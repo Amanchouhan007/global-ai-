@@ -22,6 +22,7 @@ import {
 import { useAdminStore } from '../store/adminStore';
 import ThemeToggle from '../../components/common/ThemeToggle';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 
 // Screens
 import DashboardScreen from '../screens/DashboardScreen';
@@ -39,6 +40,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
   const [toastMessage, setToastMessage] = useState(null);
 
   const { isDark } = useTheme();
+  const { user, logout } = useAuth();
   const { settings, aiReadinessScore, activities } = useAdminStore();
 
   // Exactly 6 menus as strictly required
@@ -255,10 +257,11 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                   <button
                     onClick={() => {
                       setProfileDropdownOpen(false);
-                      showToast('Admin session secured.');
+                      if (logout) logout();
+                      showToast('Admin session signed out.');
                       onExitToLanding();
                     }}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-rose-500 hover:bg-rose-500/10 rounded-lg text-left font-semibold"
+                    className="w-full flex items-center gap-2 px-3 py-2 text-rose-500 hover:bg-rose-500/10 rounded-lg text-left font-semibold cursor-pointer"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     <span>Sign Out</span>
@@ -334,6 +337,17 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                 >
                   <ExternalLink className="w-4 h-4" />
                   <span>Back to Live Website</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (logout) logout();
+                    onExitToLanding();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl font-bold text-xs text-rose-500 hover:bg-rose-500/10 transition-colors cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Sign Out</span>
                 </button>
               </div>
             </div>

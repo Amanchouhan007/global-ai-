@@ -21,7 +21,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import ThemeToggle from './common/ThemeToggle';
 
-export default function LoginPage({ onNavigate }) {
+export default function LoginPage({ onNavigate, notice }) {
   const { login, register } = useAuth();
   const { isDark } = useTheme();
 
@@ -346,6 +346,13 @@ export default function LoginPage({ onNavigate }) {
                 Sign in to continue to GlobalHealthAI.
               </p>
             </div>
+
+            {notice && (
+              <div className="mb-3.5 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-medium flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>{notice}</span>
+              </div>
+            )}
 
             {/* Role Selection Tabs */}
             <div className="mb-3.5">

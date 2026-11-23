@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Siren,
   Clock,
@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 
 export default function BottomRow() {
+  const [toolNotice, setToolNotice] = useState(null);
+
   const tools = [
     {
       title: 'My Symptoms Checker',
@@ -50,6 +52,20 @@ export default function BottomRow() {
       color: 'text-[#2563eb]'
     }
   ];
+
+  const handleToolClick = (toolTitle) => {
+    if (toolTitle === 'My Symptoms Checker') {
+      const searchEl = document.getElementById('search-section');
+      if (searchEl) {
+        searchEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const input = searchEl.querySelector('input[type="text"]');
+        if (input) setTimeout(() => input.focus(), 400);
+      }
+    } else {
+      setToolNotice(`"${toolTitle}" is in clinical development. This interactive tool will be available in an upcoming release.`);
+      setTimeout(() => setToolNotice(null), 3500);
+    }
+  };
 
   return (
     <section id="resources" className="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8 py-2.5 pb-8 scroll-mt-20">
@@ -130,7 +146,8 @@ export default function BottomRow() {
                 return (
                   <div
                     key={idx}
-                    className="w-[88px] sm:w-[94px] lg:w-auto shrink-0 lg:shrink flex flex-col items-center justify-center p-1.5 bg-white dark:bg-[#0B132B] rounded-xl border border-blue-100 dark:border-slate-800 shadow-2xs h-[92px] text-center hover:border-blue-300 dark:hover:border-blue-500 transition-colors cursor-pointer group"
+                    onClick={() => handleToolClick(item.title)}
+                    className="w-[88px] sm:w-[94px] lg:w-auto shrink-0 lg:shrink flex flex-col items-center justify-center p-1.5 bg-white dark:bg-[#0B132B] rounded-xl border border-blue-100 dark:border-slate-800 shadow-2xs h-[92px] text-center hover:border-blue-300 dark:hover:border-blue-500 hover:-translate-y-0.5 transition-all cursor-pointer group"
                   >
                     <div className="h-6 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform">
                       <Icon className={`w-5 h-5 ${item.color} stroke-[2]`} />
@@ -146,6 +163,24 @@ export default function BottomRow() {
         </div>
 
       </div>
+
+      {/* Development Status Notice for Upcoming Health Tools */}
+      {toolNotice && (
+        <div className="fixed bottom-6 right-6 z-50 max-w-sm bg-slate-900/95 dark:bg-[#0F1C36]/95 text-white p-3.5 rounded-2xl shadow-xl border border-slate-700/80 backdrop-blur-md flex items-center justify-between gap-3 text-xs animate-in fade-in slide-in-from-bottom-2 duration-200">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#1677E8] shrink-0 animate-pulse" />
+            <span className="leading-snug">{toolNotice}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setToolNotice(null)}
+            className="p-1 text-slate-400 hover:text-white rounded-lg cursor-pointer shrink-0"
+            aria-label="Dismiss notice"
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </section>
   );
 }
