@@ -11,8 +11,7 @@ export default function Hero() {
       id="home"
       className="relative w-full min-h-[calc(100vh-68px)] flex items-center overflow-hidden bg-white bg-no-repeat bg-cover bg-[position:88%_center] sm:bg-[position:right_center]"
       style={{
-        backgroundImage: "url('/assets/doctor_clinic_desk_bg.jpg')",
-        imageRendering: '-webkit-optimize-contrast'
+        backgroundImage: "url('/assets/doctor_clinic_desk_bg.jpg')"
       }}
     >
       {/* Light responsive overlay on small screens to ensure text legibility */}
