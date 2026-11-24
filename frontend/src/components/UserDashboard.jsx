@@ -4,6 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 import MinimalSidebar from './dashboard/MinimalSidebar';
 import WorkspaceTopBar from './dashboard/WorkspaceTopBar';
 import MinimalAIAssessmentCard from './dashboard/MinimalAIAssessmentCard';
+import HealthCardShowcase from './HealthCardShowcase';
 import MinimalLibraryView from './dashboard/MinimalLibraryView';
 import HelpModal from './dashboard/HelpModal';
 import ProfileSettingsModal from './dashboard/ProfileSettingsModal';
@@ -21,20 +22,21 @@ import {
   Shield,
   BookOpen,
   Target,
-  UserCheck
+  UserCheck,
+  Stethoscope
 } from 'lucide-react';
 
 export default function UserDashboard({ onNavigate, initialSymptom = '', initialCategory = null }) {
   const { user, logout } = useAuth();
   const { isDark } = useTheme();
 
-  // Active user: use authenticated user, or guest session if transferred from landing page
-  const currentUser = user || ((initialSymptom || initialCategory) ? {
+  // Active user: use authenticated user, or guest session for direct clinical triage
+  const currentUser = user || {
     name: 'Patient / Family User',
     email: 'user@gmail.com',
     role: 'user',
     isGuest: true
-  } : null);
+  };
 
   // Auth gate
   const isAuth = Boolean(user && (user.role === 'user' || user.role === 'admin')) || Boolean(currentUser);
@@ -257,11 +259,9 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
   return (
     <div
-      className={`h-screen w-full max-w-full overflow-hidden font-sans flex antialiased transition-colors duration-300 ${
-        isDark ? 'bg-[#080D1A] text-slate-100' : 'bg-[#F2F7FF] text-slate-900'
-      }`}
+      className="h-screen w-full max-w-full overflow-hidden font-sans flex antialiased bg-[#F8FAF9] text-slate-900 transition-colors duration-300"
     >
-      
+
       {/* 1. Left Sidebar (260px fixed, clean & structured) */}
       <MinimalSidebar
         activeCategory={activeCategory}
@@ -279,7 +279,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
       {/* 2. Main Workspace Layout */}
       <div className="flex-1 flex flex-col h-full min-w-0 w-full max-w-full overflow-hidden lg:pl-[260px]">
-        
+
         {/* Minimalist Top Bar with Ink-Bleed Theme Toggle */}
         <WorkspaceTopBar
           activeCategory={activeCategory}
@@ -290,7 +290,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
         {/* Dynamic Main View */}
         <main className="flex-1 w-full max-w-full p-2.5 xs:p-3 sm:p-6 lg:p-8 overflow-y-auto overflow-x-hidden">
-          
+
           {activeView === 'library' ? (
             /* LIBRARY VIEW */
             <MinimalLibraryView
@@ -303,7 +303,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
           ) : (
             /* MAIN CENTERED HEALTH WORKSPACE - GlobalHealthAI Theme */
             <div className="max-w-4xl w-full mx-auto space-y-4 sm:space-y-6 py-1 xs:py-2 sm:py-4 overflow-hidden">
-              
+
               {/* Landing Page Clinical Trust Ribbon */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 xs:gap-2.5 p-1.5 xs:p-2 rounded-2xl bg-white/70 dark:bg-[#0B132B]/80 backdrop-blur-xs border border-blue-100 dark:border-slate-800 shadow-2xs w-full max-w-full overflow-hidden">
                 <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-blue-50/60 dark:bg-slate-800/60 border border-blue-100/60 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
@@ -349,19 +349,19 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
               {/* Clean Branding Greeting */}
               <div className="text-center space-y-2 pt-1 px-1">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-slate-800 border border-blue-200/70 dark:border-slate-700 text-[#1677E8] dark:text-blue-300 text-xs font-semibold shadow-2xs">
-                  <Sparkles className="w-3.5 h-3.5 text-[#F04B0A]" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EBF5F0] border border-emerald-200 text-[#0D5C3A] text-xs font-semibold shadow-2xs">
+                  <Sparkles className="w-3.5 h-3.5 text-[#0D5C3A]" />
                   <span>Physician-Curated Symptom Education</span>
                 </div>
 
-                <h1 className="text-xl xs:text-2xl sm:text-3xl lg:text-[34px] font-extrabold text-[#08165B] dark:text-white tracking-tight leading-snug break-words">
-                  Know Your Symptoms. <span className="text-[#F04B0A]">Understand the Possibilities.</span>
+                <h1 className="text-xl xs:text-2xl sm:text-3xl lg:text-[34px] font-extrabold text-slate-900 tracking-tight leading-snug break-words">
+                  Know Your Symptoms. <span className="text-[#0D5C3A]">Understand the Possibilities.</span>
                 </h1>
-                
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-xl mx-auto leading-relaxed">
+
+                <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
                   {activeCategory ? (
                     <>
-                      Focused assessment active for <strong className="text-[#08165B] dark:text-blue-300 font-bold">{activeCategory.name}</strong>. Describe symptoms, lab tests, or questions below.
+                      Focused assessment active for <strong className="text-[#0D5C3A] font-bold">{activeCategory.name}</strong>. Describe symptoms, lab tests, or questions below.
                     </>
                   ) : (
                     'Describe your symptoms, ask about lab reports, or check clinical red flags for safe and reliable guidance.'
@@ -369,11 +369,11 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                 </p>
               </div>
 
-              {/* Large Elevated Input Box (Matching Landing Page Search Aesthetics) */}
+              {/* Large Elevated Input Box */}
               <div className="space-y-3">
                 <form
                   onSubmit={handleAnalyzeSymptoms}
-                  className="bg-white dark:bg-[#0F1C36] rounded-2xl border border-blue-200/90 dark:border-slate-700 shadow-[0_8px_30px_rgba(8,22,91,0.06)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:border-blue-400 dark:hover:border-slate-600 focus-within:border-[#1677E8] dark:focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/15 transition-all p-3 sm:p-4"
+                  className="bg-white rounded-2xl border border-emerald-200/90 shadow-[0_8px_30px_rgba(13,92,58,0.06)] hover:border-emerald-300 focus-within:border-[#0D5C3A] focus-within:ring-2 focus-within:ring-emerald-500/15 transition-all p-3 sm:p-4"
                 >
                   <textarea
                     rows={3}
@@ -405,20 +405,19 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                         type="button"
                         onClick={handleVoiceInput}
                         title="Voice dictation"
-                        className={`p-2 rounded-xl transition-colors cursor-pointer ${
-                          isListening
-                            ? 'bg-red-500 text-white animate-pulse'
-                            : 'text-[#1677E8] dark:text-blue-400 hover:text-[#08165B] dark:hover:text-blue-200 hover:bg-blue-50 dark:hover:bg-slate-800 border border-blue-100 dark:border-slate-700'
-                        }`}
+                        className={`p-2 rounded-xl transition-colors cursor-pointer ${isListening
+                          ? 'bg-red-500 text-white animate-pulse'
+                          : 'text-[#1677E8] dark:text-blue-400 hover:text-[#08165B] dark:hover:text-blue-200 hover:bg-blue-50 dark:hover:bg-slate-800 border border-blue-100 dark:border-slate-700'
+                          }`}
                       >
                         <Mic className="w-4 h-4" />
                       </button>
 
-                      {/* Signature Orange Check a Symptom Button */}
+                      {/* Signature Check a Symptom Button */}
                       <button
                         type="submit"
                         disabled={!promptText.trim()}
-                        className="py-2.5 px-5 sm:px-6 rounded-full bg-gradient-to-r from-[#ea580c] to-[#c2410c] hover:from-[#c2410c] hover:to-[#9a3412] text-white text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="py-2.5 px-5 sm:px-6 rounded-full bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] hover:from-[#0A4D30] hover:to-[#083F27] text-white text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         <span>Check a Symptom</span>
                         <ArrowRight className="w-4 h-4 stroke-[2.5]" />
@@ -473,11 +472,10 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                         key={cat.id}
                         type="button"
                         onClick={() => setActiveCategory(cat)}
-                        className={`p-2.5 xs:p-3 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between min-w-0 overflow-hidden ${
-                          isCurrent
-                            ? 'bg-white dark:bg-[#0F1C36] border-[#1677E8] ring-2 ring-blue-500/20 shadow-sm'
-                            : 'bg-white dark:bg-[#0B132B]/80 hover:bg-blue-50/40 dark:hover:bg-[#0F1C36] border-blue-100 dark:border-slate-800 hover:border-blue-300 dark:hover:border-slate-700 shadow-2xs hover:shadow-xs'
-                        }`}
+                        className={`p-2.5 xs:p-3 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between min-w-0 overflow-hidden ${isCurrent
+                          ? 'bg-white dark:bg-[#0F1C36] border-[#1677E8] ring-2 ring-blue-500/20 shadow-sm'
+                          : 'bg-white dark:bg-[#0B132B]/80 hover:bg-blue-50/40 dark:hover:bg-[#0F1C36] border-blue-100 dark:border-slate-800 hover:border-blue-300 dark:hover:border-slate-700 shadow-2xs hover:shadow-xs'
+                          }`}
                       >
                         <div className="flex items-center justify-between mb-1.5">
                           <span className={`w-2.5 h-2.5 rounded-full ${cat.dotColor} shrink-0`} />
@@ -495,23 +493,41 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                 </div>
               </div>
 
-              {/* Demo AI Triage Output Card */}
-              <div className="pt-2 space-y-2">
+              {/* Clinically Reviewed Health Card Output (Dynamic 1,000+ Cards System matching Client Reference Image 2) */}
+              <div className="pt-2 space-y-3">
                 <div className="flex items-center justify-between px-1">
-                  <span className="text-xs font-bold text-[#08165B] dark:text-white uppercase tracking-wider">
-                    Clinical Guidance & Triage Assessment
+                  <span className="text-xs font-bold text-[#08165B] dark:text-white uppercase tracking-wider flex items-center gap-2">
+                    <Stethoscope className="w-4 h-4 text-emerald-600" />
+                    <span>Clinical Guidance • Health Card Details (1,000+ Cards Engine)</span>
                   </span>
-                  <span className="text-[11px] font-semibold text-[#1677E8] dark:text-blue-300 bg-blue-50 dark:bg-slate-800 px-2 py-0.5 rounded-full border border-blue-200/60 dark:border-slate-700">
-                    Live Demo Mode
+                  <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+                    Active Clinical Card
                   </span>
                 </div>
 
-                <MinimalAIAssessmentCard
-                  activeSeverity={activeSeverity}
-                  onSelectSeverity={(sev) => setActiveSeverity(sev)}
-                  customQuery={promptText}
-                  onSaveReport={handleSaveReport}
+                {/* Final Dynamic Health Card matching Image 2 */}
+                <HealthCardShowcase
+                  query={promptText}
+                  onPrepareVisit={(summary) => {
+                    handleSaveReport({
+                      title: summary,
+                      date: new Date().toISOString(),
+                      severity: activeSeverity
+                    });
+                    alert(`Doctor Visit Checklist Saved to Your Library:\n${summary}`);
+                  }}
+                  showCardSelector={true}
                 />
+
+                {/* Compact Severity Assessment Summary */}
+                <div className="pt-3">
+                  <MinimalAIAssessmentCard
+                    activeSeverity={activeSeverity}
+                    onSelectSeverity={(sev) => setActiveSeverity(sev)}
+                    customQuery={promptText}
+                    onSaveReport={handleSaveReport}
+                  />
+                </div>
               </div>
 
             </div>
@@ -523,7 +539,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
       {/* Modals */}
       {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} />}
-      
+
       {profileOpen && (
         <ProfileSettingsModal
           user={effectiveUser}

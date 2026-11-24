@@ -239,12 +239,8 @@ export default function MinimalSidebar({
 
           </div>
 
-          {/* 5. Bottom Footer: Theme Toggle, Help & Support and Profile Settings */}
+          {/* 5. Bottom Footer: Help & Support and Profile Settings */}
           <div className="p-3 border-t border-slate-100 dark:border-slate-800 shrink-0 space-y-1.5">
-            
-            {/* Organic Ink Bleed Theme Toggle in Sidebar */}
-            <ThemeToggle variant="sidebar" />
-
             {/* Help & Support */}
             <button
               type="button"
