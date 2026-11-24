@@ -108,9 +108,9 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
                     key={item.label}
                     type="button"
                     onClick={() => handleNavClick(item.id, item.label)}
-                    className="flex items-center gap-1 px-1.5 2xl:px-2.5 py-1 rounded-full text-xs font-bold bg-[#EBF5F0] text-[#0D5C3A] shadow-2xs cursor-pointer transition-all"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#FCE7F0] text-[#D81B60] shadow-2xs cursor-pointer transition-all"
                   >
-                    <Home className="w-3.5 h-3.5 fill-current" />
+                    <Home className="w-3.5 h-3.5 fill-[#D81B60]" />
                     <span>{item.label}</span>
                   </button>
                 );
