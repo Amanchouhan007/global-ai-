@@ -53,12 +53,12 @@ export default function FloatingHealthChatbot({
       id: 'welcome',
       sender: 'ai',
       timestamp: 'Just now',
-      text: `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your GlobalHealth AI Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`,
+      text: `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`,
       urgency: null
     }
   ]);
 
-  const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
   const uploadMenuRef = useRef(null);
@@ -235,15 +235,31 @@ export default function FloatingHealthChatbot({
     window.open(url, '_blank');
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const isInitialMount = useRef(true);
+
+  const scrollChatContainer = (smooth = true) => {
+    if (chatContainerRef.current) {
+      if (smooth) {
+        chatContainerRef.current.scrollTo({
+          top: chatContainerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      } else {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+    }
   };
 
   useEffect(() => {
-    if (inline || isOpen) {
-      scrollToBottom();
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
     }
-  }, [isOpen, messages, isTyping, inline]);
+    // Only scroll internally inside the chat box when user/AI sends a message
+    if (isOpen || inline) {
+      scrollChatContainer(true);
+    }
+  }, [messages, isTyping]);
 
   // Quick prompt suggestions
   const quickPrompts = [
@@ -333,7 +349,10 @@ export default function FloatingHealthChatbot({
 
   // Render message item (shared between inline and floating modes)
   const renderMessages = () => (
-    <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm bg-slate-50/70">
+    <div
+      ref={chatContainerRef}
+      className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm bg-slate-50/70"
+    >
       {messages.map((msg) => {
         const isAi = msg.sender === 'ai';
 
@@ -430,8 +449,6 @@ export default function FloatingHealthChatbot({
           <span className="w-1.5 h-1.5 rounded-full bg-[#D81B60] animate-bounce [animation-delay:0.4s]"></span>
         </div>
       )}
-
-      <div ref={messagesEndRef} />
     </div>
   );
 
@@ -844,7 +861,7 @@ export default function FloatingHealthChatbot({
           onClick={() => setIsOpen(!isOpen)}
           className="group relative flex items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-emerald-400/40"
           aria-label="Open Health AI Chatbot"
-          title="Open GlobalHealth AI Assistant"
+          title="Open Health Orbit Pro Assistant"
         >
           {/* Animated online ring */}
           <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
@@ -883,7 +900,7 @@ export default function FloatingHealthChatbot({
               </div>
               <div className="leading-tight">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs sm:text-sm font-black">GlobalHealth AI</span>
+                  <span className="text-xs sm:text-sm font-black">Health Orbit Pro™</span>
                   <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40">
                     Live
                   </span>

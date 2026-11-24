@@ -23,6 +23,8 @@ import { useAdminStore } from '../store/adminStore';
 import ThemeToggle from '../../components/common/ThemeToggle';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
+import HealthOrbitLogo from '../../components/common/HealthOrbitLogo';
+import { BRAND } from '../../config/brand';
 
 // Screens
 import DashboardScreen from '../screens/DashboardScreen';
@@ -96,24 +98,16 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
               onClick={() => handleNavClick('dashboard')}
               className="flex items-center gap-2.5 cursor-pointer overflow-hidden"
             >
-              {/* Globe + Medical Cross Logo matching landing page */}
-              <div className="w-9 h-9 shrink-0 flex items-center justify-center">
-                <svg viewBox="0 0 40 40" className="w-8 h-8" fill="none">
-                  <circle cx="20" cy="20" r="18" fill="#1677E8" />
-                  <ellipse cx="20" cy="20" rx="9" ry="18" stroke="#ffffff" strokeWidth="1.2" opacity="0.8" />
-                  <line x1="2" y1="20" x2="38" y2="20" stroke="#ffffff" strokeWidth="1.2" opacity="0.8" />
-                  <rect x="16" y="8" width="8" height="24" rx="2" fill="#F04B0A" stroke="#ffffff" strokeWidth="1" />
-                  <rect x="8" y="16" width="24" height="8" rx="2" fill="#F04B0A" stroke="#ffffff" strokeWidth="1" />
-                </svg>
-              </div>
+              {/* Health Orbit Pro Official Emblem */}
+              <HealthOrbitLogo className="w-8 h-8" idPrefix="admin-logo" />
 
               {!sidebarCollapsed && (
                 <div className="flex flex-col leading-none">
                   <div className="flex items-center">
-                    <span className={`text-[17px] font-black tracking-tight ${isDark ? 'text-white' : 'text-[#08165B]'}`}>GlobalHealth</span>
-                    <span className="text-[17px] font-black text-[#F04B0A] tracking-tight">AI</span>
+                    <span className={`text-[16px] font-black tracking-tight ${isDark ? 'text-white' : 'text-[#0D5C3A]'}`}>{BRAND.prefix}</span>
+                    <span className="text-[10px] font-black text-white bg-[#D81B60] px-1.5 py-0.5 rounded-full ml-1">{BRAND.suffix}™</span>
                   </div>
-                  <span className="text-[9px] font-bold text-[#1677E8] tracking-widest uppercase mt-0.5">
+                  <span className="text-[9px] font-bold text-[#0D5C3A] tracking-wider uppercase mt-1">
                     ADMIN CONSOLE
                   </span>
                 </div>

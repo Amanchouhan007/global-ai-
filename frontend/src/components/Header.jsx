@@ -14,6 +14,7 @@ import {
 import { BRAND } from '../config/brand';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import HealthOrbitLogo from './common/HealthOrbitLogo';
 
 export default function Header({ onNavigate, onOpenDisclaimer }) {
   const { currentLang, setLanguage, supportedLanguages, t } = useLanguage();
@@ -22,69 +23,107 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const headerRef = useRef(null);
 
-  // Nav items exactly matching client UI reference Image 1
+  // Active landing page nav items: strictly matches real landing page sections
   const navItems = [
     { id: 'home', label: t('nav', 'home', 'Home'), isHome: true },
     { id: 'search-section', label: t('nav', 'symptomChecker', 'Symptom Checker') },
     { id: 'categories', label: t('nav', 'categories', 'Categories'), hasDropdown: true },
-    { id: 'health-cards', label: t('nav', 'healthCards', 'Health Cards (1,000)') },
-    { id: 'for-doctors', label: t('nav', 'forDoctors', 'For Doctors'), hasDropdown: true },
-    { id: 'for-pharmacists', label: t('nav', 'forPharmacists', 'For Pharmacists'), hasDropdown: true },
-    { id: 'resources', label: t('nav', 'resources', 'Resources'), hasDropdown: true },
     { id: 'about', label: t('nav', 'about', 'About') }
   ];
+
+  // Dropdown menu options for interactive header links
+  const dropdownMenus = {
+    categories: [
+      { label: 'My Symptoms (Acute Emergency Triage)', targetId: 'categories' },
+      { label: 'My Personal Health (Vitals, BP & Sugar)', targetId: 'categories' },
+      { label: 'My Family (Multigenerational Care)', targetId: 'categories' },
+      { label: 'My Parenting (Pediatric Care)', targetId: 'categories' },
+      { label: 'My Mind (Mental Health & Coping)', targetId: 'categories' },
+      { label: 'Explore All 10 Categories →', targetId: 'categories', isCta: true }
+    ]
+  };
 
   useEffect(() => {
     function handleClickOutside(e) {
       if (headerRef.current && !headerRef.current.contains(e.target)) {
         setLangDropdownOpen(false);
+        setUserDropdownOpen(false);
+        setActiveDropdown(null);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleDropdownItemClick = (subItem) => {
+    setActiveDropdown(null);
+    if (subItem.action === 'login') {
+      if (onNavigate) {
+        onNavigate('/login');
+      } else {
+        window.location.pathname = '/login';
+      }
+      return;
+    }
+    if (subItem.targetId) {
+      handleNavClick(subItem.targetId, subItem.label);
+    }
+  };
+
   const handleNavClick = (id, label) => {
     setActiveNav(label);
+    setActiveDropdown(null);
+    if (id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (id === 'search-section') {
+      const el = document.getElementById('search-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          const input = document.querySelector('input[placeholder*="symptom"], input[type="text"]');
+          if (input) input.focus();
+        }, 450);
+      }
+      return;
+    }
+    if (id === 'about' || id === 'for-doctors') {
+      const el = document.getElementById('about') || document.getElementById('founder');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    if (id === 'resources') {
+      const el = document.getElementById('resources') || document.getElementById('demo-videos');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      try {
-        window.history.pushState(null, '', `#${id}`);
-      } catch (e) {
-        // ignore
-      }
     }
   };
 
   return (
     <header ref={headerRef} className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-emerald-950/10 shadow-[0_2px_12px_rgba(13,92,58,0.03)] transition-all duration-200">
-      <div className="w-full max-w-[1400px] xl:max-w-[1440px] 2xl:max-w-[1520px] mx-auto px-2.5 xs:px-3 sm:px-4 lg:px-4 xl:px-5">
-        <div className="flex items-center justify-between h-[68px] gap-1 sm:gap-2">
+      <div className="w-full max-w-[1520px] mx-auto px-2.5 xs:px-3 sm:px-4 lg:px-4 xl:px-6">
+        <div className="flex items-center justify-between h-[68px] gap-1.5 lg:gap-2">
           
           {/* Logo & Clinical Brand Title */}
           <div
             onClick={() => handleNavClick('home', 'Home')}
-            className="flex items-center gap-2 sm:gap-3 shrink-0 cursor-pointer select-none group"
+            className="flex items-center gap-2 sm:gap-2.5 shrink-0 cursor-pointer select-none group"
           >
-            {/* Health Orbit Pro Emblem */}
-            <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
-              <svg viewBox="0 0 44 44" className="w-8 h-8 sm:w-10 sm:h-10 drop-shadow-xs" fill="none">
-                <path d="M7 26C5 18 10 9 20 6C30 3 39 9 41 18C43 27 36 37 25 39C16 41 8 35 7 26Z" stroke="#0D5C3A" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="3 1" />
-                <circle cx="21" cy="22" r="14" fill="#0D5C3A" fillOpacity="0.08" stroke="#0D5C3A" strokeWidth="2" />
-                <path d="M12 22C12 16 16 12 21 12C26 12 30 16 30 22C30 28 26 32 21 32C16 32 12 28 12 22Z" fill="#0D9488" fillOpacity="0.15" />
-                <rect x="29" y="4" width="4" height="12" rx="1.5" fill="#D81B60" />
-                <rect x="25" y="8" width="12" height="4" rx="1.5" fill="#D81B60" />
-                <circle cx="21" cy="22" r="4" fill="#D81B60" />
-              </svg>
-            </div>
+            {/* Health Orbit Pro Official Emblem */}
+            <HealthOrbitLogo className="w-8 h-8 sm:w-10 sm:h-10" idPrefix="header-logo" />
 
             <div className="flex flex-col">
               <div className="flex items-center leading-none">
-                <span className="text-lg xs:text-xl sm:text-[23px] font-black text-[#0D5C3A] tracking-tight">
+                <span className="text-lg xs:text-xl lg:text-[21px] xl:text-[23px] font-black text-[#0D5C3A] tracking-tight">
                   {BRAND.prefix}
                 </span>
                 <span className="text-[11px] sm:text-[13px] font-black text-white bg-[#D81B60] px-1.5 sm:px-2 py-0.5 rounded-full ml-1 sm:ml-1.5 align-middle shadow-2xs tracking-normal">
@@ -97,8 +136,8 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
             </div>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1 text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-semibold text-slate-700">
+          {/* Desktop Navigation Links — visible on tablets, laptops and desktop (>= 768px) */}
+          <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 text-[11px] lg:text-[12px] xl:text-[13px] font-semibold text-slate-700">
             {navItems.map((item) => {
               const isActive = activeNav === item.label;
 
@@ -108,11 +147,61 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
                     key={item.label}
                     type="button"
                     onClick={() => handleNavClick(item.id, item.label)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#FCE7F0] text-[#D81B60] shadow-2xs cursor-pointer transition-all"
+                    className="flex items-center gap-1 px-1.5 lg:px-2 xl:px-2.5 py-1 rounded-full text-xs font-bold bg-[#EBF5F0] text-[#0D5C3A] shadow-2xs cursor-pointer transition-all"
                   >
-                    <Home className="w-3.5 h-3.5 fill-[#D81B60]" />
+                    <Home className="w-3.5 h-3.5 fill-current" />
                     <span>{item.label}</span>
                   </button>
+                );
+              }
+
+              if (item.hasDropdown && dropdownMenus[item.id]) {
+                const isDropdownOpen = activeDropdown === item.id;
+                return (
+                  <div
+                    key={item.label}
+                    className="relative"
+                    onMouseEnter={() => setActiveDropdown(item.id)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => handleNavClick(item.id, item.label)}
+                      className={`flex items-center gap-0.5 px-1.5 lg:px-2 py-1 rounded-full font-semibold whitespace-nowrap cursor-pointer transition-colors ${
+                        isActive
+                          ? 'text-[#0D5C3A] font-bold bg-[#EBF5F0]'
+                          : 'hover:text-[#0D5C3A] hover:bg-[#F2F8F5]'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform duration-150 ${isDropdownOpen ? 'rotate-180 text-[#0D5C3A]' : ''}`} />
+                    </button>
+
+                    {isDropdownOpen && (
+                      <div className="absolute left-0 mt-1 w-64 bg-white rounded-2xl shadow-xl border border-emerald-100 p-1.5 z-50 text-xs animate-in fade-in duration-150">
+                        <div className="px-3 py-1.5 text-[10.5px] font-black text-[#0D5C3A] uppercase tracking-wider border-b border-emerald-50 flex items-center justify-between">
+                          <span>{item.label}</span>
+                          <span className="text-[9.5px] font-normal text-slate-400">Quick Jump</span>
+                        </div>
+                        <div className="py-1 space-y-0.5">
+                          {dropdownMenus[item.id].map((subItem, sIdx) => (
+                            <button
+                              key={sIdx}
+                              type="button"
+                              onClick={() => handleDropdownItemClick(subItem)}
+                              className={`w-full text-left px-3 py-2 rounded-xl cursor-pointer transition-colors flex items-center justify-between text-xs ${
+                                subItem.isCta
+                                  ? 'bg-[#EBF5F0] text-[#0D5C3A] font-bold hover:bg-emerald-100 mt-1'
+                                  : 'text-slate-700 hover:bg-[#F4F9F6] hover:text-[#0D5C3A] font-medium'
+                              }`}
+                            >
+                              <span>{subItem.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 );
               }
 
@@ -121,14 +210,13 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
                   key={item.label}
                   type="button"
                   onClick={() => handleNavClick(item.id, item.label)}
-                  className={`flex items-center gap-0.5 px-1 2xl:px-2 py-1 rounded-full font-semibold whitespace-nowrap cursor-pointer transition-colors ${
+                  className={`flex items-center gap-0.5 px-1.5 lg:px-2 py-1 rounded-full font-semibold whitespace-nowrap cursor-pointer transition-colors ${
                     isActive
                       ? 'text-[#0D5C3A] font-bold bg-[#EBF5F0]'
                       : 'hover:text-[#0D5C3A] hover:bg-[#F2F8F5]'
                   }`}
                 >
                   <span>{item.label}</span>
-                  {item.hasDropdown && <ChevronDown className="w-3 h-3 text-slate-400" />}
                 </button>
               );
             })}
@@ -195,7 +283,7 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
               <button
                 type="button"
                 onClick={onOpenDisclaimer}
-                className="hidden 2xl:flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-[#0D5C3A] hover:bg-[#EBF5F0] transition-colors cursor-pointer"
+                className="hidden md:flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-[#0D5C3A] hover:bg-[#EBF5F0] transition-colors cursor-pointer"
                 title="View Healthcare Disclaimer"
               >
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
@@ -257,11 +345,11 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
               </button>
             )}
 
-            {/* Mobile / Tablet Hamburger Menu */}
+            {/* Mobile Hamburger Menu (visible below md: 768px) */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-2 text-slate-700 rounded-xl hover:bg-slate-100 transition-colors"
+              className="md:hidden p-2 text-slate-700 rounded-xl hover:bg-slate-100 transition-colors"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -272,7 +360,7 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
 
         {/* Mobile Menu Drawer */}
         {mobileMenuOpen && (
-          <div className="xl:hidden py-4 border-t border-slate-200 space-y-3 bg-white">
+          <div className="md:hidden py-4 border-t border-slate-200 space-y-3 bg-white">
             {/* Mobile Auth Status Banner */}
             <div className="px-4 py-2.5 rounded-xl bg-[#F4F9F6] border border-emerald-100 flex items-center justify-between">
               <div className="flex items-center gap-2">
