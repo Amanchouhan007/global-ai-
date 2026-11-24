@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { googleAuthService } from '../services/googleAuth';
 
 const AuthContext = createContext(null);
 
@@ -114,13 +115,27 @@ export function AuthProvider({ children }) {
     return { success: false, error: 'Invalid credentials. Please check your email and password or register a new account.' };
   };
 
+  const loginWithGoogle = async () => {
+    try {
+      const res = await googleAuthService.signInWithGoogle();
+      if (res && res.success && res.user) {
+        setUser(res.user);
+        localStorage.setItem('globalhealth_auth', JSON.stringify(res.user));
+        return { success: true, redirect: '/user/dashboard', user: res.user };
+      }
+      return { success: false, error: 'Google sign-in was not completed.' };
+    } catch (err) {
+      return { success: false, error: err.message || 'Google sign-in error.' };
+    }
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('globalhealth_auth');
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, loginWithGoogle, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

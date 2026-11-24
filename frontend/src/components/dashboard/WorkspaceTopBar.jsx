@@ -61,12 +61,8 @@ export default function WorkspaceTopBar({
         </div>
       </div>
 
-      {/* Right: Theme Toggle & Emergency Pill Badge */}
+      {/* Right: Emergency Pill Badge */}
       <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-        
-        {/* Organic Ink-Bleed Theme Toggle */}
-        <ThemeToggle variant="topbar" />
-
         {/* Emergency Helpline Pill */}
         <a
           href="tel:112"

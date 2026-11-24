@@ -3,15 +3,12 @@ import React, { createContext, useContext, useState, useEffect, useRef } from 'r
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  // Read persisted theme or system preference
+  // Default strictly to cohesive, premium healthcare light theme
   const [theme, setTheme] = useState(() => {
     try {
       if (typeof window !== 'undefined') {
         const saved = localStorage.getItem('globalhealth_theme');
-        if (saved === 'dark' || saved === 'light') return saved;
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
+        if (saved === 'light') return 'light';
       }
     } catch (e) {
       // Fallback

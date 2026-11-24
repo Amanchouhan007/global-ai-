@@ -5,28 +5,36 @@ import {
   ChevronDown,
   Globe,
   Menu,
-  X
+  X,
+  Home,
+  CheckCircle2,
+  FileText,
+  AlertTriangle
 } from 'lucide-react';
-import ThemeToggle from './common/ThemeToggle';
+import { BRAND } from '../config/brand';
+import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
 
-export default function Header({ onNavigate }) {
+export default function Header({ onNavigate, onOpenDisclaimer }) {
+  const { currentLang, setLanguage, supportedLanguages, t } = useLanguage();
+  const { user, logout } = useAuth();
   const [activeNav, setActiveNav] = useState('Home');
-  const [justClicked, setJustClicked] = useState(null);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('EN');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const headerRef = useRef(null);
 
+  // Nav items exactly matching client UI reference Image 1
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'search-section', label: 'Symptom Checker' },
-    { id: 'categories', label: 'Categories' },
-    { id: 'categories', label: 'Health Cards (1,000)' },
-    { id: 'for-doctors', label: 'For Doctors' },
-    { id: 'for-pharmacists', label: 'For Pharmacists' },
-    { id: 'resources', label: 'Resources' },
-    { id: 'founder', label: 'About' }
+    { id: 'home', label: t('nav', 'home', 'Home'), isHome: true },
+    { id: 'search-section', label: t('nav', 'symptomChecker', 'Symptom Checker') },
+    { id: 'categories', label: t('nav', 'categories', 'Categories'), hasDropdown: true },
+    { id: 'health-cards', label: t('nav', 'healthCards', 'Health Cards (1,000)') },
+    { id: 'for-doctors', label: t('nav', 'forDoctors', 'For Doctors'), hasDropdown: true },
+    { id: 'for-pharmacists', label: t('nav', 'forPharmacists', 'For Pharmacists'), hasDropdown: true },
+    { id: 'resources', label: t('nav', 'resources', 'Resources'), hasDropdown: true },
+    { id: 'about', label: t('nav', 'about', 'About') }
   ];
 
   useEffect(() => {
@@ -41,9 +49,6 @@ export default function Header({ onNavigate }) {
 
   const handleNavClick = (id, label) => {
     setActiveNav(label);
-    setJustClicked(label);
-    setTimeout(() => setJustClicked(null), 500);
-
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -56,197 +61,316 @@ export default function Header({ onNavigate }) {
   };
 
   return (
-    <header ref={headerRef} className="sticky top-0 z-50 bg-white dark:bg-[#0B132B] border-b border-blue-100 dark:border-slate-800 shadow-2xs transition-colors duration-200">
-      <div className="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8">
-        <div className="flex items-center justify-between h-[64px] gap-2">
+    <header ref={headerRef} className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-emerald-950/10 shadow-[0_2px_12px_rgba(13,92,58,0.03)] transition-all duration-200">
+      <div className="w-full max-w-[1400px] xl:max-w-[1440px] 2xl:max-w-[1520px] mx-auto px-2.5 xs:px-3 sm:px-4 lg:px-4 xl:px-5">
+        <div className="flex items-center justify-between h-[68px] gap-1 sm:gap-2">
           
-          {/* Logo & Tagline */}
+          {/* Logo & Clinical Brand Title */}
           <div
             onClick={() => handleNavClick('home', 'Home')}
-            className="flex items-center gap-2 shrink-0 cursor-pointer select-none"
+            className="flex items-center gap-2 sm:gap-3 shrink-0 cursor-pointer select-none group"
           >
-            {/* Globe + Medical Cross Icon */}
-            <div className="relative w-9 h-9 flex items-center justify-center shrink-0">
-              <svg viewBox="0 0 40 40" className="w-9 h-9" fill="none">
-                <circle cx="20" cy="20" r="18" fill="#1d6fd8" />
-                <path d="M20 2C10.06 2 2 10.06 2 20s8.06 18 18 18 18-8.06 18-18S29.94 2 20 2z" stroke="#104a93" strokeWidth="1.5" />
-                <ellipse cx="20" cy="20" rx="9" ry="18" stroke="#ffffff" strokeWidth="1.2" opacity="0.8" />
-                <line x1="2" y1="20" x2="38" y2="20" stroke="#ffffff" strokeWidth="1.2" opacity="0.8" />
-                <line x1="5" y1="11" x2="35" y2="11" stroke="#ffffff" strokeWidth="1" opacity="0.6" />
-                <line x1="5" y1="29" x2="35" y2="29" stroke="#ffffff" strokeWidth="1" opacity="0.6" />
-                {/* Gold Cross */}
-                <rect x="16" y="8" width="8" height="24" rx="2" fill="#f59e0b" stroke="#ffffff" strokeWidth="1" />
-                <rect x="8" y="16" width="24" height="8" rx="2" fill="#f59e0b" stroke="#ffffff" strokeWidth="1" />
+            {/* Health Orbit Pro Emblem */}
+            <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 44 44" className="w-8 h-8 sm:w-10 sm:h-10 drop-shadow-xs" fill="none">
+                <path d="M7 26C5 18 10 9 20 6C30 3 39 9 41 18C43 27 36 37 25 39C16 41 8 35 7 26Z" stroke="#0D5C3A" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="3 1" />
+                <circle cx="21" cy="22" r="14" fill="#0D5C3A" fillOpacity="0.08" stroke="#0D5C3A" strokeWidth="2" />
+                <path d="M12 22C12 16 16 12 21 12C26 12 30 16 30 22C30 28 26 32 21 32C16 32 12 28 12 22Z" fill="#0D9488" fillOpacity="0.15" />
+                <rect x="29" y="4" width="4" height="12" rx="1.5" fill="#D81B60" />
+                <rect x="25" y="8" width="12" height="4" rx="1.5" fill="#D81B60" />
+                <circle cx="21" cy="22" r="4" fill="#D81B60" />
               </svg>
             </div>
 
             <div className="flex flex-col">
               <div className="flex items-center leading-none">
-                <span className="text-[20px] sm:text-[22px] font-black text-[#0f2d59] dark:text-white tracking-tight">GlobalHealth</span>
-                <span className="text-[20px] sm:text-[22px] font-black text-[#ea580c] tracking-tight">AI</span>
-                <span className="text-[10px] font-bold text-[#ea580c] ml-0.5 align-super">™</span>
+                <span className="text-lg xs:text-xl sm:text-[23px] font-black text-[#0D5C3A] tracking-tight">
+                  {BRAND.prefix}
+                </span>
+                <span className="text-[11px] sm:text-[13px] font-black text-white bg-[#D81B60] px-1.5 sm:px-2 py-0.5 rounded-full ml-1 sm:ml-1.5 align-middle shadow-2xs tracking-normal">
+                  {BRAND.suffix}™
+                </span>
               </div>
-              <div className="text-[8px] sm:text-[8.5px] font-bold text-[#0f2d59] dark:text-slate-300 tracking-wider uppercase mt-0.5 hidden xs:block">
-                SYMPTOM EDUCATION <span className="text-[#ea580c]">•</span> CLINICAL GUIDANCE <span className="text-[#ea580c]">•</span> SAFE NEXT STEPS
+              <div className="text-[7.5px] sm:text-[8px] font-bold text-slate-500 tracking-wider uppercase mt-1 hidden xs:block">
+                {BRAND.tagline}
               </div>
             </div>
           </div>
 
-          {/* Desktop Navigation Links: Clean, Shiny on Hover & Glassy on Click */}
-          <nav className="hidden xl:flex items-center space-x-1 lg:space-x-1.5 text-[12px] lg:text-[13px] font-semibold text-[#0f2d59] shrink-0">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1 text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-semibold text-slate-700">
             {navItems.map((item) => {
               const isActive = activeNav === item.label;
-              const isPopping = justClicked === item.label;
+
+              if (item.isHome) {
+                return (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => handleNavClick(item.id, item.label)}
+                    className="flex items-center gap-1 px-1.5 2xl:px-2.5 py-1 rounded-full text-xs font-bold bg-[#EBF5F0] text-[#0D5C3A] shadow-2xs cursor-pointer transition-all"
+                  >
+                    <Home className="w-3.5 h-3.5 fill-current" />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              }
 
               return (
                 <button
                   key={item.label}
                   type="button"
                   onClick={() => handleNavClick(item.id, item.label)}
-                  className={`nav-glass-btn relative px-2.5 lg:px-3 py-1 rounded-full text-xs lg:text-[13px] font-bold whitespace-nowrap cursor-pointer transition-all duration-300 ${
-                    isPopping ? 'animate-glass-pop' : ''
-                  } ${
+                  className={`flex items-center gap-0.5 px-1 2xl:px-2 py-1 rounded-full font-semibold whitespace-nowrap cursor-pointer transition-colors ${
                     isActive
-                      ? 'nav-glass-active shadow-sm font-black'
-                      : 'text-[#0f2d59] dark:text-slate-200 hover:text-[#1677E8] dark:hover:text-white hover:bg-blue-50/70 dark:hover:bg-slate-800/70 border border-transparent hover:border-blue-200/60'
+                      ? 'text-[#0D5C3A] font-bold bg-[#EBF5F0]'
+                      : 'hover:text-[#0D5C3A] hover:bg-[#F2F8F5]'
                   }`}
                 >
-                  <span className="relative z-10">{item.label}</span>
-                  {isActive && (
-                    <span className="absolute -bottom-1 left-2.5 right-2.5 h-[2px] bg-[#ea580c] rounded-full"></span>
-                  )}
+                  <span>{item.label}</span>
+                  {item.hasDropdown && <ChevronDown className="w-3 h-3 text-slate-400" />}
                 </button>
               );
             })}
 
-            {/* Search Icon Button */}
+            {/* Search Icon Trigger */}
             <button
               type="button"
               onClick={() => handleNavClick('search-section', 'Symptom Checker')}
-              className="p-1.5 text-[#0f2d59] dark:text-slate-300 hover:text-[#1d6fd8] dark:hover:text-white transition-colors cursor-pointer rounded-full hover:bg-blue-50 dark:hover:bg-slate-800 ml-1"
-              aria-label="Search Symptoms"
+              className="p-1.5 text-slate-600 hover:text-[#0D5C3A] rounded-full hover:bg-[#F2F8F5] transition-colors cursor-pointer"
               title="Search symptoms"
+              aria-label="Search"
             >
               <Search className="w-4 h-4 stroke-[2.3]" />
             </button>
+          </nav>
 
-            {/* Language Selector (EN) */}
+          {/* Right Actions: 6-Language Selector, Disclaimer, Authentication */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            
+            {/* 6-Language Selector Dropdown */}
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-full border border-blue-200 dark:border-slate-700 text-xs font-bold text-[#0f2d59] dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-full border border-emerald-200 bg-[#F4F9F6] text-xs font-bold text-[#0D5C3A] hover:bg-[#EBF5F0] transition-colors cursor-pointer shadow-2xs"
+                title="Select language"
               >
-                <Globe className="w-3.5 h-3.5 text-[#1d6fd8]" />
-                <span>{selectedLanguage}</span>
-                <ChevronDown className="w-3 h-3 text-[#0f2d59] dark:text-slate-300" />
+                <Globe className="w-3.5 h-3.5 text-[#0D5C3A]" />
+                <span className="hidden 2xl:inline">
+                  {currentLang === 'EN' ? 'EN | हिंदी | मराठी' : currentLang}
+                </span>
+                <span className="2xl:hidden text-[11px] sm:text-xs font-black">{currentLang}</span>
+                <ChevronDown className="w-3 h-3 text-[#0D5C3A]" />
               </button>
 
               {langDropdownOpen && (
-                <div className="absolute right-0 mt-1.5 w-32 bg-white dark:bg-[#0F1C36] rounded-xl shadow-lg border border-blue-100 dark:border-slate-700 p-1 z-50 text-xs">
-                  {['EN (English)', 'HI (Hindi)', 'MR (Marathi)'].map(l => (
+                <div className="absolute right-0 mt-1.5 w-48 bg-white rounded-2xl shadow-xl border border-emerald-100 p-1.5 z-50 text-xs animate-in fade-in duration-150">
+                  <div className="px-2.5 py-1 text-[10.5px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                    6 Languages (RTL Supported)
+                  </div>
+                  {supportedLanguages.map(l => (
                     <button
-                      key={l}
+                      key={l.code}
                       onClick={() => {
-                        setSelectedLanguage(l.substring(0, 2));
+                        setLanguage(l.code);
                         setLangDropdownOpen(false);
                       }}
-                      className="w-full text-left px-2.5 py-1.5 hover:bg-blue-50 dark:hover:bg-slate-800 rounded-lg font-medium text-slate-800 dark:text-slate-200"
+                      className={`w-full text-left px-2.5 py-2 rounded-xl font-medium cursor-pointer flex items-center justify-between transition-colors ${
+                        currentLang === l.code
+                          ? 'bg-[#EBF5F0] text-[#0D5C3A] font-bold'
+                          : 'text-slate-700 hover:bg-slate-50'
+                      }`}
                     >
-                      {l}
+                      <span>{l.nativeName}</span>
+                      <span className="text-[10px] text-slate-400 uppercase">{l.code}</span>
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Theme Toggle (Dark/Light mode) */}
-            <ThemeToggle variant="topbar" />
+            {/* Disclaimer Trigger Pill */}
+            {onOpenDisclaimer && (
+              <button
+                type="button"
+                onClick={onOpenDisclaimer}
+                className="hidden 2xl:flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-[#0D5C3A] hover:bg-[#EBF5F0] transition-colors cursor-pointer"
+                title="View Healthcare Disclaimer"
+              >
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                <span>{t('nav', 'disclaimer', 'Disclaimer')}</span>
+              </button>
+            )}
 
-            {/* Sign In Button */}
-            <button
-              type="button"
-              onClick={() => onNavigate ? onNavigate('/login') : (window.location.pathname = '/login')}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-blue-200 dark:border-slate-700 text-[#0f2d59] dark:text-slate-100 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors cursor-pointer text-xs font-bold shadow-2xs"
-              aria-label="Sign In or Account"
-              title="Sign In to GlobalHealthAI"
-            >
-              <User className="w-3.5 h-3.5 text-[#1677E8]" />
-              <span className="hidden xl:inline">Sign In</span>
-            </button>
+            {/* Real Authentication State Button */}
+            {user ? (
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
+                >
+                  <User className="w-3.5 h-3.5" />
+                  <span className="max-w-[90px] truncate">{user.name || 'Account'}</span>
+                  <ChevronDown className="w-3 h-3 text-emerald-200" />
+                </button>
 
-          </nav>
+                {userDropdownOpen && (
+                  <div className="absolute right-0 mt-1.5 w-44 bg-white rounded-2xl shadow-xl border border-emerald-100 p-1.5 z-50 text-xs animate-in fade-in duration-150">
+                    <div className="px-3 py-2 border-b border-slate-100">
+                      <p className="font-bold text-slate-900 truncate">{user.name}</p>
+                      <p className="text-[10px] text-slate-500 truncate">{user.email || user.role}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setUserDropdownOpen(false);
+                        onNavigate(user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard');
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 hover:bg-[#EBF5F0] hover:text-[#0D5C3A] font-semibold transition-colors cursor-pointer"
+                    >
+                      My Dashboard
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setUserDropdownOpen(false);
+                        if (logout) logout();
+                        if (onNavigate) onNavigate('/');
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-red-600 hover:bg-red-50 font-semibold transition-colors cursor-pointer"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onNavigate ? onNavigate('/login') : (window.location.pathname = '/login')}
+                className="flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white text-xs font-bold shadow-xs transition-colors cursor-pointer shrink-0 whitespace-nowrap"
+              >
+                <User className="w-3.5 h-3.5" />
+                <span>{t('nav', 'signIn', 'Sign In')}</span>
+              </button>
+            )}
 
-          {/* Mobile & Tablet hamburger for screens < 1280px */}
-          <div className="flex items-center gap-1.5 sm:gap-2 xl:hidden">
-            <ThemeToggle variant="topbar" />
+            {/* Mobile / Tablet Hamburger Menu */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 sm:p-2 text-[#0f2d59] dark:text-slate-200"
+              className="xl:hidden p-2 text-slate-700 rounded-xl hover:bg-slate-100 transition-colors"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
+
           </div>
         </div>
 
-        {/* Mobile menu drawer for phone and tablet screens */}
+        {/* Mobile Menu Drawer */}
         {mobileMenuOpen && (
-          <div className="xl:hidden py-3 border-t border-blue-100 dark:border-slate-800 space-y-1.5 bg-white dark:bg-[#0B132B] text-sm font-semibold">
-            {navItems.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  handleNavClick(item.id, item.label);
-                }}
-                className={`w-full text-left px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all ${
-                  activeNav === item.label
-                    ? 'bg-blue-100 text-[#0f2d59] dark:bg-slate-800 dark:text-blue-400 font-black'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800/80'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-
-            {/* Language Selector in Mobile Drawer */}
-            <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-blue-50/60 dark:bg-slate-800/60 border border-blue-100/60 dark:border-slate-700/60 my-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#0f2d59] dark:text-slate-200">
-                <Globe className="w-4 h-4 text-[#1d6fd8]" />
-                <span>Language:</span>
+          <div className="xl:hidden py-4 border-t border-slate-200 space-y-3 bg-white">
+            {/* Mobile Auth Status Banner */}
+            <div className="px-4 py-2.5 rounded-xl bg-[#F4F9F6] border border-emerald-100 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4 text-[#0D5C3A]" />
+                <span className="text-xs font-bold text-slate-800">
+                  {user ? (user.name || 'Logged In') : 'Guest Session'}
+                </span>
               </div>
-              <div className="flex items-center gap-1">
-                {['EN', 'HI', 'MR'].map((lang) => (
+              {user ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (logout) logout();
+                  }}
+                  className="text-xs font-bold text-red-600 hover:underline"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (onNavigate) onNavigate('/login');
+                  }}
+                  className="text-xs font-black text-[#0D5C3A] hover:underline"
+                >
+                  Sign In →
+                </button>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 gap-1">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleNavClick(item.id, item.label);
+                  }}
+                  className={`w-full text-left px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all flex items-center justify-between ${
+                    activeNav === item.label
+                      ? 'bg-[#EBF5F0] text-[#0D5C3A] font-bold'
+                      : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    {item.isHome && <Home className="w-4 h-4 text-[#0D5C3A]" />}
+                    <span>{item.label}</span>
+                  </div>
+                  {item.hasDropdown && <ChevronDown className="w-3.5 h-3.5 text-slate-400" />}
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile 6-Language Selector */}
+            <div className="px-4 py-3 rounded-2xl bg-[#F8FAF9] border border-emerald-100 mt-2 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
+                <Globe className="w-4 h-4 text-[#0D5C3A]" />
+                <span>6 Languages (with RTL):</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {supportedLanguages.map((lang) => (
                   <button
-                    key={lang}
-                    type="button"
-                    onClick={() => setSelectedLanguage(lang)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                      selectedLanguage === lang
-                        ? 'bg-[#1677E8] text-white shadow-xs'
-                        : 'text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700'
+                    key={lang.code}
+                    onClick={() => {
+                      setLanguage(lang.code);
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      currentLang === lang.code
+                        ? 'bg-[#0D5C3A] text-white shadow-2xs'
+                        : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                     }`}
                   >
-                    {lang}
+                    {lang.nativeName}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  if (onNavigate) onNavigate('/login');
-                  else window.location.pathname = '/login';
-                }}
-                className="w-full text-center px-3.5 py-2.5 bg-gradient-to-r from-[#F04B0A] to-[#ff6224] text-white font-bold rounded-xl cursor-pointer shadow-md text-xs sm:text-sm"
-              >
-                Sign In to Dashboard
-              </button>
-            </div>
+            {/* Mobile Disclaimer Trigger */}
+            {onOpenDisclaimer && (
+              <div className="px-4 pt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenDisclaimer();
+                  }}
+                  className="w-full py-2 px-3 rounded-xl border border-amber-200 bg-amber-50 text-amber-900 text-xs font-bold flex items-center justify-center gap-1.5"
+                >
+                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                  <span>Clinical Disclaimer & Educational Scope</span>
+                </button>
+              </div>
+            )}
           </div>
         )}
 

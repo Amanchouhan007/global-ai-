@@ -1,258 +1,159 @@
 import React from 'react';
 import {
-  ShieldAlert,
-  BookOpen,
-  Target,
   Users,
-  Globe,
+  Cpu,
+  Layers,
+  Sparkles,
+  CheckCircle2,
   Stethoscope
 } from 'lucide-react';
+import { BRAND } from '../config/brand';
+import { FOUNDER_INFO } from '../config/company';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Hero() {
-  const highlights = [
-    {
-      title: 'Safety First',
-      desc: 'Check for Red-Flag Symptoms',
-      icon: ShieldAlert
-    },
-    {
-      title: '1,000',
-      desc: 'Symptom Cards Clinically Reviewed',
-      icon: BookOpen
-    },
-    {
-      title: 'Specific & Relevant Answers',
-      desc: '(≈ 100 words)',
-      icon: Target
-    },
-    {
-      title: 'For You, Your Family',
-      desc: 'and Caregivers',
-      icon: Users
-    },
-    {
-      title: 'English + Regional Languages',
-      desc: '(Marathi, Hindi)',
-      icon: Globe
-    }
-  ];
+  const { t } = useLanguage();
 
   return (
-    <section
-      id="home"
-      className="relative w-full bg-[#f3f8fd] dark:bg-[#080D1A] pt-3 sm:pt-4 pb-0 transition-colors duration-200"
-    >
-      {/* Centered Main Container: Aligned 1:1 with Header, Search Bar & Category Cards */}
-      <div className="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8">
-        
-        {/* Contained Hero Card: No bottom border or bottom shadow to eliminate visible divider line */}
-        <div className="relative w-full overflow-hidden rounded-t-2xl sm:rounded-t-3xl rounded-b-none border-t border-x border-b-0 border-blue-100/70 dark:border-slate-800/70 bg-[#eef7ff] dark:bg-[#080D1A]">
-          
-          {/* ========================================================
-              1. DEDICATED MOBILE HERO LAYOUT (VIEWPORTS < 640px)
-              Guarantees ZERO text overlap on Dr. Pratap Madhukar's face
-              ======================================================== */}
-          <div className="block sm:hidden px-3.5 py-4 space-y-3.5">
-            {/* Mobile Branding & Headlines */}
-            <div>
-              <div className="flex items-center leading-none mb-1.5">
-                <span className="text-2xl font-black text-[#08165B] dark:text-white tracking-tight">
-                  GlobalHealth
-                </span>
-                <span className="text-2xl font-black text-[#F04B0A] tracking-tight">
-                  AI
-                </span>
-                <span className="text-xs font-bold text-[#F04B0A] ml-1 align-super">™</span>
-              </div>
+    <section id="home" className="relative w-full pt-6 pb-6 sm:pt-8 sm:pb-8 lg:pt-10 lg:pb-10 overflow-hidden bg-gradient-to-b from-[#F2F8F5] via-[#FAFDFB] to-[#F8FAF9]">
+      <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8">
 
-              <h1 className="text-base font-black text-[#08165B] dark:text-white tracking-tight leading-snug">
-                Know Your Symptoms. Understand the Possibilities.
-              </h1>
-              <h2 className="text-base font-black tracking-tight leading-snug mb-2">
-                <span className="text-[#F04B0A]">Recognise Danger.</span>{' '}
-                <span className="text-[#08165B] dark:text-white">Take the Next Safe Step.</span>
-              </h2>
+        {/* Main 2-Column Hero Grid: Left Formula & Titles, Right Dr. Pratap Showcase */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
 
-              <p className="text-[12px] text-slate-700 dark:text-slate-200 font-medium leading-relaxed">
-                A physician-curated, AI-powered symptom education platform with 1,000 clinically reviewed cards from 38 years of experience. Clear, practical and reliable guidance for you and your family.
-              </p>
+          {/* ================= LEFT SIDE: BRAND TITLE, PILLS & CO-INTELLIGENCE EQUATION ================= */}
+          <div className="lg:col-span-6 xl:col-span-6 space-y-4 sm:space-y-5 text-left">
+
+            {/* Top Brand Headline: Health Orbit Pro™ */}
+            <div className="flex items-center flex-wrap gap-2.5 sm:gap-3 leading-none">
+              <span className="text-4xl sm:text-5xl lg:text-[54px] xl:text-[60px] font-black text-[#0D5C3A] tracking-tight">
+                {BRAND.prefix}
+              </span>
+              <span className="text-2xl sm:text-3xl lg:text-[32px] font-black text-white bg-[#D81B60] px-4 py-1.5 sm:py-2 rounded-2xl shadow-sm tracking-normal">
+                {BRAND.suffix}™
+              </span>
             </div>
 
-            {/* Dedicated Doctor Showcase Frame: Sharp 4K visual with Dr. Pratap Madhukar completely unobstructed */}
-            <div className="relative w-full h-[180px] xs:h-[200px] rounded-2xl overflow-hidden border border-blue-200/80 dark:border-slate-700/80 shadow-xs bg-[#dbeafe] dark:bg-slate-900">
-              <img
-                src="/assets/hero-banner-clean-4k.jpg"
-                alt="Dr Pratap Madhukar - GlobalHealthAI Panoramic Hero"
-                className="w-full h-full object-cover [object-position:84%_center]"
-                style={{ imageRendering: 'auto' }}
-                loading="eager"
-                fetchPriority="high"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            {/* Pill 1: Amber Banner — India's Own Co-Intelligence Healthcare AI */}
+            <div>
+              <div className="inline-flex items-center px-4 sm:px-5 py-2 rounded-full bg-[#FEF3C7] text-amber-950 text-xs sm:text-sm lg:text-base font-extrabold shadow-2xs tracking-tight border border-amber-300">
+                <span>{t('hero', 'badge', BRAND.badge)}</span>
+              </div>
+            </div>
 
-              {/* Doctor Badge cleanly anchored inside frame with ZERO text overlapping his face */}
-              <div className="absolute left-2.5 bottom-2.5 right-2.5 z-10">
-                <div className="flex items-center gap-2 p-2 rounded-xl bg-white/95 dark:bg-[#0F1C36]/95 backdrop-blur-md border border-[#D6E6FA] dark:border-slate-700 shadow-md">
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#08165B] to-[#1677E8] text-white flex items-center justify-center shadow-xs shrink-0">
-                    <Stethoscope className="w-3.5 h-3.5 text-white" />
+            {/* Pill 2: Deep Forest/Indigo Headline — Where Human Experience Meets AI. */}
+            <div>
+              <div className="inline-flex items-center px-5 sm:px-7 py-2.5 sm:py-3 rounded-full bg-[#0E281F] text-white text-base sm:text-xl lg:text-[22px] xl:text-[24px] font-black shadow-md tracking-tight border border-emerald-900">
+                <span>{t('hero', 'headline', BRAND.headline)}</span>
+              </div>
+            </div>
+
+            {/* The Co-Intelligence Formula Equation Strip */}
+            <div className="pt-1.5 w-full">
+              <div className="p-3 sm:p-3.5 rounded-2xl sm:rounded-full bg-white border border-emerald-950/10 shadow-[0_4px_20px_rgba(13,92,58,0.06)] max-w-full">
+                <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-3">
+
+                  {/* 1. Human Insight */}
+                  <div className="flex items-center gap-1.5 sm:gap-2 px-1 sm:px-2 py-1 bg-pink-50/50 sm:bg-transparent rounded-lg">
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-pink-50 text-[#D81B60] flex items-center justify-center shrink-0">
+                      <Users className="w-4 h-4 sm:w-4.5 sm:h-4.5 stroke-[2.4]" />
+                    </div>
+                    <span className="text-xs sm:text-sm lg:text-[14.5px] font-black text-[#D81B60] truncate">
+                      {t('hero', 'formulaHuman', BRAND.formula.human)}
+                    </span>
                   </div>
-                  <div className="text-left leading-tight min-w-0">
-                    <div className="text-[11.5px] font-black text-[#08165B] dark:text-white truncate">
-                      Dr Pratap Madhukar
+
+                  <span className="hidden sm:inline text-slate-400 font-black text-xs sm:text-sm">+</span>
+
+                  {/* 2. Artificial Intelligence */}
+                  <div className="flex items-center gap-1.5 sm:gap-2 px-1 sm:px-2 py-1 bg-teal-50/50 sm:bg-transparent rounded-lg">
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-teal-50 text-[#0D9488] flex items-center justify-center shrink-0">
+                      <Cpu className="w-4 h-4 sm:w-4.5 sm:h-4.5 stroke-[2.4]" />
                     </div>
-                    <div className="text-[9.5px] font-semibold text-[#1677E8] dark:text-blue-400 truncate">
-                      Physician • Clinical Editor
-                    </div>
-                    <div className="text-[8.5px] font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1 mt-0.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                      <span>38 Years of Experience</span>
-                    </div>
+                    <span className="text-xs sm:text-sm lg:text-[14.5px] font-black text-[#0D9488] truncate">
+                      {t('hero', 'formulaAI', BRAND.formula.ai)}
+                    </span>
                   </div>
+
+                  <span className="hidden sm:inline text-slate-400 font-black text-xs sm:text-sm">+</span>
+
+                  {/* 3. Medical Evidence */}
+                  <div className="flex items-center gap-1.5 sm:gap-2 px-1 sm:px-2 py-1 bg-emerald-50/50 sm:bg-transparent rounded-lg">
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-emerald-50 text-[#0D5C3A] flex items-center justify-center shrink-0">
+                      <Layers className="w-4 h-4 sm:w-4.5 sm:h-4.5 stroke-[2.4]" />
+                    </div>
+                    <span className="text-xs sm:text-sm lg:text-[14.5px] font-black text-[#0D5C3A] truncate">
+                      {t('hero', 'formulaEvidence', BRAND.formula.evidence)}
+                    </span>
+                  </div>
+
+                  <span className="hidden sm:inline text-slate-400 font-black text-xs sm:text-sm">=</span>
+
+                  {/* 4. Outcome: Clearer Health Decisions */}
+                  <div className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-full bg-[#FDE047] text-slate-900 font-black text-xs sm:text-sm lg:text-[14px] shadow-2xs border border-amber-300 text-center col-span-2 sm:col-span-1">
+                    {t('hero', 'formulaOutcome', BRAND.formula.outcome)}
+                  </div>
+
                 </div>
               </div>
             </div>
 
-            {/* 5 Feature Badges: Horizontal swipeable strip on mobile */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-              {highlights.map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-1.5 p-2 rounded-xl bg-white/95 dark:bg-[#0F1C36]/95 backdrop-blur-md border border-[#D6E6FA] dark:border-slate-700 shadow-2xs min-w-[145px] shrink-0"
-                  >
-                    <div className="w-6 h-6 rounded-full border border-[#F04B0A] flex items-center justify-center text-[#F04B0A] shrink-0 bg-orange-50/70 dark:bg-orange-950/50">
-                      <Icon className="w-3 h-3 stroke-[2.2]" />
-                    </div>
-                    <div className="min-w-0 leading-tight">
-                      <div className="text-[10px] font-black text-[#08165B] dark:text-white leading-tight line-clamp-1">
-                        {item.title}
-                      </div>
-                      <div className="text-[8.5px] text-slate-600 dark:text-slate-300 font-medium leading-tight line-clamp-2">
-                        {item.desc}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
           </div>
 
-          {/* ========================================================
-              2. DESKTOP & TABLET HERO LAYOUT (VIEWPORTS >= 640px)
-              Panoramic side-by-side with continuous gradient veil
-              ======================================================== */}
-          <div className="hidden sm:flex relative w-full min-h-[365px] md:min-h-[375px] lg:min-h-[385px] xl:min-h-[395px] items-center">
+          {/* ================= RIGHT SIDE: DR. PRATAP MADHUKAR VISUAL & CREDENTIALS ================= */}
+          <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center lg:justify-end">
             
-            {/* Background Image: Sharp, crisp rendering locked to natural scale without stretching or blur */}
-            <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none">
+            {/* Desktop / Tablet Landscape: Full 4K Panoramic Banner — 100% Unclipped, Zero Dead White Gaps */}
+            <div className="hidden sm:block w-full rounded-2xl lg:rounded-3xl overflow-hidden shadow-[0_16px_40px_rgba(13,92,58,0.10)] border border-emerald-950/10 bg-white">
               <img
-                src="/assets/hero-banner-clean-4k.jpg"
-                alt="GlobalHealthAI - Dr Pratap Madhukar Panoramic Hero"
-                className="w-full h-full object-cover [object-position:85%_center] md:[object-position:88%_center] lg:[object-position:right_center]"
-                style={{ imageRendering: 'auto' }}
+                src="/assets/dr_pratap_clinic_hero_exact_4k.jpg"
+                data-desk-ref="/assets/dr-pratap-desk-hd.jpg"
+                alt="Dr Pratap Madhukar - Senior Physician & Family Health Mentor"
+                className="w-full h-auto block object-contain"
+                style={{ imageRendering: '-webkit-optimize-contrast' }}
                 loading="eager"
-                fetchPriority="high"
               />
             </div>
 
-            {/* Seamless horizontal gradient veil: Fades continuously from high contrast on left to 100% transparent on right with ZERO vertical lines or hard edges */}
-            <div className="absolute inset-0 w-full h-full pointer-events-none [background-image:linear-gradient(to_right,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.85)_32%,rgba(255,255,255,0.35)_52%,transparent_72%)] dark:[background-image:linear-gradient(to_right,rgba(8,13,26,0.97)_0%,rgba(8,13,26,0.85)_32%,rgba(8,13,26,0.35)_52%,transparent_72%)]"></div>
-
-            {/* Seamless bottom fade: smoothly transitions the hero image into the search bar background without any hard line or divider */}
-            <div className="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-t from-[#f3f8fd] dark:from-[#080D1A] via-[#f3f8fd]/70 dark:via-[#080D1A]/70 to-transparent pointer-events-none z-10"></div>
-
-            {/* Hero Content Layer */}
-            <div className="relative w-full px-5 sm:px-7 lg:px-9 xl:px-11 pt-6 lg:pt-7 pb-12 lg:pb-14 z-10 flex flex-col justify-between h-full">
-              
-              {/* Left Side: Typography & Branding */}
-              <div className="max-w-[560px] lg:max-w-[620px] xl:max-w-[680px]">
-                
-                {/* Logo: GlobalHealthAI™ */}
-                <div className="flex items-center leading-none mb-2.5">
-                  <span className="text-2xl sm:text-3xl lg:text-[34px] font-black text-[#08165B] dark:text-white tracking-tight">
-                    GlobalHealth
-                  </span>
-                  <span className="text-2xl sm:text-3xl lg:text-[34px] font-black text-[#F04B0A] tracking-tight">
-                    AI
-                  </span>
-                  <span className="text-xs sm:text-base font-bold text-[#F04B0A] ml-1 align-super">™</span>
+            {/* Mobile View (< 640px): Large doctor portrait & crystal-clear credentials matching user reference */}
+            <div className="sm:hidden w-full space-y-3">
+              <div className="w-full bg-white rounded-3xl p-4 border border-emerald-950/10 shadow-sm space-y-3.5">
+                {/* Large Doctor Portrait */}
+                <div className="relative w-full rounded-2xl overflow-hidden border border-slate-200/90 shadow-sm bg-slate-100">
+                  <img
+                    src="/assets/dr_pratap_user_card_photo.jpg"
+                    alt="Dr Pratap Madhukar - Senior Physician"
+                    className="w-full h-auto object-cover object-center"
+                    style={{ imageRendering: '-webkit-optimize-contrast' }}
+                    loading="eager"
+                  />
                 </div>
 
-                {/* Headline */}
-                <h1 className="text-lg sm:text-xl lg:text-[23px] xl:text-[25px] font-black text-[#08165B] dark:text-white tracking-tight leading-snug">
-                  Know Your Symptoms. Understand the Possibilities.
-                </h1>
-                <h2 className="text-lg sm:text-xl lg:text-[23px] xl:text-[25px] font-black tracking-tight leading-snug mb-2 sm:mb-2.5">
-                  <span className="text-[#F04B0A]">Recognise Danger.</span>{' '}
-                  <span className="text-[#08165B] dark:text-white">Take the Next Safe Step.</span>
-                </h2>
-
-                {/* Subtext */}
-                <p className="text-xs sm:text-[13px] lg:text-[13.5px] text-slate-700 dark:text-slate-200 font-medium leading-relaxed max-w-[560px] mb-3.5 sm:mb-4.5">
-                  A physician-curated, AI-powered symptom education platform with 1,000 clinically reviewed cards from 38 years of experience. Clear, practical and reliable guidance for you and your family.
-                </p>
-              </div>
-
-              {/* Badges & Doctor Card Area */}
-              <div className="max-w-[700px] xl:max-w-[760px]">
-
-                {/* 5 Feature Badges (Bottom-Left Row): Clean responsive grid on tablet/desktop */}
-                <div className="grid grid-cols-3 lg:grid-cols-5 gap-2">
-                  {highlights.map((item, idx) => {
-                    const Icon = item.icon;
-                    return (
-                      <div
-                        key={idx}
-                        className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-xl bg-white/95 dark:bg-[#0F1C36]/95 backdrop-blur-md border border-[#D6E6FA] dark:border-slate-700 shadow-2xs hover:shadow-xs transition-all duration-200"
-                      >
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#F04B0A] flex items-center justify-center text-[#F04B0A] shrink-0 bg-orange-50/70 dark:bg-orange-950/50">
-                          <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.2]" />
-                        </div>
-
-                        <div className="min-w-0 leading-tight">
-                          <div className="text-[9.5px] sm:text-[10px] font-black text-[#08165B] dark:text-white leading-tight line-clamp-1">
-                            {item.title}
-                          </div>
-                          <div className="text-[8px] sm:text-[8.5px] text-slate-600 dark:text-slate-300 font-medium leading-tight line-clamp-2">
-                            {item.desc}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Doctor Info Card: Anchored directly over the doctor's lower torso inside the hero card */}
-                <div className="absolute right-5 md:right-7 lg:right-9 bottom-5 md:bottom-6 z-20">
-                  <div className="flex items-center gap-2.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-white/95 dark:bg-[#0F1C36]/95 backdrop-blur-md border border-[#D6E6FA] dark:border-slate-700 shadow-md sm:shadow-lg hover:shadow-xl transition-all">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#08165B] to-[#1677E8] text-white flex items-center justify-center shadow-xs shrink-0">
-                      <Stethoscope className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="text-left leading-tight">
-                      <div className="text-xs sm:text-[13px] font-black text-[#08165B] dark:text-white">
-                        Dr Pratap Madhukar
-                      </div>
-                      <div className="text-[10px] sm:text-[10.5px] font-semibold text-[#1677E8] dark:text-blue-400 mt-0.5">
-                        Physician • Clinical Editor
-                      </div>
-                      <div className="text-[8.5px] sm:text-[9px] font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 mt-0.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                        <span>38 Years of Experience</span>
-                      </div>
-                    </div>
+                {/* Readable Credentials Badge */}
+                <div className="text-left space-y-1.5 px-1">
+                  <div className="flex items-center justify-between gap-1 flex-wrap">
+                    <h3 className="text-xl font-black text-[#8B0000] tracking-tight">
+                      {FOUNDER_INFO.name}
+                    </h3>
+                    <span className="px-2.5 py-1 rounded-full bg-[#FDE047] text-slate-900 text-xs font-black border border-amber-300">
+                      {FOUNDER_INFO.experience}
+                    </span>
                   </div>
+                  <p className="text-sm font-bold text-slate-800">
+                    {FOUNDER_INFO.role}
+                  </p>
+                  <p className="text-xs font-semibold text-slate-600 leading-snug">
+                    {FOUNDER_INFO.credentials}
+                  </p>
                 </div>
-
               </div>
-
             </div>
+
           </div>
 
         </div>
 
       </div>
-
     </section>
   );
 }

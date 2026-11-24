@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
-import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import React from 'react';
 
-class ErrorBoundary extends Component {
+/**
+ * GlobalHealthAI - Robust Application Error Boundary
+ * Prevents blank white screens by intercepting runtime crashes,
+ * logging diagnostics, and presenting an intuitive recovery interface.
+ */
+export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,22 +21,20 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     this.setState({ errorInfo });
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    console.error('[GlobalHealthAI ErrorBoundary] Caught uncaught error:', error, errorInfo);
   }
-
-  handleReset = () => {
-    this.setState({
-      hasError: false,
-      error: null,
-      errorInfo: null,
-    });
-  };
 
   handleReload = () => {
     window.location.reload();
   };
 
-  handleGoHome = () => {
+  handleResetSession = () => {
+    try {
+      localStorage.removeItem('globalhealth_auth');
+      localStorage.removeItem('globalhealth_history');
+    } catch {
+      // ignore
+    }
     window.location.href = '/';
   };
 
@@ -43,59 +45,68 @@ class ErrorBoundary extends Component {
           ? this.props.fallback({
               error: this.state.error,
               errorInfo: this.state.errorInfo,
-              resetError: this.handleReset,
+              resetError: () => this.setState({ hasError: false, error: null, errorInfo: null }),
             })
           : this.props.fallback;
       }
 
+      const errorMessage = this.state.error?.message || 'An unexpected client error occurred.';
+      const componentStack = this.state.errorInfo?.componentStack || '';
+
       return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
-          <div className="max-w-lg w-full bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-8 text-center">
-            <div className="w-16 h-16 bg-red-100 dark:bg-red-950/50 rounded-full flex items-center justify-center mx-auto mb-5 text-red-600 dark:text-red-400">
-              <AlertTriangle className="w-8 h-8" />
+        <div className="min-h-screen w-full bg-[#F2F7FF] dark:bg-[#080D1A] flex items-center justify-center p-4 font-sans text-slate-800 dark:text-slate-100 antialiased">
+          <div className="max-w-lg w-full bg-white dark:bg-[#0F172A] rounded-2xl shadow-xl border border-blue-100 dark:border-slate-800 p-6 sm:p-8 space-y-6 text-center">
+
+            {/* Brand Logo */}
+            <div className="flex items-center justify-center gap-1.5 select-none">
+              <span className="text-[22px] font-black text-[#08165B] dark:text-white tracking-tight">GlobalHealth</span>
+              <span className="text-[22px] font-black text-[#F04B0A] tracking-tight">AI</span>
+              <span className="text-[11px] font-bold text-[#F04B0A] align-super">™</span>
             </div>
 
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-              Something went wrong
-            </h1>
-            <p className="text-slate-600 dark:text-slate-300 text-sm mb-6 leading-relaxed">
-              An unexpected application error occurred. You can reload the page or return to the homepage.
-            </p>
+            {/* Error Icon Badge */}
+            <div className="w-16 h-16 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
 
-            {this.state.error && (
-              <div className="mb-6 text-left">
-                <details className="bg-slate-100 dark:bg-slate-900/80 rounded-lg p-3 text-xs text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                  <summary className="font-semibold cursor-pointer text-slate-800 dark:text-slate-200 mb-1">
-                    Error details
-                  </summary>
-                  <p className="font-mono text-red-600 dark:text-red-400 break-words mt-1">
-                    {this.state.error.toString()}
-                  </p>
-                  {this.state.errorInfo?.componentStack && (
-                    <pre className="mt-2 overflow-x-auto text-[11px] text-slate-500 dark:text-slate-400 max-h-40">
-                      {this.state.errorInfo.componentStack}
-                    </pre>
-                  )}
-                </details>
-              </div>
-            )}
+            {/* Title & Description */}
+            <div className="space-y-2">
+              <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                Application Recovery
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                We encountered an unexpected interface issue. Your patient records and session data remain safe. You can reload the page or return to the main home screen.
+              </p>
+            </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button
                 onClick={this.handleReload}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-medium text-sm transition-colors shadow-sm"
+                className="flex-1 py-3 px-4 rounded-xl bg-[#1677E8] hover:bg-[#115fc4] text-white font-semibold text-xs sm:text-sm shadow-sm transition-all duration-150 cursor-pointer flex items-center justify-center gap-2"
               >
-                <RefreshCw className="w-4 h-4" />
-                Reload Application
+                Reload Page
               </button>
               <button
-                onClick={this.handleGoHome}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium text-sm transition-colors"
+                onClick={this.handleResetSession}
+                className="flex-1 py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs sm:text-sm transition-all duration-150 cursor-pointer flex items-center justify-center gap-2"
               >
-                <Home className="w-4 h-4" />
-                Return Home
+                Return to Home
               </button>
             </div>
+
+            {/* Diagnostic Details (Collapsible) */}
+            <details className="text-left text-xs bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400">
+              <summary className="cursor-pointer font-medium text-slate-700 dark:text-slate-300 select-none outline-none">
+                Technical Diagnostics (Click to view)
+              </summary>
+              <div className="mt-2 space-y-1 font-mono text-[11px] overflow-x-auto whitespace-pre-wrap max-h-32 p-2 bg-white dark:bg-slate-950 rounded border border-slate-100 dark:border-slate-800 text-red-600 dark:text-red-400">
+                <p><strong>Error:</strong> {errorMessage}</p>
+                {componentStack && <p className="mt-1 text-slate-500 dark:text-slate-400">{componentStack}</p>}
+              </div>
+            </details>
           </div>
         </div>
       );
@@ -106,4 +117,3 @@ class ErrorBoundary extends Component {
 }
 
 export { ErrorBoundary };
-export default ErrorBoundary;
