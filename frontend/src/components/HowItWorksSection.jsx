@@ -8,8 +8,11 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { BRAND } from '../config/brand';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function HowItWorksSection({ onStartAssessment }) {
+  const { currentLang, t } = useLanguage();
+
   return (
     <section id="how-it-works" className="py-16 sm:py-20 lg:py-24 bg-[#F4F9F6] border-y border-emerald-950/10 scroll-mt-20">
       <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
@@ -18,13 +21,13 @@ export default function HowItWorksSection({ onStartAssessment }) {
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-emerald-200 text-xs sm:text-sm font-bold text-[#0D5C3A] shadow-2xs">
             <ShieldCheck className="w-4 h-4 text-[#0D5C3A]" />
-            <span>Clinical Intelligence Architecture</span>
+            <span>{t('howItWorks', 'badge', 'Clinical Intelligence Architecture')}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
-            How {BRAND.name}™ Works
+            {t('howItWorks', 'title', `How ${BRAND.name}™ Works`)}
           </h2>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
-            A transparent, 3-step clinical process designed to transform symptom uncertainty into calm, evidence-based guidance.
+            {t('howItWorks', 'subtitle', 'A transparent, 3-step clinical process designed to transform symptom uncertainty into calm, evidence-based guidance.')}
           </p>
         </div>
 
@@ -37,7 +40,7 @@ export default function HowItWorksSection({ onStartAssessment }) {
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-black text-emerald-300 tracking-tight font-mono">01</span>
                 <span className="text-xs font-black px-3 py-1 rounded-full border bg-[#EBF5F0] border-emerald-200 text-[#0D5C3A]">
-                  Text, Voice or Report
+                  {t('howItWorks', 'step1Tag', 'Text, Voice or Report')}
                 </span>
               </div>
 
@@ -47,13 +50,13 @@ export default function HowItWorksSection({ onStartAssessment }) {
 
               <div className="space-y-2">
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                  Describe Your Symptoms
+                  {t('howItWorks', 'step1Title', 'Describe Your Symptoms')}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  <strong>What it does:</strong> Accepts natural descriptions in plain English or 5 regional languages. Supports speech dictation and PDF/image report parsing.
+                  {t('howItWorks', 'step1What', 'What it does: Accepts natural descriptions in plain English or 5 regional languages. Supports speech dictation and PDF/image report parsing.')}
                 </p>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  <strong>Patient benefit:</strong> No confusing medical terms required. Speak or type freely as you would to a trusted family doctor.
+                  {t('howItWorks', 'step1Benefit', 'Patient benefit: No confusing medical terms required. Speak or type freely as you would to a trusted family doctor.')}
                 </p>
               </div>
 
@@ -88,7 +91,7 @@ export default function HowItWorksSection({ onStartAssessment }) {
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-black text-teal-300 tracking-tight font-mono">02</span>
                 <span className="text-xs font-black px-3 py-1 rounded-full border bg-[#F0FDFA] border-teal-200 text-[#0F766E]">
-                  Evidence-Based Triage
+                  {t('howItWorks', 'step2Tag', 'Co-Intelligence AI')}
                 </span>
               </div>
 
@@ -98,13 +101,13 @@ export default function HowItWorksSection({ onStartAssessment }) {
 
               <div className="space-y-2">
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                  Clinical Risk Stratification
+                  {t('howItWorks', 'step2Title', 'AI Clinical Triaging & Matching')}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  <strong>What it does:</strong> Cross-references symptoms against 1,000+ conditions curated by Dr. Pratap Madhukar and international ICMR/WHO triage criteria.
+                  {t('howItWorks', 'step2What', 'What it does: Cross-references symptoms against 1,000+ conditions curated by Dr. Pratap Madhukar and international ICMR/WHO triage criteria.')}
                 </p>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  <strong>Patient benefit:</strong> Instant certainty on whether symptoms represent an emergency (Red), need a doctor within 24–48h (Yellow), or allow safe self-care (Green).
+                  {t('howItWorks', 'step2Benefit', 'Patient benefit: Instant certainty on whether symptoms represent an emergency (Red), need a doctor within 24–48h (Yellow), or allow safe self-care (Green).')}
                 </p>
               </div>
 
@@ -142,7 +145,7 @@ export default function HowItWorksSection({ onStartAssessment }) {
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-black text-emerald-300 tracking-tight font-mono">03</span>
                 <span className="text-xs font-black px-3 py-1 rounded-full border bg-[#EBF5F0] border-emerald-200 text-[#0D5C3A]">
-                  Doctor & Family Ready
+                  {t('howItWorks', 'step3Tag', 'Evidence Guidance')}
                 </span>
               </div>
 
@@ -152,13 +155,13 @@ export default function HowItWorksSection({ onStartAssessment }) {
 
               <div className="space-y-2">
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                  Clear Actionable Next Steps
+                  {t('howItWorks', 'step3Title', 'Clear Actionable Next Steps')}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  <strong>What it does:</strong> Produces a concise (~100 words) clinical briefing, supportive home-care steps, harmful actions to avoid, and doctor consultation checklists.
+                  {t('howItWorks', 'step3What', 'What it does: Produces a concise (~100 words) clinical briefing, supportive home-care steps, harmful actions to avoid, and doctor consultation checklists.')}
                 </p>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  <strong>Patient benefit:</strong> Saves valuable time in the doctor's office and prevents risky self-medication errors before appointment.
+                  {t('howItWorks', 'step3Benefit', 'Patient benefit: Saves valuable time in the doctor\'s office and prevents risky self-medication errors before appointment.')}
                 </p>
               </div>
 

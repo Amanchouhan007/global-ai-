@@ -215,14 +215,14 @@ export default function DraggableDisclaimerBox({
             <GripVertical className="w-4 h-4 text-emerald-300 shrink-0 opacity-80" />
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-300 shrink-0" />
-              <span className="text-xs font-black tracking-tight">DPDP & Clinical Safety</span>
+              <span className="text-xs font-black tracking-tight">{t('draggableDisclaimer', 'gripTitle', 'DPDP & Clinical Safety')}</span>
             </div>
           </div>
 
           <div className="flex items-center gap-1">
             {/* Drag hint badge */}
             <span className="hidden sm:inline-block text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/15 text-emerald-200">
-              Drag Me
+              {t('draggableDisclaimer', 'dragMe', 'Drag Me')}
             </span>
 
             {/* Expand / Minimize Toggle */}
@@ -258,20 +258,20 @@ export default function DraggableDisclaimerBox({
             <div className="flex items-start gap-2 text-slate-700">
               <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
               <p className="leading-snug text-[11px] text-slate-600 font-medium">
-                <strong>Educational Triage Only:</strong> Under {FOUNDER_INFO.name} ({FOUNDER_INFO.experience}). Zero server tracking under India's <strong>DPDP Act 2023</strong>.
+                {t('draggableDisclaimer', 'summary', `Educational Triage Only: Under ${FOUNDER_INFO.name} (${FOUNDER_INFO.experience}). Zero server tracking under India's DPDP Act 2023.`)}
               </p>
             </div>
 
             <div className="flex items-center justify-between pt-1 border-t border-emerald-950/10">
               <span className="text-[10px] font-bold text-rose-600">
-                Emergency: Call 108 / 112
+                {t('draggableDisclaimer', 'emergency', 'Emergency: Call 108 / 112')}
               </span>
               <button
                 type="button"
                 onClick={() => setIsExpanded(true)}
                 className="text-[11px] font-black text-[#0D5C3A] hover:underline cursor-pointer"
               >
-                Read DPDP Terms →
+                {t('draggableDisclaimer', 'readTerms', 'Read DPDP Terms →')}
               </button>
             </div>
           </div>
@@ -334,7 +334,7 @@ export default function DraggableDisclaimerBox({
                 title="Immediately erase all local symptom search caches"
               >
                 <Trash2 className="w-3.5 h-3.5 text-rose-600" />
-                <span>DPDP Right to Erasure: Purge Local Session Data</span>
+                <span>{t('draggableDisclaimer', 'purgeBtn', 'DPDP Right to Erasure: Purge Local Session Data')}</span>
               </button>
 
               <button
@@ -345,7 +345,7 @@ export default function DraggableDisclaimerBox({
                 }}
                 className="w-full py-2 px-3 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
               >
-                Acknowledge & Collapse (Keep Draggable)
+                {t('draggableDisclaimer', 'ackBtn', 'Acknowledge & Collapse (Keep Draggable)')}
               </button>
             </div>
 

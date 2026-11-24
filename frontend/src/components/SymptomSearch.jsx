@@ -289,7 +289,7 @@ export default function SymptomSearch({ onSearch }) {
         <div className="pt-2 text-left space-y-2 border-t border-pink-200/60">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-600">
             <Sparkles className="w-3.5 h-3.5 text-[#D81B60]" />
-            <span>Frequent Clinical Inquiries (Click to Evaluate):</span>
+            <span>{t('insights', 'frequentTitle', 'Frequent Clinical Inquiries (Click to Evaluate):')}</span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {[

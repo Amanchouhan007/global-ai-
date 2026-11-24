@@ -9,61 +9,63 @@ import {
   Stethoscope
 } from 'lucide-react';
 import { BRAND } from '../config/brand';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function RiskLevelsSection({ onStartAssessment }) {
+  const { currentLang, t } = useLanguage();
   const [activeSeverityTab, setActiveSeverityTab] = useState('YELLOW');
 
   const severityData = {
     RED: {
-      title: 'Red — Immediate Emergency Action',
-      badge: 'Critical Red-Flag Emergency',
+      title: t('risk', 'redTitle', 'Red — Immediate Emergency Action'),
+      badge: t('risk', 'redBadge', 'Critical Red-Flag Emergency'),
       color: 'text-red-700',
       bgColor: 'bg-red-50',
       borderColor: 'border-red-200',
       tagColor: 'bg-red-600 text-white',
-      definition: 'Life-threatening or time-sensitive physiological conditions requiring immediate hospital evaluation.',
-      sampleCondition: 'Acute Crushing Chest Pain with Shortness of Breath',
+      definition: t('risk', 'redDef', 'Life-threatening or time-sensitive physiological conditions requiring immediate hospital evaluation.'),
+      sampleCondition: t('risk', 'redSample', 'Acute Crushing Chest Pain with Shortness of Breath'),
       signs: [
         'Sudden, severe chest pressure or radiation to arm/jaw',
         'Acute difficulty breathing or cyanosis (blue lips)',
         'Sudden weakness, facial droop, or slurred speech (FAST signs)',
         'Uncontrolled bleeding, severe trauma, or loss of consciousness'
       ],
-      action: 'Call emergency medical services (108 in India / 911 in US) or go to the nearest emergency department immediately. Do not attempt to drive yourself.'
+      action: t('risk', 'redAction', 'Call emergency medical services (108 in India / 911 in US) or go to the nearest emergency department immediately. Do not attempt to drive yourself.')
     },
     YELLOW: {
-      title: 'Yellow — Clinical Doctor Consultation (24–48h)',
-      badge: 'Moderate Caution / Medical Review',
+      title: t('risk', 'yellowTitle', 'Yellow — Clinical Doctor Consultation (24–48h)'),
+      badge: t('risk', 'yellowBadge', 'Moderate Caution / Medical Review'),
       color: 'text-amber-800',
       bgColor: 'bg-amber-50',
       borderColor: 'border-amber-200',
       tagColor: 'bg-amber-500 text-white',
-      definition: 'Sub-acute symptoms requiring physical examination, lab tests, or prescription medications by a licensed clinician.',
-      sampleCondition: 'Persistent High Fever with Productive Cough (> 3 Days)',
+      definition: t('risk', 'yellowDef', 'Sub-acute symptoms requiring physical examination, lab tests, or prescription medications by a licensed clinician.'),
+      sampleCondition: t('risk', 'yellowSample', 'Persistent High Fever with Productive Cough (> 3 Days)'),
       signs: [
         'Fever exceeding 101°F (38.3°C) that persists past 72 hours',
         'Unexplained weight loss or severe nocturnal sweating',
         'Persistent abdominal pain or inability to retain fluids',
         'Worsening chronic condition flare-up (asthma, hypertension, diabetes)'
       ],
-      action: 'Schedule an in-person consultation with a qualified general practitioner or relevant specialist within 24 to 48 hours for clinical evaluation and diagnostics.'
+      action: t('risk', 'yellowAction', 'Schedule an in-person consultation with a qualified general practitioner or relevant specialist within 24 to 48 hours for clinical evaluation and diagnostics.')
     },
     GREEN: {
-      title: 'Green — Safe Self-Care & Observation',
-      badge: 'Low Urgency / Home Supportive Care',
+      title: t('risk', 'greenTitle', 'Green — Safe Self-Care & Observation'),
+      badge: t('risk', 'greenBadge', 'Low Urgency / Home Supportive Care'),
       color: 'text-emerald-800',
       bgColor: 'bg-[#EBF5F0]',
       borderColor: 'border-emerald-200',
       tagColor: 'bg-[#0D5C3A] text-white',
-      definition: 'Mild, self-limiting symptoms that typically resolve with rest, balanced hydration, and gentle home supportive care.',
-      sampleCondition: 'Mild Tension Headache or Seasonal Runny Nose',
+      definition: t('risk', 'greenDef', 'Mild, self-limiting symptoms that typically resolve with rest, balanced hydration, and gentle home supportive care.'),
+      sampleCondition: t('risk', 'greenSample', 'Mild Tension Headache or Seasonal Runny Nose'),
       signs: [
         'Mild nasal congestion without facial pain or high fever',
         'Transient muscle fatigue after exercise with normal vital signs',
         'Occasional acid reflux after a heavy meal without weight loss',
         'Minor superficial scratches or bruises without swelling'
       ],
-      action: 'Maintain hydration, prioritize 7–8 hours of restorative sleep, and monitor symptoms. If symptoms fail to improve or worsen after 48–72 hours, consult a physician.'
+      action: t('risk', 'greenAction', 'Maintain hydration, prioritize 7–8 hours of restorative sleep, and monitor symptoms. If symptoms fail to improve or worsen after 48–72 hours, consult a physician.')
     }
   };
 
@@ -77,13 +79,13 @@ export default function RiskLevelsSection({ onStartAssessment }) {
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-emerald-200 text-xs sm:text-sm font-bold text-[#0D5C3A] shadow-2xs">
             <ShieldCheck className="w-4 h-4 text-[#0D5C3A]" />
-            <span>Clinical Triage Architecture</span>
+            <span>{t('risk', 'badge', 'Clinical Triage Architecture')}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
-            Understanding Your Risk Level: Red, Yellow & Green
+            {t('risk', 'title', 'Understanding Your Risk Level: Red, Yellow & Green')}
           </h2>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
-            Every clinical decision rule in {BRAND.name}™ is calibrated to provide immediate clarity on symptom urgency and eliminate diagnostic hesitation.
+            {t('risk', 'subtitle', `Every clinical decision rule in ${BRAND.name}™ is calibrated to provide immediate clarity on symptom urgency and eliminate diagnostic hesitation.`)}
           </p>
         </div>
 
@@ -99,7 +101,7 @@ export default function RiskLevelsSection({ onStartAssessment }) {
             }`}
           >
             <Siren className="w-4 h-4" />
-            <span>Red — Emergency</span>
+            <span>{t('risk', 'tabRed', 'Red: Emergency')}</span>
           </button>
 
           <button
@@ -112,7 +114,7 @@ export default function RiskLevelsSection({ onStartAssessment }) {
             }`}
           >
             <Clock className="w-4 h-4" />
-            <span>Yellow — Doctor in 24–48h</span>
+            <span>{t('risk', 'tabYellow', 'Yellow: Doctor in 24–48h')}</span>
           </button>
 
           <button
@@ -125,7 +127,7 @@ export default function RiskLevelsSection({ onStartAssessment }) {
             }`}
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>Green — Safe Self-Care</span>
+            <span>{t('risk', 'tabGreen', 'Green: Safe Self-Care')}</span>
           </button>
         </div>
 

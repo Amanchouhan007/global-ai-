@@ -35,14 +35,14 @@ export default function ExploreCategories({ onSelectCategory }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showAllModal]);
 
-  // Exact 10 Categories with Rich Clinical Descriptions & Topic Counts
+  // Exact 10 Categories with Rich Clinical Descriptions & Topic Counts (Fully Dynamic across 6 Languages)
   const clientCategories = [
     // Row 1
     {
       id: 'symptoms',
-      title: t('categories', 'mySymptoms', 'My Symptoms'),
-      badge: '1,000+ Health Cards',
-      desc: 'Immediate emergency triage, red-flag detection, and 1,000+ acute clinical symptom checklists.',
+      title: t('categories', 'symptomsTitle', 'My Symptoms'),
+      badge: t('categories', 'symptomsBadge', '1,000+ Health Cards'),
+      desc: t('categories', 'symptomsDesc', 'Immediate emergency triage, red-flag detection, and 1,000+ acute clinical symptom checklists.'),
       tags: ['Headache', 'Chest Pain', 'Fever', 'Cough'],
       textColor: 'text-[#BE185D]',
       borderColor: 'border-[#D81B60]/40',
@@ -54,9 +54,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     },
     {
       id: 'personal-health',
-      title: t('categories', 'myPersonalHealth', 'My Personal Health'),
-      badge: '85+ Clinical Guides',
-      desc: 'Vitals regulation, blood pressure, diabetes metrics, and preventive longevity care.',
+      title: t('categories', 'personalHealthTitle', 'My Personal Health'),
+      badge: t('categories', 'personalHealthBadge', '85+ Clinical Guides'),
+      desc: t('categories', 'personalHealthDesc', 'Vitals regulation, blood pressure, diabetes metrics, and preventive longevity care.'),
       tags: ['Hypertension', 'Sugar / HbA1c', 'Thyroid', 'Lipids'],
       textColor: 'text-[#0D5C3A]',
       borderColor: 'border-emerald-200/90',
@@ -67,9 +67,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     },
     {
       id: 'family',
-      title: t('categories', 'myFamily', 'My Family'),
-      badge: '95+ Family Topics',
-      desc: 'Multigenerational family health, senior citizen care, and infection safety.',
+      title: t('categories', 'familyTitle', 'My Family'),
+      badge: t('categories', 'familyBadge', '95+ Family Topics'),
+      desc: t('categories', 'familyDesc', 'Multigenerational family health, senior citizen care, and infection safety.'),
       tags: ['Elderly Care', 'Seasonal Flu', 'Joint Care', 'Immunity'],
       textColor: 'text-[#0D5C3A]',
       borderColor: 'border-emerald-200/80',
@@ -80,9 +80,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     },
     {
       id: 'parenting',
-      title: t('categories', 'myParenting', 'My Parenting'),
-      badge: '70+ Pediatric Topics',
-      desc: 'Infant growth milestones, pediatric fevers, childhood rashes, and safe child care.',
+      title: t('categories', 'parentingTitle', 'My Parenting'),
+      badge: t('categories', 'parentingBadge', '70+ Pediatric Topics'),
+      desc: t('categories', 'parentingDesc', 'Infant growth milestones, pediatric fevers, childhood rashes, and safe child care.'),
       tags: ['Baby Fever', 'Teething', 'Colic', 'Growth'],
       textColor: 'text-[#0F766E]',
       borderColor: 'border-teal-200/80',
@@ -93,9 +93,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     },
     {
       id: 'food-nutrition',
-      title: t('categories', 'myFood', 'My Food'),
-      badge: '110+ Diet Guides',
-      desc: 'Therapeutic meal planning, gut microbiome, balanced nutrients, and diabetic diets.',
+      title: t('categories', 'foodTitle', 'My Food'),
+      badge: t('categories', 'foodBadge', '110+ Diet Guides'),
+      desc: t('categories', 'foodDesc', 'Therapeutic meal planning, gut microbiome, balanced nutrients, and diabetic diets.'),
       tags: ['Low-Sodium', 'High-Fiber', 'Gut Health', 'Anemia'],
       textColor: 'text-[#0D5C3A]',
       borderColor: 'border-emerald-200/80',
@@ -107,9 +107,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     // Row 2
     {
       id: 'mind-emotions',
-      title: t('categories', 'myMind', 'My Mind'),
-      badge: '60+ Mental Health Topics',
-      desc: 'Cognitive wellness, anxiety coping mechanisms, burnout relief, and mood balance.',
+      title: t('categories', 'mindTitle', 'My Mind'),
+      badge: t('categories', 'mindBadge', '60+ Mental Health Topics'),
+      desc: t('categories', 'mindDesc', 'Cognitive wellness, anxiety coping mechanisms, burnout relief, and mood balance.'),
       tags: ['Anxiety', 'Burnout', 'Panic Symptoms', 'Focus'],
       textColor: 'text-[#0D5C3A]',
       borderColor: 'border-emerald-200/80',
@@ -120,9 +120,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     },
     {
       id: 'sleep',
-      title: t('categories', 'mySleep', 'My Sleep'),
-      badge: '45+ Sleep Protocols',
-      desc: 'Circadian rhythm stabilization, insomnia mitigation, and sleep apnea protocols.',
+      title: t('categories', 'sleepTitle', 'My Sleep'),
+      badge: t('categories', 'sleepBadge', '45+ Sleep Protocols'),
+      desc: t('categories', 'sleepDesc', 'Circadian rhythm stabilization, insomnia mitigation, and sleep apnea protocols.'),
       tags: ['Insomnia', 'Snoring / Apnea', 'Sleep Hygiene', 'REM'],
       textColor: 'text-[#0F766E]',
       borderColor: 'border-teal-200/80',
@@ -133,9 +133,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     },
     {
       id: 'beauty',
-      title: t('categories', 'myBeauty', 'My Beauty'),
-      badge: '65+ Dermatology Topics',
-      desc: 'Clinical dermatology, skin barrier health, acne treatment, and scalp wellness.',
+      title: t('categories', 'beautyTitle', 'My Beauty'),
+      badge: t('categories', 'beautyBadge', '65+ Dermatology Topics'),
+      desc: t('categories', 'beautyDesc', 'Clinical dermatology, skin barrier health, acne treatment, and scalp wellness.'),
       tags: ['Acne', 'Eczema', 'Hair Fall', 'Sun Care'],
       textColor: 'text-[#0D5C3A]',
       borderColor: 'border-pink-200/70',
@@ -146,9 +146,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     },
     {
       id: 'medicine-tests',
-      title: t('categories', 'myLabTests', 'My Lab Tests'),
-      badge: '150+ Lab Explanations',
-      desc: 'Decoding CBC, lipid profile, liver function, and diagnostic biomarker ranges.',
+      title: t('categories', 'labTestsTitle', 'My Lab Tests'),
+      badge: t('categories', 'labTestsBadge', '150+ Lab Explanations'),
+      desc: t('categories', 'labTestsDesc', 'Decoding CBC, lipid profile, liver function, and diagnostic biomarker ranges.'),
       tags: ['CBC Panel', 'Lipid Profile', 'HbA1c', 'LFT / KFT'],
       textColor: 'text-[#0D5C3A]',
       borderColor: 'border-emerald-200/90',
@@ -159,9 +159,9 @@ export default function ExploreCategories({ onSelectCategory }) {
     },
     {
       id: 'medicines',
-      title: t('categories', 'myMedicines', 'My Medicines'),
-      badge: '200+ Drug Overviews',
-      desc: 'Medication usage rules, potential interactions, common side effects, and safety.',
+      title: t('categories', 'medicinesTitle', 'My Medicines'),
+      badge: t('categories', 'medicinesBadge', '200+ Drug Overviews'),
+      desc: t('categories', 'medicinesDesc', 'Medication usage rules, potential interactions, common side effects, and safety.'),
       tags: ['Paracetamol', 'Antibiotics', 'Antacids', 'Safety'],
       textColor: 'text-[#0D5C3A]',
       borderColor: 'border-emerald-200/90',
@@ -203,7 +203,7 @@ export default function ExploreCategories({ onSelectCategory }) {
             <LayoutGrid className="w-4 h-4 sm:w-4.5 sm:h-4.5 stroke-[2.4]" />
           </div>
           <h2 className="text-base sm:text-lg lg:text-xl font-black text-slate-900 tracking-tight">
-            Explore by Category
+            {t('categories', 'title', 'Explore by Category')}
           </h2>
         </div>
 
@@ -275,7 +275,7 @@ export default function ExploreCategories({ onSelectCategory }) {
               {/* Bottom Action Strip */}
               <div className="pt-2 sm:pt-3 border-t border-black/5 flex items-center justify-between text-left mt-2">
                 <span className={`text-[11px] sm:text-xs font-black ${cat.textColor} group-hover:underline`}>
-                  Browse Topics
+                  {t('categories', 'browseTopics', 'Browse Topics')}
                 </span>
                 <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white border ${cat.arrowBorder} flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-110 transition-transform`}>
                   <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />

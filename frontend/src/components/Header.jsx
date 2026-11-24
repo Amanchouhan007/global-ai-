@@ -260,6 +260,7 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
                   {supportedLanguages.map(l => (
                     <button
                       key={l.code}
+                      data-lang={l.code}
                       onClick={() => {
                         setLanguage(l.code);
                         setLangDropdownOpen(false);

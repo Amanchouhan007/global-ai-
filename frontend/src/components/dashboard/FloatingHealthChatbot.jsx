@@ -35,6 +35,7 @@ import {
   detectEmergencyRedFlags,
   HEALTH_CATEGORIES
 } from '../../data/healthKnowledgeBase';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function FloatingHealthChatbot({
   user,
@@ -42,6 +43,7 @@ export default function FloatingHealthChatbot({
   inline = false,
   onStartAssessment
 }) {
+  const { currentLang, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -636,7 +638,7 @@ export default function FloatingHealthChatbot({
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={isListening ? "Listening... Speak now..." : "Ask Dr. Pratap AI: Describe any symptom or query..."}
+          placeholder={isListening ? "Listening... Speak now..." : t('chat', 'placeholder', "Ask Dr. Pratap AI: Describe any symptom or query...")}
           className="flex-1 bg-transparent px-2 py-1 text-xs text-slate-900 placeholder-slate-400 focus:outline-none"
         />
 
@@ -657,7 +659,7 @@ export default function FloatingHealthChatbot({
           className="px-3 py-1.5 rounded-lg bg-[#0D5C3A] hover:bg-[#0A4D30] disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1 transition-all cursor-pointer shrink-0"
           title="Send message"
         >
-          <span>Send</span>
+          <span>{t('chat', 'sendBtn', 'Send')}</span>
           <Send className="w-3 h-3" />
         </button>
       </form>
@@ -770,15 +772,15 @@ export default function FloatingHealthChatbot({
           <div className="text-center space-y-1">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EBF5F0] border border-emerald-200 text-[10.5px] font-bold text-[#0D5C3A] shadow-2xs">
               <Bot className="w-3 h-3 text-[#0D5C3A]" />
-              <span>AI Co-Intelligence Clinical Chat</span>
+              <span>{t('chat', 'badge', 'AI Co-Intelligence Clinical Chat')}</span>
             </div>
 
             <h2 className="text-lg sm:text-xl lg:text-2xl font-black text-slate-900 tracking-tight">
-              Interactive Clinical Chat Assistant
+              {t('chat', 'title', 'Interactive Clinical Chat Assistant')}
             </h2>
 
             <p className="text-[11px] sm:text-xs text-slate-600 font-medium">
-              Physician-supervised symptom dialogue. Type your symptoms or tap a sample query.
+              {t('chat', 'subtitle', 'Physician-supervised symptom dialogue. Type your symptoms or tap a sample query.')}
             </p>
           </div>
 
@@ -795,14 +797,14 @@ export default function FloatingHealthChatbot({
                 <div>
                   <div className="flex items-center gap-1.5 leading-tight">
                     <h3 className="text-xs font-black tracking-tight">
-                      Dr. Pratap AI Clinical Assistant
+                      {t('chat', 'botName', 'Dr. Pratap AI Clinical Assistant')}
                     </h3>
                     <span className="text-[8.5px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40">
                       Live
                     </span>
                   </div>
                   <p className="text-[9.5px] text-emerald-200/80 font-medium">
-                    Supervised by Dr. Pratap Madhukar • 38 Yrs Experience
+                    {t('chat', 'botStatus', 'Supervised by Dr. Pratap Madhukar • 38 Yrs Experience')}
                   </p>
                 </div>
               </div>

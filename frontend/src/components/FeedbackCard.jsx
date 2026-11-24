@@ -89,10 +89,10 @@ export default function FeedbackCard() {
                 onChange={(e) => setFeedbackType(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:border-[#D81B60]"
               >
-                <option value="clinical">Clinical Accuracy & Clarity</option>
-                <option value="ease">Symptom Checker Ease of Use</option>
-                <option value="translation">Language & Translation Feedback</option>
-                <option value="general">General Suggestion for Dr. Pratap</option>
+                <option value="clinical">{t('feedback', 'optClinical', 'Clinical Accuracy & Clarity')}</option>
+                <option value="ease">{t('feedback', 'optEase', 'Symptom Checker Ease of Use')}</option>
+                <option value="translation">{t('feedback', 'optTranslation', 'Language & Translation Feedback')}</option>
+                <option value="general">{t('feedback', 'optGeneral', 'General Suggestion for Dr. Pratap')}</option>
               </select>
             </div>
 
@@ -136,7 +136,7 @@ export default function FeedbackCard() {
               rows={3}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Tell us what worked well or what health condition you would like covered..."
+              placeholder={t('feedback', 'placeholderMsg', 'Tell us what worked well or what health condition you would like covered...')}
               className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#D81B60]"
             />
           </div>
@@ -150,7 +150,7 @@ export default function FeedbackCard() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@example.com (if you would like a clinical response)"
+              placeholder={t('feedback', 'placeholderEmail', 'name@example.com (if you would like a clinical response)')}
               className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#D81B60]"
             />
           </div>

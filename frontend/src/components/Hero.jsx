@@ -57,14 +57,14 @@ export default function Hero() {
                 {FOUNDER_INFO.name}
               </h3>
               <p className="text-[10.5px] sm:text-[11px] font-bold text-slate-800 leading-snug">
-                {FOUNDER_INFO.role}
+                {t('hero', 'doctorRole', FOUNDER_INFO.role)}
               </p>
               <p className="text-[9.5px] sm:text-[10px] font-medium text-slate-600 leading-tight">
-                {FOUNDER_INFO.credentials}
+                {t('hero', 'doctorCredentials', FOUNDER_INFO.credentials)}
               </p>
               <div className="pt-1">
                 <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFE600] text-slate-900 text-[10px] font-black shadow-2xs">
-                  {FOUNDER_INFO.experience}
+                  {t('hero', 'doctorExperience', FOUNDER_INFO.experience)}
                 </span>
               </div>
             </div>

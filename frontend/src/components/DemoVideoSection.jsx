@@ -4,9 +4,16 @@ import { DEMO_VIDEOS } from '../config/demoVideos';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function DemoVideoSection() {
-  const { currentLang, setLanguage } = useLanguage();
+  const { currentLang, setLanguage, t } = useLanguage();
   const [selectedLang, setSelectedLang] = useState(currentLang || 'EN');
   const [isPlaying, setIsPlaying] = useState(false);
+
+  // Synchronize with global language when switched in header
+  React.useEffect(() => {
+    if (currentLang && DEMO_VIDEOS[currentLang]) {
+      setSelectedLang(currentLang);
+    }
+  }, [currentLang]);
 
   const videoData = DEMO_VIDEOS[selectedLang] || DEMO_VIDEOS.EN;
 
@@ -25,13 +32,13 @@ export default function DemoVideoSection() {
           <div className="space-y-2 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF5F0] text-[#0D5C3A] text-xs sm:text-sm font-bold border border-emerald-200">
               <Video className="w-4 h-4 text-[#0D5C3A]" />
-              <span>Multilingual Clinical Walkthrough</span>
+              <span>{t('videos', 'badge', 'Multilingual Clinical Walkthrough')}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-              Watch Platform Demo in 6 Languages
+              {t('videos', 'title', 'Watch Platform Demo in 6 Languages')}
             </h2>
             <p className="text-xs sm:text-sm md:text-base text-slate-600 font-medium">
-              Select your preferred language to watch the step-by-step symptom assessment walkthrough.
+              {t('videos', 'subtitle', 'Select your preferred language to watch the step-by-step symptom assessment walkthrough.')}
             </p>
           </div>
 

@@ -84,7 +84,7 @@ function MainRouter() {
       if (window.location.hash) {
         try {
           history.replaceState(null, '', '/');
-        } catch (e) {}
+        } catch (e) { }
       }
       window.scrollTo(0, 0);
     }
@@ -112,7 +112,7 @@ function MainRouter() {
           setCurrentPath('/login');
           try {
             window.history.replaceState({}, '', '/login');
-          } catch (e) {}
+          } catch (e) { }
         }
       } else if (path.startsWith('/user') || hash.startsWith('#user')) {
         setCurrentPath('/user/dashboard');
@@ -136,7 +136,7 @@ function MainRouter() {
     if (path === '/') {
       try {
         window.history.pushState({}, '', '/');
-      } catch (e) {}
+      } catch (e) { }
       setCurrentPath('/');
       setInitialSymptom('');
       setInitialCategory(null);
@@ -146,7 +146,7 @@ function MainRouter() {
       if (isUserAdmin()) {
         try {
           window.history.pushState({}, '', path);
-        } catch (e) {}
+        } catch (e) { }
         setCurrentPath('/admin/dashboard');
         setAuthNotice('');
         window.scrollTo(0, 0);
@@ -154,20 +154,20 @@ function MainRouter() {
         setAuthNotice('Admin access restricted. Please sign in with administrator credentials.');
         try {
           window.history.pushState({}, '', '/login');
-        } catch (e) {}
+        } catch (e) { }
         setCurrentPath('/login');
         window.scrollTo(0, 0);
       }
     } else if (path.startsWith('/user')) {
       try {
         window.history.pushState({}, '', path);
-      } catch (e) {}
+      } catch (e) { }
       setCurrentPath('/user/dashboard');
       window.scrollTo(0, 0);
     } else {
       try {
         window.history.pushState({}, '', path);
-      } catch (e) {}
+      } catch (e) { }
       setCurrentPath(path);
       window.scrollTo(0, 0);
     }
@@ -234,16 +234,24 @@ function MainRouter() {
           }}
         />
 
-        {/* 2. Interactive Clinical Chat Assistant */}
+        {/* 2. Symptom Search: main clinical search bar directly under hero matching reference */}
+        <SymptomSearch onSearch={handleSearch} />
+
+        {/* 3. Explore by Category: 10 clinical cards with My Symptoms (1,000+ Health Cards) highlighted */}
+        <ExploreCategories onSelectCategory={handleSelectCategory} />
+
+        {/* 4. Existing Chat Assistant: dedicated, spacious landing page section visible upon scrolling */}
         <ChatAssistantSection
           user={user}
           onStartAssessment={(q) => handleSearch(q || '')}
         />
 
-        {/* 3. Explore by Category: 10 clinical cards with My Symptoms (1,000+ Health Cards) highlighted */}
-        <ExploreCategories onSelectCategory={handleSelectCategory} />
+        {/* 5. Health Cards and clinical guidance */}
+        <div id="health-cards" className="py-12 bg-white border-y border-emerald-950/10 scroll-mt-20 overflow-hidden">
+          <HealthCardShowcase onStartAssessment={() => navigate('/user/dashboard')} />
+        </div>
 
-        {/* 4. How It Works */}
+        {/* 6. How It Works */}
         <HowItWorksSection onStartAssessment={() => navigate('/user/dashboard')} />
 
         {/* 7. Doctor Profile */}
@@ -268,19 +276,25 @@ function MainRouter() {
       </main>
 
       {/* 12. Footer Integration */}
-      <Footer 
+      <Footer
         onOpenDisclaimer={() => setShowDisclaimer(true)}
         onOpenAgeGate={() => setShowAgeGate(true)}
         onNavigate={navigate}
       />
 
-      {/* 13. Attractive DPDP 2023 Draggable Box on Landing Page */}
-      <DraggableDisclaimerBox 
+      {/* 13. Clinical Safety & Governance Disclaimer Modal */}
+      <DisclaimerModal
+        isOpen={showDisclaimer}
+        onClose={() => setShowDisclaimer(false)}
+      />
+
+      {/* 14. Attractive DPDP 2023 Draggable Box on Landing Page */}
+      <DraggableDisclaimerBox
         isOpenExternal={showDisclaimer}
         onCloseExternal={() => setShowDisclaimer(false)}
       />
 
-      <AgeVerificationModal 
+      <AgeVerificationModal
         isOpenManual={showAgeGate}
         onCloseManual={() => setShowAgeGate(false)}
       />
