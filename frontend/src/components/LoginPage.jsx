@@ -20,6 +20,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { BRAND } from '../config/brand';
+import HealthOrbitLogo from './common/HealthOrbitLogo';
 
 export default function LoginPage({ onNavigate, notice }) {
   const { login, loginWithGoogle, register } = useAuth();
@@ -234,16 +235,7 @@ export default function LoginPage({ onNavigate, notice }) {
           
           {/* Brand Logo & Medical Emblem */}
           <div className="flex items-center gap-3 cursor-pointer select-none" onClick={() => onNavigate && onNavigate('/')}>
-            <div className="relative w-10 h-10 flex items-center justify-center shrink-0 drop-shadow-xs">
-              <svg viewBox="0 0 40 40" className="w-10 h-10" fill="none">
-                <circle cx="20" cy="20" r="18" fill="#1677E8" />
-                <path d="M20 2C10.06 2 2 10.06 2 20s8.06 18 18 18 18-8.06 18-18S29.94 2 20 2z" stroke="#08165B" strokeWidth="1.5" />
-                <ellipse cx="20" cy="20" rx="9" ry="18" stroke="#ffffff" strokeWidth="1.2" opacity="0.85" />
-                <line x1="2" y1="20" x2="38" y2="20" stroke="#ffffff" strokeWidth="1.2" opacity="0.85" />
-                <rect x="16" y="8" width="8" height="24" rx="2" fill="#F04B0A" stroke="#ffffff" strokeWidth="1" />
-                <rect x="8" y="16" width="24" height="8" rx="2" fill="#F04B0A" stroke="#ffffff" strokeWidth="1" />
-              </svg>
-            </div>
+            <HealthOrbitLogo className="w-10 h-10 sm:w-11 sm:h-11" idPrefix="login-logo" />
 
             <div className="flex flex-col">
               <div className="flex items-center leading-none">
@@ -364,7 +356,7 @@ export default function LoginPage({ onNavigate, notice }) {
               <p className={`text-xs font-medium mt-0.5 ${
                 isDark ? 'text-slate-400' : 'text-slate-500'
               }`}>
-                Sign in to continue to GlobalHealthAI.
+                Sign in to continue to Health Orbit Pro™.
               </p>
             </div>
 
@@ -651,7 +643,7 @@ export default function LoginPage({ onNavigate, notice }) {
               <p className={`text-xs font-medium mt-0.5 ${
                 isDark ? 'text-slate-400' : 'text-slate-500'
               }`}>
-                Join GlobalHealthAI for verified clinical guidance & triage.
+                Join Health Orbit Pro™ for verified clinical guidance & triage.
               </p>
             </div>
 

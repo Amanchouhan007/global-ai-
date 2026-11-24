@@ -13,6 +13,7 @@ import DPDPSection from './components/DPDPSection';
 import FAQSection from './components/FAQSection';
 import FeedbackCard from './components/FeedbackCard';
 import DisclaimerModal from './components/DisclaimerModal';
+import DraggableDisclaimerBox from './components/DraggableDisclaimerBox';
 import AgeVerificationModal from './components/AgeVerificationModal';
 import LoginPage from './components/LoginPage';
 import UserDashboard from './components/UserDashboard';
@@ -75,31 +76,51 @@ function MainRouter() {
   const [initialCategory, setInitialCategory] = useState(null);
 
   useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    // On root page load or refresh, start at top (y=0) and clear any accidental anchor hash
+    if (window.location.pathname === '/' && (!window.location.hash || (!window.location.hash.startsWith('#admin') && !window.location.hash.startsWith('#user') && !window.location.hash.startsWith('#login')))) {
+      if (window.location.hash) {
+        try {
+          history.replaceState(null, '', '/');
+        } catch (e) {}
+      }
+      window.scrollTo(0, 0);
+    }
     if (window.location.hash.startsWith('#admin') && !isUserAdmin()) {
-      window.location.hash = '#login';
+      window.history.replaceState({}, '', '/login');
+      setCurrentPath('/login');
     }
   }, []);
 
   useEffect(() => {
     const handlePopState = () => {
-      if (window.location.hash.startsWith('#admin')) {
+      const path = window.location.pathname;
+      const hash = window.location.hash;
+
+      if (path.startsWith('/admin') || hash.startsWith('#admin')) {
         if (isUserAdmin()) {
           setCurrentPath('/admin/dashboard');
-          const parts = window.location.hash.split('/');
-          if (parts[1]) setAdminScreen(parts[1]);
+          const parts = (hash.startsWith('#admin/') ? hash : path).split('/');
+          if (parts[parts.length - 1] && parts[parts.length - 1] !== 'dashboard' && parts[parts.length - 1] !== 'admin') {
+            setAdminScreen(parts[parts.length - 1]);
+          }
           setAuthNotice('');
         } else {
           setAuthNotice('Admin access restricted. Please sign in with administrator credentials.');
           setCurrentPath('/login');
-          window.location.hash = '#login';
+          try {
+            window.history.replaceState({}, '', '/login');
+          } catch (e) {}
         }
-      } else if (window.location.hash.startsWith('#user')) {
+      } else if (path.startsWith('/user') || hash.startsWith('#user')) {
         setCurrentPath('/user/dashboard');
-      } else if (window.location.hash.startsWith('#login')) {
+      } else if (path.startsWith('/login') || hash.startsWith('#login')) {
         setCurrentPath('/login');
       } else {
         setAuthNotice('');
-        setCurrentPath(window.location.pathname || '/');
+        setCurrentPath(path || '/');
       }
     };
 
@@ -113,8 +134,9 @@ function MainRouter() {
 
   const navigate = (path) => {
     if (path === '/') {
-      window.location.hash = '';
-      window.history.pushState({}, '', '/');
+      try {
+        window.history.pushState({}, '', '/');
+      } catch (e) {}
       setCurrentPath('/');
       setInitialSymptom('');
       setInitialCategory(null);
@@ -122,25 +144,30 @@ function MainRouter() {
       window.scrollTo(0, 0);
     } else if (path.startsWith('/admin')) {
       if (isUserAdmin()) {
-        window.location.hash = '#admin';
-        window.history.pushState({}, '', path);
+        try {
+          window.history.pushState({}, '', path);
+        } catch (e) {}
         setCurrentPath('/admin/dashboard');
         setAuthNotice('');
         window.scrollTo(0, 0);
       } else {
         setAuthNotice('Admin access restricted. Please sign in with administrator credentials.');
-        window.location.hash = '#login';
-        window.history.pushState({}, '', '/login');
+        try {
+          window.history.pushState({}, '', '/login');
+        } catch (e) {}
         setCurrentPath('/login');
         window.scrollTo(0, 0);
       }
     } else if (path.startsWith('/user')) {
-      window.location.hash = '#user';
-      window.history.pushState({}, '', path);
+      try {
+        window.history.pushState({}, '', path);
+      } catch (e) {}
       setCurrentPath('/user/dashboard');
       window.scrollTo(0, 0);
     } else {
-      window.history.pushState({}, '', path);
+      try {
+        window.history.pushState({}, '', path);
+      } catch (e) {}
       setCurrentPath(path);
       window.scrollTo(0, 0);
     }
@@ -255,10 +282,10 @@ function MainRouter() {
         onNavigate={navigate}
       />
 
-      {/* Modals */}
-      <DisclaimerModal 
-        isOpen={showDisclaimer}
-        onClose={() => setShowDisclaimer(false)}
+      {/* 13. Attractive DPDP 2023 Draggable Box on Landing Page */}
+      <DraggableDisclaimerBox 
+        isOpenExternal={showDisclaimer}
+        onCloseExternal={() => setShowDisclaimer(false)}
       />
 
       <AgeVerificationModal 

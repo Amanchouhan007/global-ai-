@@ -1,7 +1,9 @@
 import React from 'react';
+import HealthOrbitLogo from './common/HealthOrbitLogo';
+import { BRAND } from '../config/brand';
 
 /**
- * GlobalHealthAI - Robust Application Error Boundary
+ * Health Orbit Pro™ - Robust Application Error Boundary
  * Prevents blank white screens by intercepting runtime crashes,
  * logging diagnostics, and presenting an intuitive recovery interface.
  */
@@ -11,7 +13,7 @@ export default class ErrorBoundary extends React.Component {
     this.state = {
       hasError: false,
       error: null,
-      errorInfo: null,
+      errorInfo: null
     };
   }
 
@@ -21,8 +23,16 @@ export default class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     this.setState({ errorInfo });
-    console.error('[GlobalHealthAI ErrorBoundary] Caught uncaught error:', error, errorInfo);
+    console.error('[Health Orbit Pro ErrorBoundary] Caught uncaught error:', error, errorInfo);
   }
+
+  handleReset = () => {
+    this.setState({
+      hasError: false,
+      error: null,
+      errorInfo: null,
+    });
+  };
 
   handleReload = () => {
     window.location.reload();
@@ -45,7 +55,7 @@ export default class ErrorBoundary extends React.Component {
           ? this.props.fallback({
               error: this.state.error,
               errorInfo: this.state.errorInfo,
-              resetError: () => this.setState({ hasError: false, error: null, errorInfo: null }),
+              resetError: this.handleReset,
             })
           : this.props.fallback;
       }
@@ -58,10 +68,16 @@ export default class ErrorBoundary extends React.Component {
           <div className="max-w-lg w-full bg-white dark:bg-[#0F172A] rounded-2xl shadow-xl border border-blue-100 dark:border-slate-800 p-6 sm:p-8 space-y-6 text-center">
 
             {/* Brand Logo */}
-            <div className="flex items-center justify-center gap-1.5 select-none">
-              <span className="text-[22px] font-black text-[#08165B] dark:text-white tracking-tight">GlobalHealth</span>
-              <span className="text-[22px] font-black text-[#F04B0A] tracking-tight">AI</span>
-              <span className="text-[11px] font-bold text-[#F04B0A] align-super">™</span>
+            <div className="flex items-center justify-center gap-2 select-none">
+              <HealthOrbitLogo className="w-8 h-8" idPrefix="error-logo" />
+              <div className="flex items-center leading-none">
+                <span className="text-[22px] font-black text-[#0D5C3A] dark:text-white tracking-tight">
+                  {BRAND.prefix}
+                </span>
+                <span className="text-[13px] font-black text-white bg-[#D81B60] px-2 py-0.5 rounded-full ml-1.5 align-middle shadow-2xs">
+                  {BRAND.suffix}™
+                </span>
+              </div>
             </div>
 
             {/* Error Icon Badge */}

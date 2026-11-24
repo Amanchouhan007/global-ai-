@@ -14,6 +14,8 @@ import {
 import { PORTAL_CATEGORIES } from '../../data/portalCategories';
 import ThemeToggle from '../common/ThemeToggle';
 import { useTheme } from '../../context/ThemeContext';
+import HealthOrbitLogo from '../common/HealthOrbitLogo';
+import { BRAND } from '../../config/brand';
 
 export default function MinimalSidebar({
   activeCategory,
@@ -74,17 +76,12 @@ export default function MinimalSidebar({
               className="flex items-center gap-2.5 cursor-pointer group"
               title="Return to Homepage"
             >
-              {/* Clean Medical Emblem */}
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1677E8] to-[#08165B] flex items-center justify-center text-white shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current stroke-[2.2]">
-                  <path d="M12 2v20M2 12h20" strokeLinecap="round" />
-                  <circle cx="12" cy="12" r="9" strokeWidth="1.8" />
-                </svg>
-              </div>
+              {/* Official Health Orbit Pro Emblem */}
+              <HealthOrbitLogo className="w-8 h-8" idPrefix="min-sidebar-logo" />
 
               <div className="flex items-center leading-none">
-                <span className="text-[17px] font-bold text-[#08165B] dark:text-white tracking-tight">GlobalHealth</span>
-                <span className="text-[17px] font-bold text-[#F04B0A] tracking-tight ml-1">AI</span>
+                <span className={`text-[17px] font-bold tracking-tight ${isDark ? 'text-white' : 'text-[#0D5C3A]'}`}>{BRAND.prefix}</span>
+                <span className="text-[10px] font-black text-white bg-[#D81B60] px-1.5 py-0.5 rounded-full ml-1">{BRAND.suffix}™</span>
               </div>
             </div>
 

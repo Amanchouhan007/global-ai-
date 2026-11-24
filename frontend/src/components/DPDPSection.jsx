@@ -36,7 +36,7 @@ export default function DPDPSection() {
   };
 
   return (
-    <section id="privacy-dpdp" className="py-16 sm:py-20 bg-gradient-to-b from-[#F8FAF9] via-[#F4F9F6] to-[#F8FAF9] border-t border-emerald-950/10">
+    <section id="privacy-dpdp" className="py-16 sm:py-20 bg-gradient-to-b from-[#F8FAF9] via-[#F4F9F6] to-[#F8FAF9] border-t border-emerald-950/10 scroll-mt-20">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

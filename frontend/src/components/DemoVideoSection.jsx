@@ -16,7 +16,8 @@ export default function DemoVideoSection() {
   };
 
   return (
-    <section id="demo-videos" className="py-12 sm:py-18 max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
+    <section id="resources" className="py-12 sm:py-18 max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20 relative">
+      <div id="demo-videos" className="absolute -top-20 left-0"></div>
       <div className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-emerald-950/10 shadow-[0_12px_40px_rgba(13,92,58,0.06)] space-y-8">
         
         {/* Header */}

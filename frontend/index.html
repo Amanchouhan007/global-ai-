@@ -8,6 +8,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+      // Enforce scroll position starts at top (0, 0) on initial load and refresh
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      if (window.location.pathname === '/' && window.location.hash && !window.location.hash.startsWith('#admin') && !window.location.hash.startsWith('#user') && !window.location.hash.startsWith('#login')) {
+        try {
+          history.replaceState(null, '', '/');
+        } catch (e) {}
+      }
+      window.scrollTo(0, 0);
+    </script>
   </head>
   <body class="antialiased font-sans bg-[#F8FAF9] text-slate-900 transition-colors duration-200 overflow-x-hidden">
     <div id="root"></div>

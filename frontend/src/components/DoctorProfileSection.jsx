@@ -10,7 +10,8 @@ import { FOUNDER_INFO } from '../config/company';
 
 export default function DoctorProfileSection({ onStartAssessment }) {
   return (
-    <section id="founder" className="py-16 sm:py-20 lg:py-24 bg-white border-b border-emerald-950/10 scroll-mt-24">
+    <section id="about" className="py-16 sm:py-20 lg:py-24 bg-white border-b border-emerald-950/10 scroll-mt-24 relative">
+      <div id="founder" className="absolute -top-24 left-0"></div>
       <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Clinical Leadership & Founder Spotlight Card */}
