@@ -30,7 +30,7 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
   // Active landing page nav items: strictly matches real landing page sections
   const navItems = [
     { id: 'home', label: t('nav', 'home', 'Home'), isHome: true },
-    { id: 'search-section', label: t('nav', 'symptomChecker', 'Symptom Checker') },
+    { id: 'chat-assistant', label: t('nav', 'symptomChecker', 'Symptom Checker') },
     { id: 'categories', label: t('nav', 'categories', 'Categories'), hasDropdown: true },
     { id: 'about', label: t('nav', 'about', 'About') }
   ];
@@ -81,12 +81,12 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    if (id === 'search-section') {
-      const el = document.getElementById('search-section');
+    if (id === 'chat-assistant' || id === 'search-section') {
+      const el = document.getElementById('chat-assistant') || document.getElementById('search-section');
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(() => {
-          const input = document.querySelector('input[placeholder*="symptom"], input[type="text"]');
+          const input = el.querySelector('input[type="text"]') || document.querySelector('input[placeholder*="symptom"], input[type="text"]');
           if (input) input.focus();
         }, 450);
       }
@@ -224,7 +224,7 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
             {/* Search Icon Trigger */}
             <button
               type="button"
-              onClick={() => handleNavClick('search-section', 'Symptom Checker')}
+              onClick={() => handleNavClick('chat-assistant', 'Symptom Checker')}
               className="p-1.5 text-slate-600 hover:text-[#0D5C3A] rounded-full hover:bg-[#F2F8F5] transition-colors cursor-pointer"
               title="Search symptoms"
               aria-label="Search"
