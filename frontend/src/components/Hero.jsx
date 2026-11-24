@@ -51,8 +51,8 @@ export default function Hero() {
           </div>
 
           {/* Right Column: Dr. Pratap Credentials Badge (Compact & positioned to the side) */}
-          <div className="lg:col-span-5 xl:col-span-5 flex justify-center lg:justify-end lg:pt-20 xl:pt-24">
-            <div className="w-full max-w-[250px] sm:max-w-[270px] bg-white/95 backdrop-blur-sm rounded-2xl p-2.5 sm:p-3 shadow-lg border border-slate-200/80 text-left space-y-1 transition-all lg:translate-x-4 xl:translate-x-8">
+          <div className="lg:col-span-5 xl:col-span-5 flex justify-center lg:justify-end pt-8 sm:pt-12 lg:pt-52 xl:pt-60">
+            <div className="w-full max-w-[250px] sm:max-w-[270px] bg-white/95 backdrop-blur-sm rounded-2xl p-2.5 sm:p-3 shadow-lg border border-slate-200/80 text-left space-y-1 transition-all translate-y-4 sm:translate-y-6 lg:translate-x-4 xl:translate-x-8 lg:translate-y-16">
               <h3 className="text-sm sm:text-[15px] font-black text-[#8B0000] tracking-tight leading-tight">
                 {FOUNDER_INFO.name}
               </h3>
