@@ -15,6 +15,7 @@ import DraggableDisclaimerBox from './components/DraggableDisclaimerBox';
 import AgeVerificationModal from './components/AgeVerificationModal';
 import LoginPage from './components/LoginPage';
 import UserDashboard from './components/UserDashboard';
+import CategoryChatPage from './components/CategoryChatPage';
 import AdminLayout from './admin/components/AdminLayout';
 import Footer from './components/Footer';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -23,7 +24,13 @@ import { LanguageProvider } from './context/LanguageContext';
 
 function MainRouter() {
   const { user } = useAuth();
-  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(() => {
+    try {
+      return localStorage.getItem('healthorbit_disclaimer_ack') !== 'true';
+    } catch {
+      return true;
+    }
+  });
   const [showAgeGate, setShowAgeGate] = useState(false);
 
   const isUserAdmin = () => {
@@ -114,6 +121,8 @@ function MainRouter() {
         }
       } else if (path.startsWith('/user') || hash.startsWith('#user')) {
         setCurrentPath('/user/dashboard');
+      } else if (path.startsWith('/category/')) {
+        setCurrentPath(path);
       } else if (path.startsWith('/login') || hash.startsWith('#login')) {
         setCurrentPath('/login');
       } else {
@@ -178,7 +187,7 @@ function MainRouter() {
 
   const handleSelectCategory = (category) => {
     setInitialCategory(category);
-    navigate('/user/dashboard');
+    navigate(`/category/${category?.id || 'symptoms'}`);
   };
 
   // Route: Login Page
@@ -204,6 +213,37 @@ function MainRouter() {
     return <LoginPage onNavigate={navigate} notice={authNotice || "Admin access restricted. Please sign in with administrator credentials."} />;
   }
 
+  // Route: Dynamic Category Chat Page (/category/:id)
+  if (currentPath.startsWith('/category/')) {
+    const categoryId = currentPath.replace(/^\/category\//, '').split('/')[0];
+    return (
+      <>
+        <CategoryChatPage
+          categoryId={categoryId}
+          initialCategory={initialCategory}
+          onNavigate={navigate}
+          onOpenDisclaimer={() => setShowDisclaimer(true)}
+          onOpenAgeGate={() => setShowAgeGate(true)}
+        />
+        <DisclaimerModal
+          isOpen={showDisclaimer}
+          onClose={() => {
+            try {
+              localStorage.setItem('healthorbit_disclaimer_ack', 'true');
+            } catch {
+              // ignore
+            }
+            setShowDisclaimer(false);
+          }}
+        />
+        <AgeVerificationModal
+          isOpenManual={showAgeGate}
+          onCloseManual={() => setShowAgeGate(false)}
+        />
+      </>
+    );
+  }
+
   // Route: User Dashboard
   if (currentPath === '/user/dashboard' || window.location.hash.startsWith('#user')) {
     return (
@@ -219,7 +259,7 @@ function MainRouter() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-[#F8FAF9] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 transition-colors duration-200">
       {/* 1. Header / Navigation Bar matching reference Image 1 */}
-      <Header onNavigate={navigate} onOpenDisclaimer={() => setShowDisclaimer(true)} />
+      <Header onNavigate={navigate} />
 
       {/* Main Page Layout */}
       <main>
@@ -275,7 +315,14 @@ function MainRouter() {
       {/* 13. Clinical Safety & Governance Disclaimer Modal */}
       <DisclaimerModal
         isOpen={showDisclaimer}
-        onClose={() => setShowDisclaimer(false)}
+        onClose={() => {
+          try {
+            localStorage.setItem('healthorbit_disclaimer_ack', 'true');
+          } catch {
+            // ignore
+          }
+          setShowDisclaimer(false);
+        }}
       />
 
       {/* 14. Attractive DPDP 2023 Draggable Box on Landing Page */}

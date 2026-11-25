@@ -41,7 +41,9 @@ export default function FloatingHealthChatbot({
   user,
   activeCategory,
   inline = false,
-  onStartAssessment
+  onStartAssessment,
+  customQuickPrompts = null,
+  externalPrompt = null
 }) {
   const { currentLang, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
@@ -50,12 +52,15 @@ export default function FloatingHealthChatbot({
   const [attachedFile, setAttachedFile] = useState(null);
   const [isListening, setIsListening] = useState(false);
   const [showUploadMenu, setShowUploadMenu] = useState(false);
+  const categoryTitle = activeCategory?.title || activeCategory?.name;
   const [messages, setMessages] = useState([
     {
       id: 'welcome',
       sender: 'ai',
       timestamp: 'Just now',
-      text: `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`,
+      text: categoryTitle
+        ? `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 Welcome to **${categoryTitle}**. ${activeCategory?.desc || activeCategory?.description || ''} Ask any question or tap a topic below for instant, clinically grounded guidance supervised by Dr. Pratap Madhukar.`
+        : `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`,
       urgency: null
     }
   ]);
@@ -264,14 +269,24 @@ export default function FloatingHealthChatbot({
   }, [messages, isTyping]);
 
   // Quick prompt suggestions
-  const quickPrompts = [
-    'Severe right-side headache with sensitivity to bright lights',
-    'Chest tightness on exertion radiating to left shoulder',
-    'Mild dry cough and low-grade fever for 2 days',
-    'What are red-flag emergency symptoms?',
-    'What is a normal blood pressure reading?',
-    'High BP reading (155/95) with temple ache'
-  ];
+  const quickPrompts = customQuickPrompts && customQuickPrompts.length > 0
+    ? customQuickPrompts
+    : [
+        'Severe right-side headache with sensitivity to bright lights',
+        'Chest tightness on exertion radiating to left shoulder',
+        'Mild dry cough and low-grade fever for 2 days',
+        'What are red-flag emergency symptoms?',
+        'What is a normal blood pressure reading?',
+        'High BP reading (155/95) with temple ache'
+      ];
+
+  const lastExternalNonceRef = useRef(null);
+  useEffect(() => {
+    if (externalPrompt?.text && externalPrompt.nonce !== lastExternalNonceRef.current) {
+      lastExternalNonceRef.current = externalPrompt.nonce;
+      handleSend(externalPrompt.text);
+    }
+  }, [externalPrompt]);
 
   const handleSend = (textToSend = inputMessage) => {
     const text = (typeof textToSend === 'string' ? textToSend : inputMessage).trim();

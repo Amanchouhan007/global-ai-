@@ -20,23 +20,9 @@ import {
 import { PORTAL_CATEGORIES } from '../data/portalCategories';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function ExploreCategories({ onSelectCategory }) {
-  const { t } = useLanguage();
-  const [showAllModal, setShowAllModal] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && showAllModal) {
-        setShowAllModal(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showAllModal]);
-
+export function getClientCategories(t = (_ns, _k, fb) => fb) {
   // Exact 10 Categories with Rich Clinical Descriptions & Topic Counts (Fully Dynamic across 6 Languages)
-  const clientCategories = [
+  return [
     // Row 1
     {
       id: 'symptoms',
@@ -171,15 +157,37 @@ export default function ExploreCategories({ onSelectCategory }) {
       icon: Pill
     }
   ];
+}
+
+export default function ExploreCategories({ onSelectCategory }) {
+  const { t } = useLanguage();
+  const [showAllModal, setShowAllModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && showAllModal) {
+        setShowAllModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showAllModal]);
+
+  const clientCategories = getClientCategories(t);
 
   const handleCardClick = (cat) => {
-    const matched = PORTAL_CATEGORIES.find(
+    const matchedPortal = PORTAL_CATEGORIES.find(
       c => c.id === cat.id || c.name.toLowerCase().includes(cat.title.toLowerCase().replace('my ', ''))
-    ) || {
+    );
+    const matched = {
+      ...(matchedPortal || {}),
+      ...cat,
       id: cat.id,
       name: cat.title,
-      dotColor: 'bg-emerald-500',
-      description: `Clinical insights and symptom guidance for ${cat.title}.`
+      title: cat.title,
+      description: cat.desc || matchedPortal?.description || `Clinical insights and symptom guidance for ${cat.title}.`,
+      dotColor: matchedPortal?.dotColor || 'bg-emerald-500'
     };
 
     if (onSelectCategory) {
