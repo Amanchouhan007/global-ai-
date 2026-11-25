@@ -3,74 +3,81 @@ import { BRAND } from '../config/brand';
 import { FOUNDER_INFO } from '../config/company';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function Hero() {
+/**
+ * Hero Component - Fully Responsive Homepage Hero Banner
+ * 
+ * Implements native 100% viewport width banner with automatic aspect-ratio
+ * scaling (1024/341 ~ 3:1). Preserves all embedded typography, badges,
+ * Dr. Pratap Madhukar portrait, and clinic information card.
+ * 
+ * Features:
+ * - Responsive CSS: width 100%, height auto, display block, object-fit contain
+ * - Zero hardcoded pixel width/height, zero fixed positioning, zero distortion/cropping
+ * - Dual asset resolution (Native 1024x341 + UHD 4K 3840x1280 srcset)
+ * - Accessible sr-only landmarks for SEO & screen-readers (no duplicated visual overlays)
+ * - Functional interactive DPDP Disclaimer action matching embedded button bounds
+ * - Seamless breakpoint scaling for Mobile, Tablet, Desktop, 2K QHD, and 4K UHD
+ */
+export default function Hero({ onOpenDisclaimer }) {
   const { t } = useLanguage();
 
   return (
     <section
       id="home"
-      className="relative w-full min-h-[calc(100vh-68px)] flex items-center overflow-hidden bg-white bg-no-repeat bg-cover bg-[position:88%_center] sm:bg-[position:right_center]"
-      style={{
-        backgroundImage: "url('/assets/doctor_clinic_desk_bg.jpg')"
-      }}
+      className="relative w-full bg-white overflow-hidden p-0 m-0 border-b border-slate-100"
     >
-      {/* Light responsive overlay on small screens to ensure text legibility */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/40 lg:from-transparent lg:via-transparent lg:to-transparent pointer-events-none" />
-
-      {/* Main Hero Container */}
-      <div className="relative z-10 w-full max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-16 lg:py-20 xl:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-
-          {/* Left Column (Brand, Badges, Formula Equation Strip) */}
-          <div className="lg:col-span-7 xl:col-span-7 flex flex-col items-start text-left space-y-3.5 sm:space-y-4">
-
-            {/* 1. Health Orbit Pro™ Headline */}
-            <div className="flex items-center gap-2.5 sm:gap-3 leading-none">
-              <span className="text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-black text-[#0D5C3A] tracking-tight">
-                {BRAND.prefix}
-              </span>
-              <span className="text-xl sm:text-2xl lg:text-[28px] font-black text-white bg-[#D81B60] px-3.5 py-1 sm:py-1.5 rounded-2xl shadow-sm tracking-normal">
-                {BRAND.suffix}™
-              </span>
-            </div>
-
-            {/* 2. Yellow Pill: India's Own Co-Intelligence Healthcare AI */}
-            <div>
-              <div className="inline-flex items-center px-4 sm:px-6 py-1.5 sm:py-2 rounded-full bg-[#FFE600] text-slate-900 text-xs sm:text-sm lg:text-[15px] font-extrabold italic shadow-2xs border border-yellow-300">
-                <span>{t('hero', 'badge', BRAND.badge)}</span>
-              </div>
-            </div>
-
-            {/* 3. Deep Purple Pill: Where Human Experience Meets AI. */}
-            <div>
-              <div className="inline-flex items-center px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-[#200B4D] text-white text-sm sm:text-lg lg:text-[20px] xl:text-[22px] font-black italic shadow-md border border-purple-900">
-                <span>{t('hero', 'headline', BRAND.headline)}</span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Right Column: Dr. Pratap Credentials Badge (Compact & positioned to the side) */}
-          <div className="lg:col-span-5 xl:col-span-5 flex justify-center lg:justify-end pt-8 sm:pt-12 lg:pt-52 xl:pt-60">
-            <div className="w-full max-w-[250px] sm:max-w-[270px] bg-white/95 backdrop-blur-sm rounded-2xl p-2.5 sm:p-3 shadow-lg border border-slate-200/80 text-left space-y-1 transition-all translate-y-4 sm:translate-y-6 lg:translate-x-4 xl:translate-x-8 lg:translate-y-16">
-              <h3 className="text-sm sm:text-[15px] font-black text-[#8B0000] tracking-tight leading-tight">
-                {FOUNDER_INFO.name}
-              </h3>
-              <p className="text-[10.5px] sm:text-[11px] font-bold text-slate-800 leading-snug">
-                {FOUNDER_INFO.role}
-              </p>
-              <p className="text-[9.5px] sm:text-[10px] font-medium text-slate-600 leading-tight">
-                {FOUNDER_INFO.credentials}
-              </p>
-              <div className="pt-1">
-                <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFE600] text-slate-900 text-[10px] font-black shadow-2xs">
-                  {FOUNDER_INFO.experience}
-                </span>
-              </div>
-            </div>
-          </div>
-
+      {/* 1. Accessible Screen-Reader Semantic Content for SEO & Assistive Tech */}
+      <div className="sr-only">
+        <h1>
+          {BRAND.prefix} {BRAND.suffix}™ - {t('hero', 'badge', BRAND.badge)}
+        </h1>
+        <p>{t('hero', 'headline', BRAND.headline)}</p>
+        <div>
+          <h2>{FOUNDER_INFO.name}</h2>
+          <p>{FOUNDER_INFO.role}</p>
+          <p>{FOUNDER_INFO.credentials}</p>
+          <p>{FOUNDER_INFO.experience}</p>
         </div>
+      </div>
+
+      {/* 2. Responsive Hero Banner Container */}
+      <div className="relative w-full max-w-[3840px] mx-auto aspect-[1024/341]">
+        <picture>
+          <source
+            media="(min-width: 1920px)"
+            srcSet="/assets/hero_banner_4k.jpg"
+          />
+          <img
+            src="/assets/hero_banner_original.jpg"
+            srcSet="/assets/hero_banner_original.jpg 1024w, /assets/hero_banner_4k.jpg 3840w"
+            sizes="(min-width: 1920px) 3840px, 100vw"
+            alt="Health Orbit Pro™ - Where Human Experience Meets AI. Senior Physician Dr Pratap Madhukar."
+            className="w-full h-auto block object-contain select-none"
+            style={{
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              objectFit: 'contain',
+              aspectRatio: '1024 / 341',
+              imageRendering: '-webkit-optimize-contrast'
+            }}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
+
+        {/* 3. Interactive DPDP Disclaimer Action Overlay */}
+        {/* Exactly covers the embedded 'DPDP Disclaimer' pill (X: ~1.2%..14%, Y: ~86%..95%) */}
+        {onOpenDisclaimer && (
+          <button
+            type="button"
+            onClick={onOpenDisclaimer}
+            className="absolute left-[1.1%] bottom-[5.0%] w-[13.5%] h-[9.0%] min-w-[40px] min-h-[20px] rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 z-20 transition-all opacity-0 hover:opacity-100 hover:bg-emerald-600/15 active:scale-95"
+            title="Open DPDP Act 2023 Clinical Governance & Disclaimer"
+            aria-label="Open DPDP Disclaimer and Statutory Patient Rights"
+          />
+        )}
       </div>
     </section>
   );

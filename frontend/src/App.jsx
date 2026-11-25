@@ -232,6 +232,7 @@ function MainRouter() {
             const el = document.getElementById('categories');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }}
+          onOpenDisclaimer={() => setShowDisclaimer(true)}
         />
 
         {/* 2. Interactive Clinical Chat Assistant */}
