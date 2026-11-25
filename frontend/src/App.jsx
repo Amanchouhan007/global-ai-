@@ -26,7 +26,7 @@ function MainRouter() {
   const { user } = useAuth();
   const [showDisclaimer, setShowDisclaimer] = useState(() => {
     try {
-      return localStorage.getItem('healthorbit_disclaimer_ack') !== 'true';
+      return sessionStorage.getItem('healthorbit_disclaimer_ack') !== 'true';
     } catch {
       return true;
     }
@@ -229,7 +229,7 @@ function MainRouter() {
           isOpen={showDisclaimer}
           onClose={() => {
             try {
-              localStorage.setItem('healthorbit_disclaimer_ack', 'true');
+              sessionStorage.setItem('healthorbit_disclaimer_ack', 'true');
             } catch {
               // ignore
             }
@@ -317,7 +317,7 @@ function MainRouter() {
         isOpen={showDisclaimer}
         onClose={() => {
           try {
-            localStorage.setItem('healthorbit_disclaimer_ack', 'true');
+            sessionStorage.setItem('healthorbit_disclaimer_ack', 'true');
           } catch {
             // ignore
           }

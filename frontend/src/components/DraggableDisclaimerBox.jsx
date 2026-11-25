@@ -40,6 +40,7 @@ export default function DraggableDisclaimerBox({
   const [position, setPosition] = useState({ x: 24, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef({ mouseX: 0, mouseY: 0, posX: 0, posY: 0 });
+  const didDragRef = useRef(false);
 
   // Initialize position to bottom-left once mounted
   useEffect(() => {
@@ -73,6 +74,7 @@ export default function DraggableDisclaimerBox({
   // Dragging logic with mouse and touch support
   const handleStartDrag = (clientX, clientY) => {
     setIsDragging(true);
+    didDragRef.current = false;
     dragStartRef.current = {
       mouseX: clientX,
       mouseY: clientY,
@@ -98,6 +100,9 @@ export default function DraggableDisclaimerBox({
       if (!isDragging) return;
       const deltaX = e.clientX - dragStartRef.current.mouseX;
       const deltaY = e.clientY - dragStartRef.current.mouseY;
+      if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) {
+        didDragRef.current = true;
+      }
 
       const newX = dragStartRef.current.posX + deltaX;
       const newY = dragStartRef.current.posY + deltaY;
@@ -117,6 +122,9 @@ export default function DraggableDisclaimerBox({
       const touch = e.touches[0];
       const deltaX = touch.clientX - dragStartRef.current.mouseX;
       const deltaY = touch.clientY - dragStartRef.current.mouseY;
+      if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) {
+        didDragRef.current = true;
+      }
 
       const newX = dragStartRef.current.posX + deltaX;
       const newY = dragStartRef.current.posY + deltaY;
@@ -208,8 +216,13 @@ export default function DraggableDisclaimerBox({
         <div
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
-          className="flex items-center justify-between px-3.5 py-2.5 bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] text-white cursor-grab active:cursor-grabbing border-b border-emerald-800"
-          title="Drag this box anywhere on your screen"
+          onClick={(e) => {
+            if (!isExpanded && !didDragRef.current && !e.target.closest('button')) {
+              setIsExpanded(true);
+            }
+          }}
+          className={`flex items-center justify-between px-3.5 py-2.5 bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] text-white ${!isExpanded ? 'cursor-pointer' : 'cursor-grab'} active:cursor-grabbing border-b border-emerald-800`}
+          title={!isExpanded ? 'Click to open DPDP terms or drag anywhere' : 'Drag this box anywhere on your screen'}
         >
           <div className="flex items-center gap-2">
             <GripVertical className="w-4 h-4 text-emerald-300 shrink-0 opacity-80" />
@@ -254,7 +267,19 @@ export default function DraggableDisclaimerBox({
 
         {/* COLLAPSED SUMMARY VIEW */}
         {!isExpanded && (
-          <div className="p-3 text-xs space-y-2 bg-gradient-to-b from-[#F4F9F6] to-white">
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => setIsExpanded(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setIsExpanded(true);
+              }
+            }}
+            className="p-3 text-xs space-y-2 bg-gradient-to-b from-[#F4F9F6] to-white cursor-pointer hover:from-[#EBF5F0] transition-colors"
+            title="Click to read full DPDP & Clinical Safety terms"
+          >
             <div className="flex items-start gap-2 text-slate-700">
               <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
               <p className="leading-snug text-[11px] text-slate-600 font-medium">
@@ -266,13 +291,9 @@ export default function DraggableDisclaimerBox({
               <span className="text-[10px] font-bold text-rose-600">
                 {t('draggableDisclaimer', 'emergency', 'Emergency: Call 108 / 112')}
               </span>
-              <button
-                type="button"
-                onClick={() => setIsExpanded(true)}
-                className="text-[11px] font-black text-[#0D5C3A] hover:underline cursor-pointer"
-              >
+              <span className="text-[11px] font-black text-[#0D5C3A] hover:underline">
                 {t('draggableDisclaimer', 'readTerms', 'Read DPDP Terms →')}
-              </button>
+              </span>
             </div>
           </div>
         )}

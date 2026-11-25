@@ -31,21 +31,12 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
   const navItems = [
     { id: 'home', label: t('nav', 'home', 'Home'), isHome: true },
     { id: 'chat-assistant', label: t('nav', 'symptomChecker', 'Symptom Checker') },
-    { id: 'categories', label: t('nav', 'categories', 'Categories'), hasDropdown: true },
+    { id: 'categories', label: t('nav', 'categories', 'Categories') },
     { id: 'about', label: t('nav', 'about', 'About') }
   ];
 
   // Dropdown menu options for interactive header links
-  const dropdownMenus = {
-    categories: [
-      { label: 'My Symptoms (Acute Emergency Triage)', targetId: 'categories' },
-      { label: 'My Personal Health (Vitals, BP & Sugar)', targetId: 'categories' },
-      { label: 'My Family (Multigenerational Care)', targetId: 'categories' },
-      { label: 'My Parenting (Pediatric Care)', targetId: 'categories' },
-      { label: 'My Mind (Mental Health & Coping)', targetId: 'categories' },
-      { label: 'Explore All 10 Categories →', targetId: 'categories', isCta: true }
-    ]
-  };
+  const dropdownMenus = {};
 
   useEffect(() => {
     function handleClickOutside(e) {
