@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ChatAssistantSection from './components/ChatAssistantSection';
-import SymptomSearch from './components/SymptomSearch';
 import ExploreCategories from './components/ExploreCategories';
-import HealthCardShowcase from './components/HealthCardShowcase';
 import HowItWorksSection from './components/HowItWorksSection';
 import DoctorProfileSection from './components/DoctorProfileSection';
 import DemoVideoSection from './components/DemoVideoSection';
@@ -234,10 +232,7 @@ function MainRouter() {
           }}
         />
 
-        {/* 2. Symptom Search: main clinical search bar directly under hero matching reference */}
-        <SymptomSearch onSearch={handleSearch} />
-
-        {/* 3. Explore by Category: 10 clinical cards with My Symptoms (1,000+ Health Cards) highlighted */}
+        {/* 2. Explore by Category: 10 clinical cards with My Symptoms (1,000+ Health Cards) highlighted */}
         <ExploreCategories onSelectCategory={handleSelectCategory} />
 
         {/* 4. Existing Chat Assistant: dedicated, spacious landing page section visible upon scrolling */}
@@ -246,12 +241,7 @@ function MainRouter() {
           onStartAssessment={(q) => handleSearch(q || '')}
         />
 
-        {/* 5. Health Cards and clinical guidance */}
-        <div id="health-cards" className="py-12 bg-white border-y border-emerald-950/10 scroll-mt-20 overflow-hidden">
-          <HealthCardShowcase onStartAssessment={() => navigate('/user/dashboard')} />
-        </div>
-
-        {/* 6. How It Works */}
+        {/* 5. How It Works */}
         <HowItWorksSection onStartAssessment={() => navigate('/user/dashboard')} />
 
         {/* 7. Doctor Profile */}

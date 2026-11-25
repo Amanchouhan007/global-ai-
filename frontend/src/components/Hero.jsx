@@ -25,26 +25,26 @@ export default function Hero() {
           <div className="lg:col-span-7 xl:col-span-7 flex flex-col items-start text-left space-y-3.5 sm:space-y-4">
 
             {/* 1. Health Orbit Pro™ Headline */}
-            <div className="flex items-center gap-2.5 sm:gap-3 leading-none">
-              <span className="text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-black text-[#0D5C3A] tracking-tight">
+            <div className="flex items-center gap-2 sm:gap-3 leading-none flex-wrap">
+              <span className="text-2xl xs:text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-black text-[#0D5C3A] tracking-tight">
                 {BRAND.prefix}
               </span>
-              <span className="text-xl sm:text-2xl lg:text-[28px] font-black text-white bg-[#D81B60] px-3.5 py-1 sm:py-1.5 rounded-2xl shadow-sm tracking-normal">
+              <span className="text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-black text-white bg-[#D81B60] px-2.5 xs:px-3.5 py-1 sm:py-1.5 rounded-2xl shadow-sm tracking-normal">
                 {BRAND.suffix}™
               </span>
             </div>
 
             {/* 2. Yellow Pill: India's Own Co-Intelligence Healthcare AI */}
             <div>
-              <div className="inline-flex items-center px-4 sm:px-6 py-1.5 sm:py-2 rounded-full bg-[#FFE600] text-slate-900 text-xs sm:text-sm lg:text-[15px] font-extrabold italic shadow-2xs border border-yellow-300">
+              <div className="inline-flex items-center px-3.5 xs:px-4 sm:px-6 py-1.5 sm:py-2 rounded-full bg-[#FFE600] text-slate-900 text-[11px] xs:text-xs sm:text-sm lg:text-[15px] font-extrabold italic shadow-2xs border border-yellow-300">
                 <span>{t('hero', 'badge', BRAND.badge)}</span>
               </div>
             </div>
 
             {/* 3. Deep Purple Pill: Where Human Experience Meets AI. */}
             <div>
-              <div className="inline-flex items-center px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-[#200B4D] text-white text-sm sm:text-lg lg:text-[20px] xl:text-[22px] font-black italic shadow-md border border-purple-900">
-                <span>{t('hero', 'headline', BRAND.headline)}</span>
+              <div className="inline-flex items-center px-4 xs:px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-[#200B4D] text-white text-xs xs:text-sm sm:text-lg lg:text-[20px] xl:text-[22px] font-black italic shadow-md border border-purple-900 max-w-full">
+                <span className="leading-snug">{t('hero', 'headline', BRAND.headline)}</span>
               </div>
             </div>
 
