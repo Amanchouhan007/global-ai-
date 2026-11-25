@@ -18,7 +18,7 @@ import { useLanguage } from '../context/LanguageContext';
  * - Functional interactive DPDP Disclaimer action matching embedded button bounds
  * - Seamless breakpoint scaling for Mobile, Tablet, Desktop, 2K QHD, and 4K UHD
  */
-export default function Hero({ onOpenDisclaimer }) {
+export default function Hero() {
   const { t } = useLanguage();
 
   return (
@@ -42,42 +42,23 @@ export default function Hero({ onOpenDisclaimer }) {
 
       {/* 2. Responsive Hero Banner Container */}
       <div className="relative w-full max-w-[3840px] mx-auto aspect-[1024/341]">
-        <picture>
-          <source
-            media="(min-width: 1920px)"
-            srcSet="/assets/hero_banner_4k.jpg"
-          />
-          <img
-            src="/assets/hero_banner_original.jpg"
-            srcSet="/assets/hero_banner_original.jpg 1024w, /assets/hero_banner_4k.jpg 3840w"
-            sizes="(min-width: 1920px) 3840px, 100vw"
-            alt="Health Orbit Pro™ - Where Human Experience Meets AI. Senior Physician Dr Pratap Madhukar."
-            className="w-full h-auto block object-contain select-none"
-            style={{
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-              objectFit: 'contain',
-              aspectRatio: '1024 / 341',
-              imageRendering: '-webkit-optimize-contrast'
-            }}
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-          />
-        </picture>
-
-        {/* 3. Interactive DPDP Disclaimer Action Overlay */}
-        {/* Exactly covers the embedded 'DPDP Disclaimer' pill (X: ~1.2%..14%, Y: ~86%..95%) */}
-        {onOpenDisclaimer && (
-          <button
-            type="button"
-            onClick={onOpenDisclaimer}
-            className="absolute left-[1.1%] bottom-[5.0%] w-[13.5%] h-[9.0%] min-w-[40px] min-h-[20px] rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 z-20 transition-all opacity-0 hover:opacity-100 hover:bg-emerald-600/15 active:scale-95"
-            title="Open DPDP Act 2023 Clinical Governance & Disclaimer"
-            aria-label="Open DPDP Disclaimer and Statutory Patient Rights"
-          />
-        )}
+        <img
+          src="/assets/hero_banner_clean_2x.webp"
+          srcSet="/assets/hero_banner_clean_1x.webp 1024w, /assets/hero_banner_clean_2x.webp 2048w, /assets/hero_banner_clean_4k.webp 3840w"
+          sizes="(min-width: 1920px) 100vw, (min-width: 1024px) 100vw, 100vw"
+          alt="Health Orbit Pro™ - Where Human Experience Meets AI. Senior Physician Dr Pratap Madhukar."
+          className="w-full h-auto block object-contain select-none"
+          style={{
+            width: '100%',
+            height: 'auto',
+            display: 'block',
+            objectFit: 'contain',
+            aspectRatio: '1024 / 341'
+          }}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
       </div>
     </section>
   );
