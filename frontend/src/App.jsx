@@ -270,6 +270,7 @@ function MainRouter() {
             const el = document.getElementById('categories');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }}
+          onOpenDisclaimer={() => setShowDisclaimer(true)}
         />
 
         {/* 2. Explore by Category: 10 clinical cards with My Symptoms (1,000+ Health Cards) highlighted */}
