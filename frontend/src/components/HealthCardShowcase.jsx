@@ -304,14 +304,14 @@ export default function HealthCardShowcase({
   }, [selectedCardId]);
 
   const tabs = [
-    { id: 'answer', label: 'Answer', icon: BookOpen },
-    { id: 'common', label: 'Common Causes', icon: ListCheck },
-    { id: 'missed', label: 'Often-Missed Causes', icon: Search },
-    { id: 'warning', label: 'Warning Signs', icon: AlertTriangle },
-    { id: 'steps', label: 'Safe Steps Now', icon: ShieldCheck },
-    { id: 'donot', label: 'Do Not Do', icon: XCircle },
+    { id: 'answer', label: t('cards', 'tabAnswer', 'Answer'), icon: BookOpen },
+    { id: 'common', label: t('cards', 'tabCauses', 'Common Causes'), icon: ListCheck },
+    { id: 'missed', label: t('cards', 'oftenMissedTitle', 'Often-Missed Causes'), icon: Search },
+    { id: 'warning', label: t('cards', 'tabRedFlags', 'Warning Signs'), icon: AlertTriangle },
+    { id: 'steps', label: t('cards', 'tabSafeSteps', 'Safe Steps Now'), icon: ShieldCheck },
+    { id: 'donot', label: t('cards', 'doNotDoTitle', 'Do Not Do'), icon: XCircle },
     { id: 'groups', label: 'Special Groups', icon: Users },
-    { id: 'mycheck', label: 'My Check', icon: CheckSquare }
+    { id: 'mycheck', label: t('cards', 'tabChecklist', 'My Check'), icon: CheckSquare }
   ];
 
   const handleCheckboxToggle = (key) => {
@@ -487,7 +487,7 @@ export default function HealthCardShowcase({
                 <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
                   <Lightbulb className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <h3 className="text-base font-extrabold text-[#0D5C3A] dark:text-emerald-400">Quick Answer</h3>
+                <h3 className="text-base font-extrabold text-[#0D5C3A] dark:text-emerald-400">{t('cards', 'tabAnswer', 'Quick Answer')}</h3>
               </div>
               <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
                 {activeCard.quickAnswer}
@@ -507,7 +507,7 @@ export default function HealthCardShowcase({
             <div className="bg-[#FFF9F5] dark:bg-[#1E140F] rounded-2xl p-4 border border-amber-200/80 dark:border-amber-900/50 shadow-2xs text-left">
               <div className="flex items-center gap-2 mb-2 text-rose-800 dark:text-amber-400 font-extrabold text-sm">
                 <ListCheck className="w-4 h-4 text-rose-600 dark:text-amber-400" />
-                <span>Common Causes</span>
+                <span>{t('cards', 'causesTitle', 'Common Causes')}</span>
               </div>
               <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-200 leading-relaxed">
                 {activeCard.commonCauses.map((cause, idx) => (
@@ -523,7 +523,7 @@ export default function HealthCardShowcase({
             <div className="bg-[#F8F9FE] dark:bg-[#11162B] rounded-2xl p-4 border border-blue-200/80 dark:border-blue-900/50 shadow-2xs text-left">
               <div className="flex items-center gap-2 mb-2 text-blue-800 dark:text-blue-300 font-extrabold text-sm">
                 <Search className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                <span>Often-Missed Causes</span>
+                <span>{t('cards', 'oftenMissedTitle', 'Often-Missed Causes')}</span>
               </div>
               <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-200 leading-relaxed">
                 {activeCard.oftenMissedCauses.map((cause, idx) => (
@@ -539,14 +539,14 @@ export default function HealthCardShowcase({
             <div className="bg-[#FFF5F5] dark:bg-[#250F14] rounded-2xl p-4 border border-red-200 dark:border-red-900/60 shadow-2xs text-left">
               <div className="flex items-center gap-2 mb-2 text-red-800 dark:text-red-300 font-extrabold text-sm">
                 <AlertTriangle className="w-4 h-4 text-red-600" />
-                <span>Warning Signs – Seek Urgent Care</span>
+                <span>{t('cards', 'tabRedFlags', 'Warning Signs – Seek Urgent Care')}</span>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                 {/* Emergency Red Box */}
                 <div className="p-2.5 rounded-xl bg-[#DC2626] text-white space-y-1">
                   <span className="block text-[11px] font-black uppercase tracking-wider">
-                    Emergency – Go to ER Now
+                    {t('cards', 'redFlagsTitle', 'Emergency – Go to ER Now')}
                   </span>
                   <ul className="space-y-1 text-[11px] leading-snug">
                     {activeCard.emergencyRed.map((item, idx) => (
@@ -561,7 +561,7 @@ export default function HealthCardShowcase({
                 {/* Yellow See Doctor Soon Box */}
                 <div className="p-2.5 rounded-xl bg-[#FEF3C7] dark:bg-[#3D2C0A] text-slate-900 dark:text-amber-200 space-y-1 border border-amber-300 dark:border-amber-700">
                   <span className="block text-[11px] font-black uppercase tracking-wider text-amber-900 dark:text-amber-100">
-                    See a Doctor Soon (24–48h)
+                    {t('cards', 'yellowFlagsTitle', 'See a Doctor Soon (24–48h)')}
                   </span>
                   <ul className="space-y-1 text-[11px] text-slate-800 dark:text-amber-200 leading-snug">
                     {activeCard.doctorSoonYellow.map((item, idx) => (
@@ -581,7 +581,7 @@ export default function HealthCardShowcase({
               <div className="p-3.5 rounded-2xl bg-[#F0FDF4] dark:bg-[#0A2312] border border-emerald-200 dark:border-emerald-900/60 text-left">
                 <div className="flex items-center gap-1.5 mb-1.5 text-emerald-800 dark:text-emerald-300 font-bold text-xs">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Safe Steps Now</span>
+                  <span>{t('cards', 'tabSafeSteps', 'Safe Steps Now')}</span>
                 </div>
                 <ul className="space-y-1 text-[11px] text-slate-700 dark:text-slate-200 leading-snug">
                   {activeCard.safeSteps.map((step, idx) => (
@@ -597,7 +597,7 @@ export default function HealthCardShowcase({
               <div className="p-3.5 rounded-2xl bg-[#FFF1F2] dark:bg-[#280E13] border border-rose-200 dark:border-rose-900/60 text-left">
                 <div className="flex items-center gap-1.5 mb-1.5 text-rose-800 dark:text-rose-300 font-bold text-xs">
                   <XCircle className="w-3.5 h-3.5 text-rose-600" />
-                  <span>Do Not Do</span>
+                  <span>{t('cards', 'doNotDoTitle', 'Do Not Do')}</span>
                 </div>
                 <ul className="space-y-1 text-[11px] text-slate-700 dark:text-slate-200 leading-snug">
                   {activeCard.doNotDo.map((item, idx) => (

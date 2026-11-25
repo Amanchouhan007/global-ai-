@@ -6,7 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import HealthOrbitLogo from './common/HealthOrbitLogo';
 
 export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) {
-  const { currentLang, setLanguage, supportedLanguages } = useLanguage();
+  const { currentLang, setLanguage, supportedLanguages, t } = useLanguage();
 
   const handleScrollTo = (e, targetId) => {
     e.preventDefault();
@@ -34,15 +34,15 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
               <span className="font-bold text-white uppercase tracking-wider block sm:inline mr-2">
                 Clinical Safety Notice:
               </span>
-              {BRAND.name}™ provides educational triage based on {FOUNDER_INFO.experience} of physician experience. It does not provide definitive medical diagnoses or replace an emergency room.
+              {t('footer', 'disclaimerNotice', `${BRAND.name}™ provides educational triage based on ${FOUNDER_INFO.experience} of physician experience. It does not provide definitive medical diagnoses or replace an emergency room.`)}
             </div>
           </div>
           <button
             type="button"
             onClick={onOpenDisclaimer}
-            className="w-full sm:w-auto text-center px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold border border-amber-500/40 text-xs sm:text-sm shrink-0 transition-colors"
+            className="w-full sm:w-auto text-center px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold border border-amber-500/40 text-xs sm:text-sm shrink-0 transition-colors cursor-pointer"
           >
-            Read Disclaimer
+            {t('nav', 'disclaimer', 'Read Disclaimer')}
           </button>
         </div>
 
@@ -62,7 +62,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
             </div>
 
             <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-sm">
-              {BRAND.tagline}. {BRAND.badge} combining human medical insight with AI to bring structured, calm guidance to every family.
+              {t('footer', 'tagline', BRAND.tagline)}. {t('hero', 'badge', BRAND.badge)}
             </p>
 
             {/* Dr. Pratap Credentials Badge */}
@@ -102,40 +102,39 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
 
           {/* Clinical Navigation */}
           <div>
-            <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4">Health Platform</h4>
+            <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4">{t('footer', 'quickTitle', 'Health Platform')}</h4>
             <ul className="space-y-3 text-sm text-slate-400 font-medium">
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'home')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">Home</button></li>
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'clinical-search')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">Clinical Insights</button></li>
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'categories')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">Specialty Categories</button></li>
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'health-card-showcase')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">Health Card H-032</button></li>
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'free-access')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">100% Free Access</button></li>
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'demo-videos')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">Platform Walkthrough</button></li>
+              <li><button type="button" onClick={(e) => handleScrollTo(e, 'home')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('nav', 'home', 'Home')}</button></li>
+              <li><button type="button" onClick={(e) => handleScrollTo(e, 'chat-assistant')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('chat', 'title', 'Clinical Chat Assistant')}</button></li>
+              <li><button type="button" onClick={(e) => handleScrollTo(e, 'categories')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('categories', 'title', 'Specialty Categories')}</button></li>
+              <li><button type="button" onClick={(e) => handleScrollTo(e, 'how-it-works')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('howItWorks', 'title', 'How It Works')}</button></li>
+              <li><button type="button" onClick={(e) => handleScrollTo(e, 'demo-videos')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('videos', 'title', 'Platform Walkthrough')}</button></li>
             </ul>
           </div>
 
           {/* Privacy & Governance */}
           <div>
-            <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4">Privacy & Trust</h4>
+            <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4">{t('footer', 'legalTitle', 'Privacy & Trust')}</h4>
             <ul className="space-y-3 text-sm text-slate-400 font-medium">
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'privacy-dpdp')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">DPDP Act 2023 Compliance</button></li>
+              <li><button type="button" onClick={(e) => handleScrollTo(e, 'privacy-dpdp')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('footer', 'dpdpAct', 'DPDP Act 2023 Compliance')}</button></li>
               <li>
                 <button type="button" onClick={onOpenDisclaimer} className="hover:text-white transition-colors text-left py-0.5 block cursor-pointer">
-                  Clinical Disclaimer
+                  {t('nav', 'disclaimer', 'Clinical Disclaimer')}
                 </button>
               </li>
               <li>
                 <button type="button" onClick={onOpenAgeGate} className="hover:text-white transition-colors text-left py-0.5 block cursor-pointer">
-                  Age & Family Verification
+                  {t('footer', 'patientPrivacy', 'Age & Family Verification')}
                 </button>
               </li>
               <li>
                 <a href={`mailto:${COMPANY_INFO.grievanceEmail}`} className="hover:text-white transition-colors py-0.5 block">
-                  Grievance Redressal
+                  {t('footer', 'ethicalAI', 'Grievance Redressal')}
                 </a>
               </li>
               <li>
                 <button type="button" onClick={(e) => handleScrollTo(e, 'patient-feedback')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">
-                  Patient Quality Feedback
+                  {t('feedback', 'title', 'Patient Quality Feedback')}
                 </button>
               </li>
             </ul>
@@ -143,7 +142,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
 
           {/* Portals & Emergency */}
           <div>
-            <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4">Portals & Emergency</h4>
+            <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4">{t('footer', 'clinicalTitle', 'Portals & Emergency')}</h4>
             <ul className="space-y-3 text-sm text-slate-400 font-medium">
               <li>
                 <button 
@@ -169,7 +168,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
                   onClick={() => onNavigate ? onNavigate('/login') : (window.location.pathname = '/login')}
                   className="hover:text-white transition-colors text-left py-0.5 block cursor-pointer"
                 >
-                  Doctor / Staff Sign In
+                  {t('nav', 'signIn', 'Doctor / Staff Sign In')}
                 </button>
               </li>
               <li className="pt-2 text-rose-400 font-bold">
@@ -183,7 +182,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
         {/* Bottom Sub-footer */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
-            {BRAND.copyright}
+            {t('footer', 'allRightsReserved', BRAND.copyright)}
           </div>
           <div className="flex items-center gap-6">
             <span>{COMPANY_INFO.compliance}</span>

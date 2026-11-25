@@ -4,7 +4,7 @@ import { COMPANY_INFO } from '../config/company';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function DPDPSection() {
-  const { currentLang } = useLanguage();
+  const { currentLang, t } = useLanguage();
   const [consentGranted, setConsentGranted] = useState(() => {
     return localStorage.getItem('healthorbit_dpdp_consent') !== 'withdrawn';
   });
@@ -43,55 +43,55 @@ export default function DPDPSection() {
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-2.5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF5F0] text-[#0D5C3A] text-xs font-bold uppercase tracking-wider border border-emerald-200">
             <ShieldCheck className="w-4 h-4 text-[#0D5C3A]" />
-            <span>DPDP Act 2023 Compliant • Privacy-First Architecture</span>
+            <span>{t('dpdp', 'badge', 'DPDP Act 2023 Compliant • Privacy-First Architecture')}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
-            Your Health Data Belongs to You. <span className="text-[#0D5C3A]">Zero Server Tracking.</span>
+            {t('dpdp', 'title', 'Your Health Data Belongs to You.')} <span className="text-[#0D5C3A]">{t('dpdp', 'titleHighlight', 'Zero Server Tracking.')}</span>
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
-            In compliance with the Indian <strong>Digital Personal Data Protection (DPDP) Act 2023</strong>, Health Orbit Pro™ is engineered on a local-first privacy standard. Your symptom queries and checklist selections are processed locally in your session and are never sold or profiled.
+            {t('dpdp', 'desc', 'In compliance with the Indian Digital Personal Data Protection (DPDP) Act 2023, Health Orbit Pro™ is engineered on a local-first privacy standard. Your symptom queries and checklist selections are processed locally in your session and are never sold or profiled.')}
           </p>
         </div>
 
         {/* 4 Pillars Grid: strictly 1 column on mobile, 2 on tablet, 4 on desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-10">
-          <div className="p-6 sm:p-7 rounded-3xl bg-white border border-emerald-950/10 shadow-xs hover:shadow-lg transition-all shadow-xs hover:shadow-md transition-shadow text-left">
+          <div className="p-6 sm:p-7 rounded-3xl bg-white border border-emerald-950/10 shadow-xs hover:shadow-lg transition-all text-left">
             <div className="w-10 h-10 rounded-xl bg-[#EBF5F0] flex items-center justify-center text-[#0D5C3A] mb-3">
               <Lock className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-black text-slate-900 mb-2">Local Session Processing</h3>
+            <h3 className="text-lg font-black text-slate-900 mb-2">{t('dpdp', 'pillar1Title', 'Zero Server Tracking')}</h3>
             <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              Symptom searches and report triage inputs stay inside your active browser session. We do not maintain server-side health dossiers.
+              {t('dpdp', 'pillar1Desc', 'Symptom queries and checklists remain strictly in your browser session. They are never transmitted to external ad brokers or analytics databases.')}
             </p>
           </div>
 
-          <div className="p-6 sm:p-7 rounded-3xl bg-white border border-emerald-950/10 shadow-xs hover:shadow-lg transition-all shadow-xs hover:shadow-md transition-shadow text-left">
+          <div className="p-6 sm:p-7 rounded-3xl bg-white border border-emerald-950/10 shadow-xs hover:shadow-lg transition-all text-left">
             <div className="w-10 h-10 rounded-xl bg-[#F0FDFA] flex items-center justify-center text-[#0F766E] mb-3">
               <CheckCircle2 className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-black text-slate-900 mb-2">Informed Purpose Limitation</h3>
+            <h3 className="text-lg font-black text-slate-900 mb-2">{t('dpdp', 'pillar2Title', 'Purpose Limitation')}</h3>
             <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              Every data field collected (e.g. feedback ratings or language preference) is used strictly for display rendering, never ad tracking.
+              {t('dpdp', 'pillar2Desc', 'All clinical intelligence inputs are used solely to generate real-time triage guidance. No user profiling, no behavioral tracking.')}
             </p>
           </div>
 
-          <div className="p-6 sm:p-7 rounded-3xl bg-white border border-emerald-950/10 shadow-xs hover:shadow-lg transition-all shadow-xs hover:shadow-md transition-shadow text-left">
+          <div className="p-6 sm:p-7 rounded-3xl bg-white border border-emerald-950/10 shadow-xs hover:shadow-lg transition-all text-left">
             <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-700 mb-3">
               <Trash2 className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-black text-slate-900 mb-2">Right to Erasure</h3>
+            <h3 className="text-lg font-black text-slate-900 mb-2">{t('dpdp', 'pillar3Title', 'Right to Erasure')}</h3>
             <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              You can instantly purge all locally stored symptom history, doctor checklists, and cached cards using the one-click control below.
+              {t('dpdp', 'pillar3Desc', 'With a single click, purge your entire search history, saved health cards, and session cache from your device.')}
             </p>
           </div>
 
-          <div className="p-6 sm:p-7 rounded-3xl bg-white border border-emerald-950/10 shadow-xs hover:shadow-lg transition-all shadow-xs hover:shadow-md transition-shadow text-left">
+          <div className="p-6 sm:p-7 rounded-3xl bg-white border border-emerald-950/10 shadow-xs hover:shadow-lg transition-all text-left">
             <div className="w-10 h-10 rounded-xl bg-[#EBF5F0] flex items-center justify-center text-[#0D5C3A] mb-3">
               <FileText className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-black text-slate-900 mb-2">Statutory Redressal SLA</h3>
+            <h3 className="text-lg font-black text-slate-900 mb-2">{t('dpdp', 'pillar4Title', 'Statutory 48h Redressal')}</h3>
             <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              A designated Grievance & Data Protection Officer is available to handle any privacy concern under DPDP 2023 with a 48-hour response SLA.
+              {t('dpdp', 'pillar4Desc', 'Our dedicated Data Protection Officer is available for statutory privacy queries with response guarantees under 48 hours.')}
             </p>
           </div>
         </div>
@@ -137,12 +137,12 @@ export default function DPDPSection() {
                 {consentGranted ? (
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Consent Active (Local Storage Only)
+                    {t('dpdp', 'consentActive', 'Consent Active (Local Storage Only)')}
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-400">
                     <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                    Consent Withdrawn (Strict Ephemeral Session)
+                    {t('dpdp', 'consentWithdrawn', 'Consent Withdrawn (Strict Ephemeral Session)')}
                   </span>
                 )}
               </div>
@@ -162,7 +162,7 @@ export default function DPDPSection() {
                   className="w-full sm:w-auto px-5 py-3 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4" />
-                  <span>Withdraw Consent & Erase Local Data</span>
+                  <span>{t('dpdp', 'withdrawBtn', 'Withdraw Consent & Erase Local Data')}</span>
                 </button>
               ) : (
                 <button
@@ -171,7 +171,7 @@ export default function DPDPSection() {
                   className="w-full sm:w-auto px-5 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <RefreshCw className="w-4 h-4" />
-                  <span>Re-Enable Local Saving</span>
+                  <span>{t('dpdp', 'restoreBtn', 'Re-Enable Local Saving')}</span>
                 </button>
               )}
             </div>

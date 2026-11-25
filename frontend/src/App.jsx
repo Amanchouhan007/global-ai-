@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ChatAssistantSection from './components/ChatAssistantSection';
-import SymptomSearch from './components/SymptomSearch';
 import ExploreCategories from './components/ExploreCategories';
-import HealthCardShowcase from './components/HealthCardShowcase';
 import HowItWorksSection from './components/HowItWorksSection';
 import DoctorProfileSection from './components/DoctorProfileSection';
 import DemoVideoSection from './components/DemoVideoSection';
@@ -17,6 +15,7 @@ import DraggableDisclaimerBox from './components/DraggableDisclaimerBox';
 import AgeVerificationModal from './components/AgeVerificationModal';
 import LoginPage from './components/LoginPage';
 import UserDashboard from './components/UserDashboard';
+import CategoryChatPage from './components/CategoryChatPage';
 import AdminLayout from './admin/components/AdminLayout';
 import Footer from './components/Footer';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -25,7 +24,13 @@ import { LanguageProvider } from './context/LanguageContext';
 
 function MainRouter() {
   const { user } = useAuth();
-  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(() => {
+    try {
+      return localStorage.getItem('healthorbit_disclaimer_ack') !== 'true';
+    } catch {
+      return true;
+    }
+  });
   const [showAgeGate, setShowAgeGate] = useState(false);
 
   const isUserAdmin = () => {
@@ -84,7 +89,7 @@ function MainRouter() {
       if (window.location.hash) {
         try {
           history.replaceState(null, '', '/');
-        } catch (e) {}
+        } catch (e) { }
       }
       window.scrollTo(0, 0);
     }
@@ -112,10 +117,12 @@ function MainRouter() {
           setCurrentPath('/login');
           try {
             window.history.replaceState({}, '', '/login');
-          } catch (e) {}
+          } catch (e) { }
         }
       } else if (path.startsWith('/user') || hash.startsWith('#user')) {
         setCurrentPath('/user/dashboard');
+      } else if (path.startsWith('/category/')) {
+        setCurrentPath(path);
       } else if (path.startsWith('/login') || hash.startsWith('#login')) {
         setCurrentPath('/login');
       } else {
@@ -136,7 +143,7 @@ function MainRouter() {
     if (path === '/') {
       try {
         window.history.pushState({}, '', '/');
-      } catch (e) {}
+      } catch (e) { }
       setCurrentPath('/');
       setInitialSymptom('');
       setInitialCategory(null);
@@ -146,7 +153,7 @@ function MainRouter() {
       if (isUserAdmin()) {
         try {
           window.history.pushState({}, '', path);
-        } catch (e) {}
+        } catch (e) { }
         setCurrentPath('/admin/dashboard');
         setAuthNotice('');
         window.scrollTo(0, 0);
@@ -154,20 +161,20 @@ function MainRouter() {
         setAuthNotice('Admin access restricted. Please sign in with administrator credentials.');
         try {
           window.history.pushState({}, '', '/login');
-        } catch (e) {}
+        } catch (e) { }
         setCurrentPath('/login');
         window.scrollTo(0, 0);
       }
     } else if (path.startsWith('/user')) {
       try {
         window.history.pushState({}, '', path);
-      } catch (e) {}
+      } catch (e) { }
       setCurrentPath('/user/dashboard');
       window.scrollTo(0, 0);
     } else {
       try {
         window.history.pushState({}, '', path);
-      } catch (e) {}
+      } catch (e) { }
       setCurrentPath(path);
       window.scrollTo(0, 0);
     }
@@ -180,7 +187,7 @@ function MainRouter() {
 
   const handleSelectCategory = (category) => {
     setInitialCategory(category);
-    navigate('/user/dashboard');
+    navigate(`/category/${category?.id || 'symptoms'}`);
   };
 
   // Route: Login Page
@@ -206,6 +213,37 @@ function MainRouter() {
     return <LoginPage onNavigate={navigate} notice={authNotice || "Admin access restricted. Please sign in with administrator credentials."} />;
   }
 
+  // Route: Dynamic Category Chat Page (/category/:id)
+  if (currentPath.startsWith('/category/')) {
+    const categoryId = currentPath.replace(/^\/category\//, '').split('/')[0];
+    return (
+      <>
+        <CategoryChatPage
+          categoryId={categoryId}
+          initialCategory={initialCategory}
+          onNavigate={navigate}
+          onOpenDisclaimer={() => setShowDisclaimer(true)}
+          onOpenAgeGate={() => setShowAgeGate(true)}
+        />
+        <DisclaimerModal
+          isOpen={showDisclaimer}
+          onClose={() => {
+            try {
+              localStorage.setItem('healthorbit_disclaimer_ack', 'true');
+            } catch {
+              // ignore
+            }
+            setShowDisclaimer(false);
+          }}
+        />
+        <AgeVerificationModal
+          isOpenManual={showAgeGate}
+          onCloseManual={() => setShowAgeGate(false)}
+        />
+      </>
+    );
+  }
+
   // Route: User Dashboard
   if (currentPath === '/user/dashboard' || window.location.hash.startsWith('#user')) {
     return (
@@ -221,7 +259,7 @@ function MainRouter() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-[#F8FAF9] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 transition-colors duration-200">
       {/* 1. Header / Navigation Bar matching reference Image 1 */}
-      <Header onNavigate={navigate} onOpenDisclaimer={() => setShowDisclaimer(true)} />
+      <Header onNavigate={navigate} />
 
       {/* Main Page Layout */}
       <main>
@@ -235,16 +273,16 @@ function MainRouter() {
           onOpenDisclaimer={() => setShowDisclaimer(true)}
         />
 
-        {/* 2. Interactive Clinical Chat Assistant */}
+        {/* 2. Explore by Category: 10 clinical cards with My Symptoms (1,000+ Health Cards) highlighted */}
+        <ExploreCategories onSelectCategory={handleSelectCategory} />
+
+        {/* 4. Existing Chat Assistant: dedicated, spacious landing page section visible upon scrolling */}
         <ChatAssistantSection
           user={user}
           onStartAssessment={(q) => handleSearch(q || '')}
         />
 
-        {/* 3. Explore by Category: 10 clinical cards with My Symptoms (1,000+ Health Cards) highlighted */}
-        <ExploreCategories onSelectCategory={handleSelectCategory} />
-
-        {/* 4. How It Works */}
+        {/* 5. How It Works */}
         <HowItWorksSection onStartAssessment={() => navigate('/user/dashboard')} />
 
         {/* 7. Doctor Profile */}
@@ -269,19 +307,32 @@ function MainRouter() {
       </main>
 
       {/* 12. Footer Integration */}
-      <Footer 
+      <Footer
         onOpenDisclaimer={() => setShowDisclaimer(true)}
         onOpenAgeGate={() => setShowAgeGate(true)}
         onNavigate={navigate}
       />
 
-      {/* 13. Attractive DPDP 2023 Draggable Box on Landing Page */}
-      <DraggableDisclaimerBox 
+      {/* 13. Clinical Safety & Governance Disclaimer Modal */}
+      <DisclaimerModal
+        isOpen={showDisclaimer}
+        onClose={() => {
+          try {
+            localStorage.setItem('healthorbit_disclaimer_ack', 'true');
+          } catch {
+            // ignore
+          }
+          setShowDisclaimer(false);
+        }}
+      />
+
+      {/* 14. Attractive DPDP 2023 Draggable Box on Landing Page */}
+      <DraggableDisclaimerBox
         isOpenExternal={showDisclaimer}
         onCloseExternal={() => setShowDisclaimer(false)}
       />
 
-      <AgeVerificationModal 
+      <AgeVerificationModal
         isOpenManual={showAgeGate}
         onCloseManual={() => setShowAgeGate(false)}
       />

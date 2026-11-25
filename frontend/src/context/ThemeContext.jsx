@@ -49,7 +49,7 @@ export function ThemeProvider({ children }) {
       root.style.colorScheme = 'light';
       if (body) {
         body.classList.remove('dark');
-        body.style.backgroundColor = '#F2F7FF';
+        body.style.backgroundColor = '#F8FAF9';
         body.style.color = '#0F172A';
       }
     }

@@ -7,8 +7,11 @@ import {
   HeartHandshake
 } from 'lucide-react';
 import { FOUNDER_INFO } from '../config/company';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function DoctorProfileSection({ onStartAssessment }) {
+  const { currentLang, t } = useLanguage();
+
   return (
     <section id="about" className="py-16 sm:py-20 lg:py-24 bg-white border-b border-emerald-950/10 scroll-mt-24 relative">
       <div id="founder" className="absolute -top-24 left-0"></div>
@@ -37,12 +40,14 @@ export default function DoctorProfileSection({ onStartAssessment }) {
               <div className="mt-5 space-y-2">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-300/30 text-xs sm:text-sm font-bold">
                   <Award className="w-4 h-4" />
-                  <span>Chief Medical Mentor</span>
+                  <span>{t('doctor', 'mentorBadge', 'Chief Medical Mentor')}</span>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-black text-white">{FOUNDER_INFO.name}</h3>
-                <p className="text-base sm:text-lg text-emerald-100 font-semibold">{FOUNDER_INFO.role}</p>
+                <p className="text-base sm:text-lg text-emerald-100 font-semibold">
+                  {t('hero', 'doctorRole', FOUNDER_INFO.role)}
+                </p>
                 <p className="text-xs sm:text-sm text-emerald-200 font-medium">
-                  {FOUNDER_INFO.credentials} • {FOUNDER_INFO.experience}
+                  {t('hero', 'doctorCredentials', FOUNDER_INFO.credentials)} • {t('hero', 'doctorExperience', FOUNDER_INFO.experience)}
                 </p>
               </div>
             </div>
@@ -51,25 +56,37 @@ export default function DoctorProfileSection({ onStartAssessment }) {
             <div className="lg:col-span-7 space-y-6 text-left">
               <div className="space-y-3">
                 <span className="text-xs sm:text-sm font-black text-emerald-200 uppercase tracking-wider block">
-                  A Clinical Message from the Founder
+                  {t('doctor', 'messageTitle', 'A Clinical Message from the Founder')}
                 </span>
                 <blockquote className="text-lg sm:text-xl lg:text-2xl font-medium text-slate-100 leading-relaxed italic">
-                  "{FOUNDER_INFO.quote}"
+                  "{t('doctor', 'quote', FOUNDER_INFO.quote)}"
                 </blockquote>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-white/15">
                 <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-xs space-y-1">
-                  <span className="text-xs text-emerald-200 font-bold uppercase">Evidence Base</span>
-                  <p className="text-sm font-bold text-white">ICMR & WHO Protocols</p>
+                  <span className="text-xs text-emerald-200 font-bold uppercase">
+                    {t('doctor', 'pillar1Title', 'Evidence Base')}
+                  </span>
+                  <p className="text-sm font-bold text-white">
+                    {t('doctor', 'pillar1Text', 'ICMR & WHO Protocols')}
+                  </p>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-xs space-y-1">
-                  <span className="text-xs text-emerald-200 font-bold uppercase">Clinical Review</span>
-                  <p className="text-sm font-bold text-white">1,000+ Validated Cards</p>
+                  <span className="text-xs text-emerald-200 font-bold uppercase">
+                    {t('doctor', 'pillar2Title', 'Clinical Review')}
+                  </span>
+                  <p className="text-sm font-bold text-white">
+                    {t('doctor', 'pillar2Text', '1,000+ Validated Cards')}
+                  </p>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-xs space-y-1">
-                  <span className="text-xs text-emerald-200 font-bold uppercase">Multilingual</span>
-                  <p className="text-sm font-bold text-white">6 Indian & Regional Languages</p>
+                  <span className="text-xs text-emerald-200 font-bold uppercase">
+                    {t('doctor', 'pillar3Title', 'Primary Care')}
+                  </span>
+                  <p className="text-sm font-bold text-white">
+                    {t('doctor', 'pillar3Text', '38+ Years Direct Practice')}
+                  </p>
                 </div>
               </div>
 
@@ -79,7 +96,7 @@ export default function DoctorProfileSection({ onStartAssessment }) {
                   onClick={() => onStartAssessment ? onStartAssessment() : (window.location.pathname = '/user/dashboard')}
                   className="px-8 py-4 rounded-full bg-[#FDE047] hover:bg-[#facc15] text-slate-900 font-black text-sm sm:text-base shadow-lg transition-all cursor-pointer inline-flex items-center gap-2.5 active:scale-98"
                 >
-                  <span>Start Assessment with Clinical Guidance</span>
+                  <span>{t('doctor', 'ctaBtn', 'Consult Dr. Pratap AI Guidance')}</span>
                   <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                 </button>
               </div>

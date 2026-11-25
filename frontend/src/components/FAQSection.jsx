@@ -5,30 +5,32 @@ import {
   Sparkles
 } from 'lucide-react';
 import { BRAND } from '../config/brand';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function FAQSection() {
+  const { t } = useLanguage();
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
   const faqs = [
     {
-      q: 'How does Health Orbit Pro™ categorize my symptoms safely?',
-      a: 'Health Orbit Pro™ applies evidence-based clinical triage rules curated by Dr. Pratap Madhukar (38 years clinical experience) and ICMR/WHO guidelines. Your inputs are mapped to symptom patterns and categorized into Red (Emergency), Yellow (Doctor in 24–48h), or Green (Safe Self-Care).'
+      q: t('faq', 'q1', 'How does Health Orbit Pro™ categorize my symptoms safely?'),
+      a: t('faq', 'a1', 'Health Orbit Pro™ applies evidence-based clinical triage rules curated by Dr. Pratap Madhukar (38 years clinical experience) and ICMR/WHO guidelines. Your inputs are mapped to symptom patterns and categorized into Red (Emergency), Yellow (Doctor in 24–48h), or Green (Safe Self-Care).')
     },
     {
-      q: 'Is my health data stored on your servers or shared with third parties?',
-      a: 'No. In strict adherence with the Indian Digital Personal Data Protection (DPDP) Act 2023, symptom inquiries in guest mode are processed locally in your session memory. We do not maintain server-side health dossiers, track personal health searches, or sell advertising profiles.'
+      q: t('faq', 'q2', 'Is my health data stored on your servers or shared with third parties?'),
+      a: t('faq', 'a2', 'No. In strict adherence with the Indian Digital Personal Data Protection (DPDP) Act 2023, symptom inquiries in guest mode are processed locally in your session memory. We do not maintain server-side health dossiers, track personal health searches, or sell advertising profiles.')
     },
     {
-      q: 'Does Health Orbit Pro™ provide prescriptions or replace my doctor?',
-      a: 'No. The platform is designed strictly for educational triage guidance and consultation preparation. It does not prescribe medications, adjust dosages, or replace in-person examination by a licensed medical practitioner.'
+      q: t('faq', 'q3', 'Does Health Orbit Pro™ provide prescriptions or replace my doctor?'),
+      a: t('faq', 'a3', 'No. The platform is designed strictly for educational triage guidance and consultation preparation. It does not prescribe medications, adjust dosages, or replace in-person examination by a licensed medical practitioner.')
     },
     {
-      q: 'Are all 1,000 clinical health cards genuinely free?',
-      a: 'Yes. All 1,000 clinical health cards across all 12 core specialties are 100% free for individuals and families, with no subscription barriers or paywalls.'
+      q: t('faq', 'q4', 'Are all 1,000 clinical health cards genuinely free?'),
+      a: t('faq', 'a4', 'Yes. All 1,000 clinical health cards across all 12 core specialties are 100% free for individuals and families, with no subscription barriers or paywalls.')
     },
     {
-      q: 'What should I do if I experience a sudden red-flag medical emergency?',
-      a: 'If you or someone nearby experiences sudden chest crushing pain, facial drooping, slurred speech, or worst-ever headache, immediately dial national emergency services (108 / 112 in India, 911 in the US) or proceed to the nearest hospital emergency room.'
+      q: t('faq', 'q5', 'What should I do if I experience a sudden red-flag medical emergency?'),
+      a: t('faq', 'a5', 'If you or someone nearby experiences sudden chest crushing pain, facial drooping, slurred speech, or worst-ever headache, immediately dial national emergency services (108 / 112 in India, 911 in the US) or proceed to the nearest hospital emergency room.')
     }
   ];
 
@@ -40,13 +42,13 @@ export default function FAQSection() {
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF5F0] border border-emerald-200 text-xs sm:text-sm font-bold text-[#0D5C3A]">
             <HelpCircle className="w-4 h-4 text-[#0D5C3A]" />
-            <span>Clinical Transparency & FAQ</span>
+            <span>{t('faq', 'badge', 'Clinical Transparency & FAQ')}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
-            Frequently Asked Questions
+            {t('faq', 'title', 'Frequently Asked Questions')}
           </h2>
           <p className="text-sm sm:text-base text-slate-600 font-medium">
-            Clear, honest answers regarding data privacy, clinical safety standards, and doctor-approved use.
+            {t('faq', 'subtitle', 'Clear, honest answers regarding data privacy, clinical safety standards, and doctor-approved use.')}
           </p>
         </div>
 
