@@ -52,11 +52,11 @@ export default function DashboardScreen({ navigateTo, showToast }) {
     return actAction;
   };
 
-  // Color mapping for content distribution
+  // Color mapping for content distribution (Health Orbit Pro™ clinical palette)
   const categoryPalette = {
-    'Medical Research': { bg: 'bg-[#1677E8]', fill: '#1677E8', text: 'text-[#1677E8]' },
-    'Health Guidelines': { bg: 'bg-[#F04B0A]', fill: '#F04B0A', text: 'text-[#F04B0A]' },
-    'Educational Content': { bg: 'bg-[#08165B]', fill: '#08165B', text: 'text-[#08165B]' },
+    'Medical Research': { bg: 'bg-[#0D5C3A]', fill: '#0D5C3A', text: 'text-[#0D5C3A]' },
+    'Health Guidelines': { bg: 'bg-[#D81B60]', fill: '#D81B60', text: 'text-[#D81B60]' },
+    'Educational Content': { bg: 'bg-[#0F766E]', fill: '#0F766E', text: 'text-[#0F766E]' },
     'Other Content': { bg: 'bg-emerald-500', fill: '#10b981', text: 'text-emerald-600' }
   };
 
@@ -81,21 +81,21 @@ export default function DashboardScreen({ navigateTo, showToast }) {
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-300">
-      
+
       {/* 1. TOP 5 STATISTICS CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        
+
         {/* Card 1: Total Documents */}
-        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-[#D6E6FA] dark:border-slate-800 shadow-xs hover:shadow-md transition-shadow">
+        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-emerald-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               {t('admin', 'kpiTotalDocs', 'Total Documents')}
             </span>
-            <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#1677E8] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#EBF5F0] text-[#0D5C3A] flex items-center justify-center">
               <FileText className="w-4 h-4 stroke-[2.3]" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-[#08165B] dark:text-white mb-1">
+          <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-1">
             {totalDocuments}
           </div>
           <div className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
@@ -105,14 +105,14 @@ export default function DashboardScreen({ navigateTo, showToast }) {
         </div>
 
         {/* Card 2: Approved Documents (All admin documents are approved knowledge sources) */}
-        <div className="bg-white rounded-2xl p-5 border border-[#D6E6FA] shadow-xs hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-5 border border-emerald-200/80 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('admin', 'kpiApprovedDocs', 'Approved Documents')}</span>
             <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <CheckCircle className="w-4 h-4 stroke-[2.3]" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-[#08165B] mb-1">
+          <div className="text-2xl sm:text-3xl font-black text-slate-900 mb-1">
             {approvedDocuments}
           </div>
           <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
@@ -121,48 +121,48 @@ export default function DashboardScreen({ navigateTo, showToast }) {
         </div>
 
         {/* Card 3: Knowledge Topics */}
-        <div className="bg-white rounded-2xl p-5 border border-[#D6E6FA] shadow-xs hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-5 border border-emerald-200/80 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('admin', 'kpiKnowledgeTopics', 'Knowledge Topics')}</span>
-            <div className="w-9 h-9 rounded-xl bg-orange-50 text-[#F04B0A] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-pink-50 text-[#D81B60] flex items-center justify-center">
               <Tag className="w-4 h-4 stroke-[2.3]" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-[#08165B] mb-1">
+          <div className="text-2xl sm:text-3xl font-black text-slate-900 mb-1">
             {knowledgeTopicsCount}
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#F04B0A]">
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#D81B60]">
             <span>{t('admin', 'kpiTopicsSub', 'Categorized clinical tags')}</span>
           </div>
         </div>
 
         {/* Card 4: Indexed Content */}
-        <div className="bg-white rounded-2xl p-5 border border-[#D6E6FA] shadow-xs hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-5 border border-emerald-200/80 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('admin', 'kpiIndexedContent', 'Indexed Content')}</span>
-            <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-teal-50 text-[#0F766E] flex items-center justify-center">
               <Database className="w-4 h-4 stroke-[2.3]" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-[#08165B] mb-1">
+          <div className="text-2xl sm:text-3xl font-black text-slate-900 mb-1">
             {totalChunks} <span className="text-sm font-bold text-slate-400">{t('admin', 'chunksLabel', 'chunks')}</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-purple-600">
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#0F766E]">
             <span>{indexedContentPercent}% {t('admin', 'vectorizedLabel', 'vectorized')}</span>
           </div>
         </div>
 
         {/* Card 5: AI Readiness (Dynamic calculation, not a hardcoded 100%) */}
-        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-[#D6E6FA] dark:border-slate-800 shadow-xs hover:shadow-md transition-shadow">
+        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-emerald-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               {t('admin', 'aiReadiness', 'AI Readiness')}
             </span>
-            <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#08165B] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#EBF5F0] text-[#0D5C3A] flex items-center justify-center">
               <Activity className="w-4 h-4 stroke-[2.3]" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-[#1677E8] mb-1">
+          <div className="text-2xl sm:text-3xl font-black text-[#0D5C3A] dark:text-emerald-400 mb-1">
             {aiReadinessScore}%
           </div>
           <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
@@ -175,20 +175,20 @@ export default function DashboardScreen({ navigateTo, showToast }) {
 
       {/* 2. MAIN DASHBOARD SPLIT: System Health + Content Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* SECTION A: AI SYSTEM HEALTH (2 cols on desktop) */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-[#D6E6FA] shadow-xs">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-[#D6E6FA]">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-emerald-200/80 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-emerald-100">
             <div>
-              <h2 className="text-base sm:text-lg font-black text-[#08165B] flex items-center gap-2">
-                <Cpu className="w-5 h-5 text-[#1677E8]" />
+              <h2 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+                <Cpu className="w-5 h-5 text-[#0D5C3A]" />
                 <span>{t('admin', 'aiHealthTitle', 'AI System Health & Vector Pipeline')}</span>
               </h2>
               <p className="text-xs text-slate-500 font-medium mt-0.5">
                 {t('admin', 'aiHealthSubtitle', 'Real-time metrics for LLM connection, embedding retrieval, and grounding accuracy.')}
               </p>
             </div>
-            
+
             <div className="flex items-center gap-2 self-start sm:self-auto">
               <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -198,16 +198,16 @@ export default function DashboardScreen({ navigateTo, showToast }) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
-            
+
             {/* Health Item 1: Model Connection */}
-            <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800 flex items-start justify-between">
+            <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/70 dark:border-slate-800 flex items-start justify-between">
               <div>
                 <div className="text-xs font-bold text-slate-500 dark:text-slate-400">{t('admin', 'modelConnection', 'Model Connection')}</div>
-                <div className="text-sm font-black text-[#08165B] dark:text-white mt-0.5">{aiConfig.model}</div>
+                <div className="text-sm font-black text-slate-900 dark:text-white mt-0.5">{aiConfig.model}</div>
                 <div className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-2 flex items-center gap-2">
-                  <span>{t('admin', 'latencyLabel', 'Latency:')} <strong className="text-[#08165B] dark:text-white">{aiConfig.latencyMs} ms</strong></span>
+                  <span>{t('admin', 'latencyLabel', 'Latency:')} <strong className="text-slate-900 dark:text-white">{aiConfig.latencyMs} ms</strong></span>
                   <span>•</span>
-                  <span>{t('admin', 'providerLabel', 'Provider:')} <strong className="text-[#08165B] dark:text-white">{aiConfig.provider}</strong></span>
+                  <span>{t('admin', 'providerLabel', 'Provider:')} <strong className="text-slate-900 dark:text-white">{aiConfig.provider}</strong></span>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 text-[10px] font-bold">
@@ -216,14 +216,14 @@ export default function DashboardScreen({ navigateTo, showToast }) {
             </div>
 
             {/* Health Item 2: Knowledge Retrieval */}
-            <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800 flex items-start justify-between">
+            <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/70 dark:border-slate-800 flex items-start justify-between">
               <div>
                 <div className="text-xs font-bold text-slate-500 dark:text-slate-400">{t('admin', 'knowledgeRetrieval', 'Knowledge Retrieval')}</div>
-                <div className="text-sm font-black text-[#08165B] dark:text-white mt-0.5">{t('admin', 'vectorHybridIndex', 'Vector Hybrid Index')}</div>
+                <div className="text-sm font-black text-slate-900 dark:text-white mt-0.5">{t('admin', 'vectorHybridIndex', 'Vector Hybrid Index')}</div>
                 <div className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-2 flex items-center gap-2">
-                  <span>{t('admin', 'simThreshold', 'Sim. Threshold:')} <strong className="text-[#08165B] dark:text-white">{aiConfig.retrievalSettings.similarityThreshold}</strong></span>
+                  <span>{t('admin', 'simThreshold', 'Sim. Threshold:')} <strong className="text-slate-900 dark:text-white">{aiConfig.retrievalSettings.similarityThreshold}</strong></span>
                   <span>•</span>
-                  <span>{t('admin', 'topK', 'Top-K:')} <strong className="text-[#08165B] dark:text-white">{aiConfig.retrievalSettings.topKChunks}</strong></span>
+                  <span>{t('admin', 'topK', 'Top-K:')} <strong className="text-slate-900 dark:text-white">{aiConfig.retrievalSettings.topKChunks}</strong></span>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 text-[10px] font-bold">
@@ -232,10 +232,10 @@ export default function DashboardScreen({ navigateTo, showToast }) {
             </div>
 
             {/* Health Item 3: Response Quality */}
-            <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800 flex items-start justify-between">
+            <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/70 dark:border-slate-800 flex items-start justify-between">
               <div>
                 <div className="text-xs font-bold text-slate-500 dark:text-slate-400">{t('admin', 'responseQuality', 'Response Quality')}</div>
-                <div className="text-sm font-black text-[#08165B] dark:text-white mt-0.5">{t('admin', 'evidenceGrounded', 'Evidence Grounded')}</div>
+                <div className="text-sm font-black text-slate-900 dark:text-white mt-0.5">{t('admin', 'evidenceGrounded', 'Evidence Grounded')}</div>
                 <div className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-2 flex items-center gap-2">
                   <span>{t('admin', 'groundingLabel', 'Grounding:')} <strong className="text-emerald-600 dark:text-emerald-400">98.2%</strong></span>
                   <span>•</span>
@@ -248,17 +248,17 @@ export default function DashboardScreen({ navigateTo, showToast }) {
             </div>
 
             {/* Health Item 4: Safety Filters */}
-            <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800 flex items-start justify-between">
+            <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/70 dark:border-slate-800 flex items-start justify-between">
               <div>
                 <div className="text-xs font-bold text-slate-500 dark:text-slate-400">{t('admin', 'safetyFilters', 'Safety Filters')}</div>
-                <div className="text-sm font-black text-[#08165B] dark:text-white mt-0.5">{t('admin', 'clinicalRedFlagGuard', 'Clinical Red-Flag Guard')}</div>
+                <div className="text-sm font-black text-slate-900 dark:text-white mt-0.5">{t('admin', 'clinicalRedFlagGuard', 'Clinical Red-Flag Guard')}</div>
                 <div className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-2 flex items-center gap-2">
                   <span>{t('admin', 'noDiagnosisEnforced', 'No Diagnosis: Enforced')}</span>
                   <span>•</span>
                   <span>{t('admin', 'emergencyActive', 'Emergency: Active')}</span>
                 </div>
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950/60 text-[#1677E8] dark:text-blue-300 border border-blue-200 dark:border-blue-800 text-[10px] font-bold">
+              <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-[#0D5C3A] dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-[10px] font-bold">
                 {t('admin', 'protectedBadge', 'Protected')}
               </span>
             </div>
@@ -266,11 +266,11 @@ export default function DashboardScreen({ navigateTo, showToast }) {
           </div>
 
           {/* Quick link to AI config */}
-          <div className="mt-5 pt-3 border-t border-[#D6E6FA] flex items-center justify-between text-xs">
+          <div className="mt-5 pt-3 border-t border-emerald-100 flex items-center justify-between text-xs">
             <span className="text-slate-500">{t('admin', 'safetyInstructionsNote', 'All retrieval and safety instructions adhere to global health guidelines.')}</span>
             <button
               onClick={() => navigateTo('ai')}
-              className="text-[#1677E8] hover:text-[#08165B] font-bold flex items-center gap-1 cursor-pointer"
+              className="text-[#0D5C3A] hover:text-[#0A4D30] font-bold flex items-center gap-1 cursor-pointer"
             >
               <span>{t('admin', 'manageAIEngineBtn', 'Manage AI Engine')}</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -279,10 +279,10 @@ export default function DashboardScreen({ navigateTo, showToast }) {
         </div>
 
         {/* SECTION B: CONTENT DISTRIBUTION DONUT CHART */}
-        <div className="bg-white rounded-2xl p-6 border border-[#D6E6FA] shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-6 border border-emerald-200/80 shadow-xs flex flex-col justify-between">
           <div>
-            <h2 className="text-base sm:text-lg font-black text-[#08165B] flex items-center gap-2">
-              <Layers className="w-5 h-5 text-[#F04B0A]" />
+            <h2 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+              <Layers className="w-5 h-5 text-[#D81B60]" />
               <span>{t('admin', 'contentDistributionTitle', 'Content Distribution')}</span>
             </h2>
             <p className="text-xs text-slate-500 font-medium mt-0.5">
@@ -315,7 +315,7 @@ export default function DashboardScreen({ navigateTo, showToast }) {
               </svg>
               {/* Inner Center Label */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span className="text-2xl font-black text-[#08165B]">{totalDocuments}</span>
+                <span className="text-2xl font-black text-slate-900">{totalDocuments}</span>
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('admin', 'docsLabel', 'DOCS')}</span>
               </div>
             </div>
@@ -336,7 +336,7 @@ export default function DashboardScreen({ navigateTo, showToast }) {
 
           <button
             onClick={() => navigateTo('library')}
-            className="w-full mt-2 py-2 rounded-xl bg-blue-50 text-[#1677E8] font-bold text-xs hover:bg-blue-100/60 transition-colors cursor-pointer text-center"
+            className="w-full mt-2 py-2 rounded-xl bg-[#EBF5F0] text-[#0D5C3A] font-bold text-xs hover:bg-emerald-100/80 border border-emerald-200/70 transition-colors cursor-pointer text-center"
           >
             {t('admin', 'exploreLibraryBtn', 'Explore Library')}
           </button>
@@ -346,13 +346,13 @@ export default function DashboardScreen({ navigateTo, showToast }) {
 
       {/* 3. BOTTOM SECTION: Recent Activity + Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* SECTION C: RECENT ACTIVITY (2 cols) */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-[#D6E6FA] shadow-xs">
-          <div className="flex items-center justify-between pb-4 border-b border-[#D6E6FA]">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-emerald-200/80 shadow-xs">
+          <div className="flex items-center justify-between pb-4 border-b border-emerald-100">
             <div>
-              <h2 className="text-base sm:text-lg font-black text-[#08165B] flex items-center gap-2">
-                <Clock className="w-5 h-5 text-[#1677E8]" />
+              <h2 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+                <Clock className="w-5 h-5 text-[#0D5C3A]" />
                 <span>{t('admin', 'recentActivityTitle', 'Recent System Activity')}</span>
               </h2>
               <p className="text-xs text-slate-500 font-medium mt-0.5">
@@ -365,11 +365,11 @@ export default function DashboardScreen({ navigateTo, showToast }) {
             {activities.slice(0, 5).map((act) => (
               <div key={act.id} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-blue-50 text-[#1677E8] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                  <div className="w-8 h-8 rounded-full bg-[#EBF5F0] text-[#0D5C3A] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
                     {act.action.includes('Upload') ? 'UP' : act.action.includes('User') ? 'US' : 'AI'}
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#08165B]">{getActionLabel(act.action)}</div>
+                    <div className="text-xs font-bold text-slate-900">{getActionLabel(act.action)}</div>
                     <div className="text-xs text-slate-600 font-medium">{act.target}</div>
                     <div className="text-[10px] text-slate-400 mt-0.5">{t('admin', 'actBy', 'By')} {act.user} • {getCategoryName(act.category)}</div>
                   </div>
@@ -387,10 +387,10 @@ export default function DashboardScreen({ navigateTo, showToast }) {
         </div>
 
         {/* SECTION D: QUICK ACTIONS */}
-        <div className="bg-white rounded-2xl p-6 border border-[#D6E6FA] shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-6 border border-emerald-200/80 shadow-xs flex flex-col justify-between">
           <div>
-            <h2 className="text-base sm:text-lg font-black text-[#08165B] flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#F04B0A]" />
+            <h2 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-[#D81B60]" />
               <span>{t('admin', 'quickActionsTitle', 'Admin Quick Actions')}</span>
             </h2>
             <p className="text-xs text-slate-500 font-medium mt-0.5">
@@ -400,74 +400,74 @@ export default function DashboardScreen({ navigateTo, showToast }) {
             <div className="mt-5 space-y-2.5">
               <button
                 onClick={() => navigateTo('upload')}
-                className="w-full flex items-center justify-between p-3.5 rounded-xl border border-blue-200 hover:border-[#1677E8] bg-blue-50/40 hover:bg-blue-50 transition-all text-left cursor-pointer group"
+                className="w-full flex items-center justify-between p-3.5 rounded-xl border border-emerald-200 hover:border-[#0D5C3A] bg-[#F4F9F6] hover:bg-[#EBF5F0] transition-all text-left cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#1677E8] text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <div className="w-9 h-9 rounded-xl bg-[#0D5C3A] text-white flex items-center justify-center shrink-0 shadow-xs">
                     <UploadCloud className="w-4 h-4 stroke-[2.2]" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#08165B] group-hover:text-[#1677E8]">
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-[#0D5C3A]">
                       {t('admin', 'qaUploadDoc', 'Upload Document')}
                     </div>
                     <div className="text-[11px] text-slate-500">{t('admin', 'qaUploadDocSub', 'Add research or guidelines')}</div>
                   </div>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#1677E8]" />
+                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#0D5C3A]" />
               </button>
 
               <button
                 onClick={() => navigateTo('library')}
-                className="w-full flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-[#1677E8] bg-slate-50/50 hover:bg-blue-50/40 transition-all text-left cursor-pointer group"
+                className="w-full flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-[#0D5C3A] bg-slate-50/50 hover:bg-[#EBF5F0]/60 transition-all text-left cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#08165B] text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <div className="w-9 h-9 rounded-xl bg-[#0F766E] text-white flex items-center justify-center shrink-0 shadow-xs">
                     <BookOpen className="w-4 h-4 stroke-[2.2]" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#08165B] group-hover:text-[#1677E8]">
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-[#0D5C3A]">
                       {t('admin', 'qaBrowseLib', 'Browse Library')}
                     </div>
                     <div className="text-[11px] text-slate-500">{t('admin', 'qaBrowseLibSub', 'Inspect chunks & metadata')}</div>
                   </div>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#1677E8]" />
+                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#0D5C3A]" />
               </button>
 
               <button
                 onClick={() => navigateTo('ai')}
-                className="w-full flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-[#1677E8] bg-slate-50/50 hover:bg-blue-50/40 transition-all text-left cursor-pointer group"
+                className="w-full flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-[#D81B60] bg-slate-50/50 hover:bg-pink-50/40 transition-all text-left cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#F04B0A] text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <div className="w-9 h-9 rounded-xl bg-[#D81B60] text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Cpu className="w-4 h-4 stroke-[2.2]" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#08165B] group-hover:text-[#F04B0A]">
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-[#D81B60]">
                       {t('admin', 'qaManageAI', 'Manage AI Engine')}
                     </div>
                     <div className="text-[11px] text-slate-500">{t('admin', 'qaManageAISub', 'Model tuning & playground')}</div>
                   </div>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#F04B0A]" />
+                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#D81B60]" />
               </button>
 
               <button
                 onClick={() => navigateTo('settings')}
-                className="w-full flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-[#1677E8] bg-slate-50/50 hover:bg-blue-50/40 transition-all text-left cursor-pointer group"
+                className="w-full flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-[#0D5C3A] bg-slate-50/50 hover:bg-[#EBF5F0]/60 transition-all text-left cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-slate-700 text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Sliders className="w-4 h-4 stroke-[2.2]" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#08165B] group-hover:text-[#1677E8]">
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-[#0D5C3A]">
                       {t('admin', 'qaPlatformSettings', 'Platform Settings')}
                     </div>
                     <div className="text-[11px] text-slate-500">{t('admin', 'qaPlatformSettingsSub', 'System & admin security')}</div>
                   </div>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#1677E8]" />
+                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#0D5C3A]" />
               </button>
             </div>
           </div>

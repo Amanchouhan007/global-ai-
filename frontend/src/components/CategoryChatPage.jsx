@@ -3,6 +3,7 @@ import { ArrowLeft, Sparkles, Stethoscope } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
 import FloatingHealthChatbot from './dashboard/FloatingHealthChatbot';
+import CategoryMicroApp from './microapps/CategoryMicroApp';
 import { getClientCategories } from './ExploreCategories';
 import { PORTAL_CATEGORIES } from '../data/portalCategories';
 import { useLanguage } from '../context/LanguageContext';
@@ -92,6 +93,10 @@ export default function CategoryChatPage({
 
   const handleTopicClick = (promptText) => {
     setExternalPrompt({ text: promptText, nonce: Date.now() });
+    const chatEl = document.getElementById('category-ai-chat');
+    if (chatEl) {
+      chatEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -194,15 +199,27 @@ export default function CategoryChatPage({
           </div>
         </section>
 
+        {/* Card-Specific Interactive Micro-App */}
+        <section className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-8 py-3">
+          <CategoryMicroApp
+            key={`microapp-${resolvedCategory.id}`}
+            categoryId={resolvedCategory.id}
+            category={resolvedCategory}
+            onAskAI={handleTopicClick}
+          />
+        </section>
+
         {/* Card-Specific Dynamic Chat Assistant */}
-        <FloatingHealthChatbot
-          key={resolvedCategory.id}
-          inline={true}
-          user={user}
-          activeCategory={resolvedCategory}
-          customQuickPrompts={categoryQuickPrompts}
-          externalPrompt={externalPrompt}
-        />
+        <div id="category-ai-chat" className="scroll-mt-20">
+          <FloatingHealthChatbot
+            key={resolvedCategory.id}
+            inline={true}
+            user={user}
+            activeCategory={resolvedCategory}
+            customQuickPrompts={categoryQuickPrompts}
+            externalPrompt={externalPrompt}
+          />
+        </div>
       </main>
 
       <Footer

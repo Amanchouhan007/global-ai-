@@ -376,77 +376,47 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                 </p>
               </div>
 
-              {/* Large Elevated Input Box */}
-              <div className="space-y-3">
-                <form
-                  onSubmit={handleAnalyzeSymptoms}
-                  className="bg-white rounded-2xl border border-emerald-200/90 shadow-[0_8px_30px_rgba(13,92,58,0.06)] hover:border-emerald-300 focus-within:border-[#0D5C3A] focus-within:ring-2 focus-within:ring-emerald-500/15 transition-all p-3 sm:p-4"
-                >
-                  <textarea
-                    rows={3}
-                    value={promptText}
-                    onChange={(e) => setPromptText(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        handleAnalyzeSymptoms();
-                      }
-                    }}
-                    placeholder={
-                      activeCategory
-                        ? `${getCategoryName(activeCategory)}: ${t('dashboard', 'askAnythingPlaceholder', 'Describe what you are experiencing, when it began, and any accompanying discomfort...')}`
-                        : t('dashboard', 'askAnythingPlaceholder', 'What symptom are you worried about? e.g. cough, headache, stomach pain, chest heaviness, fever...')
+              {/* Hero-Themed Interactive Clinical Chatboard */}
+              <div className="w-full">
+                <FloatingHealthChatbot
+                  key={`dashboard-chat-${activeCategory?.id || 'symptoms'}`}
+                  inline={true}
+                  compact={true}
+                  user={effectiveUser}
+                  activeCategory={
+                    activeCategory || {
+                      id: 'symptoms',
+                      title: 'My Symptoms',
+                      name: 'My Symptoms',
+                      desc: 'Immediate emergency triage, red-flag detection, and 1,000+ acute clinical symptom checklists.',
+                      isMain: true
                     }
-                    className="w-full text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm sm:text-base font-normal resize-none focus:outline-none bg-transparent"
-                  />
-
-                  {/* Input Actions Footer */}
-                  <div className="flex items-center justify-between pt-2.5 border-t border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500">
-                      <span className="hidden sm:inline">{t('dashboard', 'inputHint', 'Press Enter to check • Shift+Enter for newline')}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      {/* Voice Dictation Button */}
-                      <button
-                        type="button"
-                        onClick={handleVoiceInput}
-                        title={t('dashboard', 'voiceDictate', 'Voice Dictation')}
-                        className={`p-2 rounded-xl transition-colors cursor-pointer ${isListening
-                          ? 'bg-red-500 text-white animate-pulse'
-                          : 'text-[#1677E8] dark:text-blue-400 hover:text-[#08165B] dark:hover:text-blue-200 hover:bg-blue-50 dark:hover:bg-slate-800 border border-blue-100 dark:border-slate-700'
-                          }`}
-                      >
-                        <Mic className="w-4 h-4" />
-                      </button>
-
-                      {/* Signature Check a Symptom Button */}
-                      <button
-                        type="submit"
-                        disabled={!promptText.trim()}
-                        className="py-2.5 px-5 sm:px-6 rounded-full bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] hover:from-[#0A4D30] hover:to-[#083F27] text-white text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                      >
-                        <span>{t('dashboard', 'analyzeSymptoms', 'Check a Symptom')}</span>
-                        <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-                      </button>
-                    </div>
-                  </div>
-                </form>
-
-                {/* Example Prompt Chips */}
-                <div className="flex flex-wrap items-center gap-2 pt-0.5">
-                  <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500">{t('chat', 'tryLabel', 'Try asking:')}</span>
-                  {exampleChips.map((chip, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => handleSelectPromptChip(chip)}
-                      className="px-3 py-1 rounded-full bg-white dark:bg-slate-800/90 hover:bg-blue-50/70 dark:hover:bg-slate-700/80 border border-blue-200/80 dark:border-slate-700 text-[#08165B] dark:text-slate-200 hover:text-[#1677E8] dark:hover:text-blue-300 text-xs font-medium transition-all shadow-2xs hover:shadow-xs cursor-pointer truncate max-w-xs"
-                    >
-                      {chip}
-                    </button>
-                  ))}
-                </div>
+                  }
+                  externalPrompt={initialSymptom ? { text: initialSymptom, nonce: 'init' } : null}
+                  onMessageSent={(msgText) => {
+                    setPromptText(msgText);
+                    const lower = msgText.toLowerCase();
+                    let nextSev = 'GREEN';
+                    if (lower.includes('chest pain') || lower.includes('breathing') || lower.includes('blood') || lower.includes('severe') || lower.includes('unconscious')) {
+                      nextSev = 'RED';
+                    } else if (lower.includes('fever') || lower.includes('cough') || lower.includes('days') || lower.includes('headache') || lower.includes('sugar') || lower.includes('pain')) {
+                      nextSev = 'YELLOW';
+                    }
+                    setActiveSeverity(nextSev);
+                    const newConv = {
+                      id: `conv-${Date.now()}`,
+                      title: msgText.length > 40 ? `${msgText.substring(0, 40)}...` : msgText,
+                      categoryName: activeCategory ? activeCategory.name : 'General Triage',
+                      date: new Date().toISOString(),
+                      preview: activeCategory
+                        ? `Assessed in ${activeCategory.name} mode. Clinical severity categorized under ${nextSev}.`
+                        : `General symptom assessment. Clinical severity categorized under ${nextSev}.`,
+                      messages: []
+                    };
+                    const updated = userPortalStorage.saveConversation(effectiveUser?.email, newConv);
+                    setConversations(updated);
+                  }}
+                />
               </div>
 
               {/* Interactive "Quick Focus Topics" Shelf (Eliminates empty feeling) */}

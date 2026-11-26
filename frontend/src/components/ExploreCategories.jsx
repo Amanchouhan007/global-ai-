@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { PORTAL_CATEGORIES } from '../data/portalCategories';
 import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
+import FloatingHealthChatbot from './dashboard/FloatingHealthChatbot';
 
 export function getClientCategories(t = (_ns, _k, fb) => fb) {
   // Exact 10 Categories with Rich Clinical Descriptions & Topic Counts (Fully Dynamic across 6 Languages)
@@ -159,10 +161,12 @@ export function getClientCategories(t = (_ns, _k, fb) => fb) {
   ];
 }
 
-export default function ExploreCategories({ onSelectCategory }) {
+export default function ExploreCategories({ onActiveCategoryChange }) {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const [showAllModal, setShowAllModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategoryId, setActiveCategoryId] = useState('symptoms');
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -176,23 +180,40 @@ export default function ExploreCategories({ onSelectCategory }) {
 
   const clientCategories = getClientCategories(t);
 
-  const handleCardClick = (cat) => {
+  const buildMatchedCategory = (cat) => {
+    const label = cat.title || cat.name || 'Health Guidance';
     const matchedPortal = PORTAL_CATEGORIES.find(
-      c => c.id === cat.id || c.name.toLowerCase().includes(cat.title.toLowerCase().replace('my ', ''))
+      c => c.id === cat.id || c.name.toLowerCase().includes(label.toLowerCase().replace('my ', ''))
     );
-    const matched = {
+    return {
       ...(matchedPortal || {}),
       ...cat,
       id: cat.id,
-      name: cat.title,
-      title: cat.title,
-      description: cat.desc || matchedPortal?.description || `Clinical insights and symptom guidance for ${cat.title}.`,
+      name: label,
+      title: label,
+      description: cat.desc || cat.description || matchedPortal?.description || `Clinical insights and symptom guidance for ${label}.`,
       dotColor: matchedPortal?.dotColor || 'bg-emerald-500'
     };
+  };
 
-    if (onSelectCategory) {
-      onSelectCategory(matched);
+  const activeCategorySource = activeCategoryId
+    ? clientCategories.find((c) => c.id === activeCategoryId) ||
+      PORTAL_CATEGORIES.find((c) => c.id === activeCategoryId)
+    : null;
+  const activeCategory = activeCategorySource ? buildMatchedCategory(activeCategorySource) : null;
+
+  const selectActiveCategory = (id) => {
+    setActiveCategoryId(id);
+    if (onActiveCategoryChange) {
+      const src = id
+        ? clientCategories.find((c) => c.id === id) || PORTAL_CATEGORIES.find((c) => c.id === id)
+        : null;
+      onActiveCategoryChange(src ? buildMatchedCategory(src) : null);
     }
+  };
+
+  const handleCardClick = (cat) => {
+    selectActiveCategory(cat.id);
   };
 
   const filteredAllCategories = PORTAL_CATEGORIES.filter(cat => {
@@ -229,70 +250,49 @@ export default function ExploreCategories({ onSelectCategory }) {
         </button>
       </div>
 
-      {/* 10 Clinical Category Cards: exactly 2 columns on mobile, 3 on tablet, 5 on desktop */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-5">
-        {clientCategories.map((cat, idx) => {
-          const Icon = cat.icon;
+      {/* 10 Clinical Category Pills acting as an inline Micro-App Navbar */}
+      <div
+        role="tablist"
+        aria-label={t('categories', 'title', 'Explore by Category')}
+        className="flex flex-wrap lg:flex-nowrap items-center gap-2 overflow-x-auto no-scrollbar py-1"
+      >
+        {clientCategories.map((cat) => {
+          const isActive = activeCategory?.id === cat.id;
           return (
-            <div
-              key={idx}
+            <button
+              key={cat.id}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
               onClick={() => handleCardClick(cat)}
-              className={`p-4 sm:p-5 rounded-2xl sm:rounded-3xl border ${cat.borderColor} ${cat.bgColor} ${
+              className={`shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] cursor-pointer select-none whitespace-nowrap ${
                 cat.isMain
-                  ? 'ring-2 sm:ring-[2.5px] ring-[#D81B60] shadow-[0_8px_30px_rgba(216,27,96,0.16)] sm:scale-[1.02] z-10'
-                  : 'shadow-2xs'
-              } hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between group hover:-translate-y-1 select-none min-h-[140px] sm:min-h-[190px]`}
+                  ? 'bg-gradient-to-r from-[#D81B60] to-[#BE185D] hover:from-[#BE185D] hover:to-[#9D174D] text-white font-extrabold ring-2 ring-pink-300/90 shadow-[0_4px_14px_rgba(216,27,96,0.32)]'
+                  : isActive
+                  ? 'bg-[#0D5C3A] text-white font-bold shadow-sm border border-[#0D5C3A] ring-2 ring-emerald-200'
+                  : 'bg-white text-slate-700 font-bold hover:bg-[#0D5C3A] hover:text-white border border-slate-200/90 hover:border-[#0D5C3A] shadow-2xs'
+              }`}
             >
-              <div className="space-y-2 text-left">
-                {/* Top Row: Icon + Badge */}
-                <div className="flex items-center justify-between gap-1.5">
-                  <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-white flex items-center justify-center shrink-0 ${
-                    cat.isMain ? 'shadow-sm ring-1 ring-pink-300' : 'shadow-2xs'
-                  } ${cat.iconColor}`}>
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.3]" />
-                  </div>
-                  <span className={`text-[10px] sm:text-xs font-black px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full ${
-                    cat.isMain
-                      ? 'bg-[#D81B60] text-white shadow-xs border border-transparent'
-                      : 'bg-white/90 text-slate-700 shadow-2xs border border-slate-200/80'
-                  }`}>
-                    {cat.badge}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h3 className={`font-black ${cat.isMain ? 'text-sm sm:text-[17px]' : 'text-xs sm:text-base'} leading-tight tracking-tight ${cat.textColor}`}>
-                  {cat.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-[11px] sm:text-xs text-slate-600 font-medium leading-relaxed line-clamp-2">
-                  {cat.desc}
-                </p>
-
-                {/* Condition Tags (hidden on tiny screens, shown on md+) */}
-                <div className="hidden md:flex flex-wrap gap-1 pt-1">
-                  {cat.tags.slice(0, 3).map((tag, tIdx) => (
-                    <span key={tIdx} className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-white/70 text-slate-600 border border-slate-200/60">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bottom Action Strip */}
-              <div className="pt-2 sm:pt-3 border-t border-black/5 flex items-center justify-between text-left mt-2">
-                <span className={`text-[11px] sm:text-xs font-black ${cat.textColor} group-hover:underline`}>
-                  {t('categories', 'browseTopics', 'Browse Topics')}
-                </span>
-                <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white border ${cat.arrowBorder} flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-110 transition-transform`}>
-                  <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                </div>
-              </div>
-            </div>
+              {cat.isMain && <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0" />}
+              <span>{cat.title}</span>
+            </button>
           );
         })}
       </div>
+
+      {/* Inline Chatboard: opens right below the buttons without navigating away */}
+      {activeCategory && (
+        <div id="inline-category-chatboard" className="mt-4 max-w-2xl mx-auto animate-fadeIn">
+          <FloatingHealthChatbot
+            key={`inline-chat-${activeCategory.id}`}
+            inline={true}
+            compact={true}
+            user={user}
+            activeCategory={activeCategory}
+            onClose={() => selectActiveCategory(null)}
+          />
+        </div>
+      )}
 
       {/* View All Categories Modal */}
       {showAllModal && (
@@ -351,7 +351,7 @@ export default function ExploreCategories({ onSelectCategory }) {
                     type="button"
                     onClick={() => {
                       setShowAllModal(false);
-                      if (onSelectCategory) onSelectCategory(cat);
+                      selectActiveCategory(cat.id);
                     }}
                     className="p-3 rounded-xl border border-slate-200 hover:border-[#0D5C3A] hover:bg-[#F2F8F5] text-left transition-all cursor-pointer group flex items-start gap-2.5"
                   >
