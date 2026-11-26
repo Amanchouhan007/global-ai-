@@ -54,7 +54,7 @@ export default function MinimalAIAssessmentCard({
       className={`rounded-2xl border p-3.5 xs:p-4 sm:p-6 lg:p-7 space-y-4 sm:space-y-5 animate-in fade-in duration-200 transition-colors duration-200 w-full max-w-full overflow-hidden ${
         isDark
           ? 'bg-[#0F1C36] border-slate-700 shadow-[0_4px_25px_rgba(0,0,0,0.4)] text-slate-100'
-          : 'bg-white border-blue-200/90 shadow-[0_4px_25px_rgba(8,22,91,0.05)] text-slate-900'
+          : 'bg-white border-emerald-200/90 shadow-[0_4px_25px_rgba(13,92,58,0.06)] text-slate-900'
       }`}
     >
       
@@ -70,8 +70,8 @@ export default function MinimalAIAssessmentCard({
         </div>
 
         {/* Interactive Severity Toggle for Client Demo */}
-        <div className="flex flex-wrap sm:flex-nowrap items-center bg-blue-50/70 dark:bg-slate-800/80 border border-blue-100 dark:border-slate-700 rounded-xl p-0.5 sm:p-1 text-xs font-medium self-start sm:self-auto max-w-full">
-          <span className="text-[10px] uppercase font-bold text-[#08165B] dark:text-blue-300 px-2 hidden md:inline">Demo Modes:</span>
+        <div className="flex flex-wrap sm:flex-nowrap items-center bg-[#F4F9F6] dark:bg-slate-800/80 border border-emerald-200/80 dark:border-slate-700 rounded-xl p-0.5 sm:p-1 text-xs font-medium self-start sm:self-auto max-w-full">
+          <span className="text-[10px] uppercase font-bold text-[#0D5C3A] dark:text-emerald-300 px-2 hidden md:inline">Demo Modes:</span>
           <button
             type="button"
             onClick={() => onSelectSeverity('GREEN')}
@@ -111,7 +111,7 @@ export default function MinimalAIAssessmentCard({
 
       {/* 2. Assessment Title & Plain-Language Summary */}
       <div className="space-y-2">
-        <h3 className="text-base sm:text-lg font-bold text-[#08165B] dark:text-white tracking-tight">
+        <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">
           {scenario.title}
         </h3>
         
@@ -122,14 +122,14 @@ export default function MinimalAIAssessmentCard({
 
       {/* 3. Bulleted Safe Next Steps */}
       <div className="space-y-2.5 pt-1">
-        <div className="text-xs font-bold uppercase tracking-wider text-[#08165B] dark:text-white">
+        <div className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
           {t('dashboard', 'safeNextSteps', 'Safe Next Steps:')}
         </div>
         
         <div className="space-y-2">
           {scenario.steps.map((step, idx) => (
             <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#1677E8] shrink-0 mt-2" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0D5C3A] shrink-0 mt-2" />
               <span>{step}</span>
             </div>
           ))}
@@ -144,9 +144,9 @@ export default function MinimalAIAssessmentCard({
           <button
             type="button"
             onClick={handleSave}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 hover:bg-blue-50/50 dark:hover:bg-slate-700 text-xs font-medium text-[#08165B] dark:text-slate-200 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 hover:bg-[#EBF5F0] dark:hover:bg-slate-700 text-xs font-medium text-[#0D5C3A] dark:text-slate-200 transition-colors cursor-pointer"
           >
-            {saved ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Bookmark className="w-3.5 h-3.5 text-[#1677E8]" />}
+            {saved ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Bookmark className="w-3.5 h-3.5 text-[#0D5C3A]" />}
             <span>{saved ? t('dashboard', 'savedReports', 'Saved to Library') : t('dashboard', 'savedReports', 'Save to Library')}</span>
           </button>
 
@@ -154,7 +154,7 @@ export default function MinimalAIAssessmentCard({
           <button
             type="button"
             onClick={handlePrint}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 hover:bg-blue-50/50 dark:hover:bg-slate-700 text-xs font-medium text-[#08165B] dark:text-slate-200 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 hover:bg-[#EBF5F0] dark:hover:bg-slate-700 text-xs font-medium text-[#0D5C3A] dark:text-slate-200 transition-colors cursor-pointer"
             title="Download PDF or Print"
           >
             <Download className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -165,7 +165,7 @@ export default function MinimalAIAssessmentCard({
           <button
             type="button"
             onClick={handleShare}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 hover:bg-blue-50/50 dark:hover:bg-slate-700 text-xs font-medium text-[#08165B] dark:text-slate-200 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 hover:bg-[#EBF5F0] dark:hover:bg-slate-700 text-xs font-medium text-[#0D5C3A] dark:text-slate-200 transition-colors cursor-pointer"
             title="Share via WhatsApp"
           >
             <Share2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -175,7 +175,7 @@ export default function MinimalAIAssessmentCard({
 
         {/* Small Verified Footer Badge */}
         <div className="flex items-start sm:items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium max-w-full">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#1677E8] shrink-0 mt-0.5 sm:mt-0" />
+          <ShieldCheck className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0 mt-0.5 sm:mt-0" />
           <span className="break-words leading-tight">{t('chat', 'groundedEvidence', 'Grounded in Verified Clinical Research PDFs • No Unverified Advice')}</span>
         </div>
 

@@ -115,10 +115,10 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
     <div className="space-y-6 animate-in fade-in duration-300">
       
       {/* Header Banner */}
-      <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-6 border border-[#D6E6FA] dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-6 border border-emerald-200/80 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-black text-[#08165B] dark:text-white flex items-center gap-2">
-            <Users className="w-6 h-6 text-[#1677E8]" />
+          <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <Users className="w-6 h-6 text-[#0D5C3A]" />
             <span>{t('admin', 'userMgmtTitle', 'User Management & Access Control')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">
@@ -128,7 +128,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
 
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-black text-xs transition-colors self-start sm:self-auto shadow-xs cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-black text-xs transition-colors self-start sm:self-auto shadow-xs cursor-pointer"
         >
           <UserPlus className="w-4 h-4 stroke-[2.2]" />
           <span>{t('admin', 'addNewUser', 'Add New User')}</span>
@@ -137,17 +137,17 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
 
       {/* USER STATISTICS CARDS */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-[#D6E6FA] dark:border-slate-800 shadow-xs">
+        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-emerald-200/80 dark:border-slate-800 shadow-xs">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
             {t('admin', 'totalUsers', 'Total Users')}
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-[#08165B] dark:text-white">{totalUsers}</div>
+          <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">{totalUsers}</div>
           <div className="text-[11px] text-slate-400 mt-1">
             {t('admin', 'registeredAccounts', 'Registered accounts')}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-[#D6E6FA] dark:border-slate-800 shadow-xs">
+        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-emerald-200/80 dark:border-slate-800 shadow-xs">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
             {t('admin', 'activeUsers', 'Active Users')}
           </div>
@@ -157,7 +157,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-[#D6E6FA] dark:border-slate-800 shadow-xs">
+        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-emerald-200/80 dark:border-slate-800 shadow-xs">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
             {t('admin', 'inactiveUsers', 'Inactive Users')}
           </div>
@@ -167,7 +167,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-[#D6E6FA] dark:border-slate-800 shadow-xs">
+        <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-emerald-200/80 dark:border-slate-800 shadow-xs">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
             {t('admin', 'recentlyRegistered', 'Recently Registered')}
           </div>
@@ -179,7 +179,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
       </div>
 
       {/* SEARCH & ROLE FILTER BAR */}
-      <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-[#D6E6FA] dark:border-slate-800 shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="bg-white dark:bg-[#0B132B] rounded-2xl p-5 border border-emerald-200/80 dark:border-slate-800 shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
         <div className="relative flex-1 w-full">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -187,7 +187,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t('admin', 'searchUserPlaceholder', 'Search users by full name or email address...')}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0F1C36] text-slate-800 dark:text-white focus:border-[#1677E8] outline-none text-xs sm:text-sm font-medium"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0F1C36] text-slate-800 dark:text-white focus:border-[#0D5C3A] outline-none text-xs sm:text-sm font-medium"
           />
         </div>
 
@@ -195,7 +195,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="px-3 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-bold text-[#08165B] dark:text-white bg-white dark:bg-[#0F1C36] outline-none"
+            className="px-3 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0F1C36] outline-none"
           >
             <option value="All">{t('admin', 'allRoles', 'All Roles')}</option>
             <option value="Admin">{t('admin', 'adminRole', 'Admin')}</option>
@@ -205,7 +205,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-bold text-[#08165B] dark:text-white bg-white dark:bg-[#0F1C36] outline-none"
+            className="px-3 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0F1C36] outline-none"
           >
             <option value="All">{t('admin', 'allUserStatuses', 'All Statuses')}</option>
             <option value="Active">{t('admin', 'activeStatus', 'Active')}</option>
@@ -215,11 +215,11 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
       </div>
 
       {/* USER TABLE */}
-      <div className="bg-white dark:bg-[#0B132B] rounded-2xl border border-[#D6E6FA] dark:border-slate-800 shadow-xs overflow-hidden">
+      <div className="bg-white dark:bg-[#0B132B] rounded-2xl border border-emerald-200/80 dark:border-slate-800 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#F2F7FF] dark:bg-[#0F1C36] border-b border-[#D6E6FA] dark:border-slate-800 text-[11px] font-black text-[#08165B] dark:text-slate-200 uppercase tracking-wider">
+              <tr className="bg-[#F4F9F6] dark:bg-[#0F1C36] border-b border-emerald-200/80 dark:border-slate-800 text-[11px] font-black text-slate-900 dark:text-slate-200 uppercase tracking-wider">
                 <th className="py-3.5 px-4 sm:px-6">{t('admin', 'colUserName', 'User Name')}</th>
                 <th className="py-3.5 px-4">{t('admin', 'colEmail', 'Email')}</th>
                 <th className="py-3.5 px-3">{t('admin', 'colRole', 'Role')}</th>
@@ -238,17 +238,17 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
                 </tr>
               ) : (
                 filteredUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-blue-50/40 transition-colors">
+                  <tr key={user.id} className="hover:bg-[#EBF5F0]/60 transition-colors">
                     
                     {/* User Name + Avatar */}
                     <td className="py-3.5 px-4 sm:px-6">
                       <div className="flex items-center gap-3">
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-xs shrink-0 ${
-                          user.role === 'Admin' ? 'bg-[#08165B] text-white' : 'bg-blue-100 text-[#1677E8]'
+                          user.role === 'Admin' ? 'bg-[#0D5C3A] text-white' : 'bg-emerald-100 text-[#0D5C3A]'
                         }`}>
                           {user.avatar}
                         </div>
-                        <div className="font-bold text-[#08165B] truncate">{user.name}</div>
+                        <div className="font-bold text-slate-900 truncate">{user.name}</div>
                       </div>
                     </td>
 
@@ -300,7 +300,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
                         <button
                           onClick={() => setEditingUser(user)}
                           title={t('admin', 'editUserTip', 'Edit User')}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-[#1677E8] hover:bg-blue-50 transition-colors"
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-[#0D5C3A] hover:bg-[#EBF5F0] transition-colors"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
@@ -334,9 +334,9 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
       {/* MODAL 1: ADD USER */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#0F1C36] rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-[#D6E6FA] dark:border-slate-700 space-y-4">
+          <div className="bg-white dark:bg-[#0F1C36] rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-emerald-200/80 dark:border-slate-700 space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
                 {t('admin', 'addUserModalTitle', 'Create New User Account')}
               </h3>
               <button onClick={() => setShowAddModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
@@ -346,7 +346,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
 
             <form onSubmit={handleAddSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1">
                   {t('admin', 'fullNameLabel', 'Full Name')} *
                 </label>
                 <input
@@ -355,12 +355,12 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
                   value={addForm.name}
                   onChange={(e) => setAddForm({ ...addForm, name: e.target.value })}
                   placeholder={t('admin', 'doctorNamePlaceholder', 'e.g. Dr. Emily Watson')}
-                  className="w-full px-3 py-2 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none text-xs"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1">
                   {t('admin', 'emailLabel', 'Email Address')} *
                 </label>
                 <input
@@ -369,18 +369,18 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
                   value={addForm.email}
                   onChange={(e) => setAddForm({ ...addForm, email: e.target.value })}
                   placeholder={t('admin', 'emailPlaceholder', 'e.g. emily.watson@hospital.org')}
-                  className="w-full px-3 py-2 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none text-xs"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1">
                   {t('admin', 'roleLabel', 'System Role')} *
                 </label>
                 <select
                   value={addForm.role}
                   onChange={(e) => setAddForm({ ...addForm, role: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-bold text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-emerald-200/80 dark:border-slate-700 font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0B132B] outline-none text-xs"
                 >
                   <option value="User" className="dark:bg-[#0B132B] dark:text-white">{t('admin', 'userRole', 'User')}</option>
                   <option value="Admin" className="dark:bg-[#0B132B] dark:text-white">{t('admin', 'adminRole', 'Admin')}</option>
@@ -397,7 +397,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#1677E8] text-white font-bold hover:bg-[#08165B] dark:hover:bg-blue-600 cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-[#0D5C3A] text-white font-bold hover:bg-[#0A4D30] dark:hover:bg-emerald-700 cursor-pointer"
                 >
                   {t('admin', 'saveUserBtn', 'Save User Account')}
                 </button>
@@ -410,9 +410,9 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
       {/* MODAL 2: EDIT USER */}
       {editingUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#0F1C36] rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-[#D6E6FA] dark:border-slate-700 space-y-4">
+          <div className="bg-white dark:bg-[#0F1C36] rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-emerald-200/80 dark:border-slate-700 space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
                 {t('admin', 'editUserModalTitle', 'Edit User Details')}
               </h3>
               <button onClick={() => setEditingUser(null)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
@@ -422,37 +422,37 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
 
             <form onSubmit={handleEditSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1">
                   {t('admin', 'fullNameLabel', 'Full Name')}
                 </label>
                 <input
                   type="text"
                   value={editingUser.name}
                   onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none text-xs"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1">
                   {t('admin', 'emailLabel', 'Email Address')}
                 </label>
                 <input
                   type="email"
                   value={editingUser.email}
                   onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none text-xs"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1">
                   {t('admin', 'roleLabel', 'System Role')}
                 </label>
                 <select
                   value={editingUser.role}
                   onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-bold text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-emerald-200/80 dark:border-slate-700 font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0B132B] outline-none text-xs"
                 >
                   <option value="User" className="dark:bg-[#0B132B] dark:text-white">{t('admin', 'userRole', 'User')}</option>
                   <option value="Admin" className="dark:bg-[#0B132B] dark:text-white">{t('admin', 'adminRole', 'Admin')}</option>
@@ -469,7 +469,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#1677E8] text-white font-bold hover:bg-[#08165B] dark:hover:bg-blue-600 cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-[#0D5C3A] text-white font-bold hover:bg-[#0A4D30] dark:hover:bg-emerald-700 cursor-pointer"
                 >
                   {t('admin', 'saveUserBtn', 'Save User Account')}
                 </button>
@@ -487,7 +487,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
               <Trash2 className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-base font-black text-[#08165B] dark:text-white">
+              <h4 className="text-base font-black text-slate-900 dark:text-white">
                 {t('admin', 'deleteUserConfirmTitle', 'Remove User Account?')}
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-300 font-medium mt-1 leading-relaxed">
@@ -515,12 +515,12 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
       {/* MODAL 4: PASSWORD RESET CONFIRMATION */}
       {passwordResetUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#0F1C36] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-blue-200 dark:border-blue-900/60 space-y-4">
-            <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950/50 text-[#1677E8] dark:text-blue-400 flex items-center justify-center">
+          <div className="bg-white dark:bg-[#0F1C36] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 dark:border-emerald-900/60 space-y-4">
+            <div className="w-10 h-10 rounded-full bg-[#EBF5F0] dark:bg-emerald-950/50 text-[#0D5C3A] dark:text-emerald-400 flex items-center justify-center">
               <Key className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-base font-black text-[#08165B] dark:text-white">
+              <h4 className="text-base font-black text-slate-900 dark:text-white">
                 {t('admin', 'resetPasswordTitle', 'Reset User Password?')}
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-300 font-medium mt-1 leading-relaxed">
@@ -536,7 +536,7 @@ export default function UserManagementScreen({ navigateTo, showToast }) {
               </button>
               <button
                 onClick={handleConfirmPasswordReset}
-                className="px-4 py-2 rounded-xl bg-[#1677E8] text-white font-bold text-xs hover:bg-[#08165B] dark:hover:bg-blue-600 shadow-md shadow-blue-500/20 cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-[#0D5C3A] text-white font-bold text-xs hover:bg-[#0A4D30] dark:hover:bg-emerald-700 shadow-md shadow-emerald-900/15 cursor-pointer"
               >
                 {t('admin', 'sendResetLinkBtn', 'Send Reset Link')}
               </button>

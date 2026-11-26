@@ -328,6 +328,7 @@ html.dark ::-webkit-scrollbar-thumb:hover {
 
 /* Layout containers & Structural backgrounds */
 html.dark .bg-\[\#F2F7FF\],
+html.dark .bg-\[\#F8FAF9\],
 html.dark .bg-\[\#F8FAFC\],
 html.dark .bg-\[\#f3f8fd\],
 html.dark .bg-slate-50\/50 {
@@ -403,10 +404,11 @@ html.dark .text-slate-800 {
   color: #FFFFFF !important;
 }
 
-/* Primary Action Blue in Dark Mode -> High-Contrast Sky Blue */
+/* Primary Action Emerald in Dark Mode -> High-Contrast Emerald */
 html.dark .text-\[\#1677E8\],
+html.dark .text-\[\#0D5C3A\],
 html.dark .text-blue-600 {
-  color: #60A5FA !important;
+  color: #34D399 !important;
 }
 
 /* Muted / Subtitle Text */
@@ -419,21 +421,26 @@ html.dark .text-slate-500 {
   color: #94A3B8 !important;
 }
 
-/* Deep Navy Action Buttons in Dark Mode -> Vibrant Blue */
+/* Deep Emerald / Navy Action Buttons in Dark Mode -> Vibrant Emerald */
 html.dark button.bg-\[\#08165B\],
-html.dark .bg-\[\#08165B\]:not(aside):not(nav) {
-  background-color: #1677E8 !important;
+html.dark button.bg-\[\#0D5C3A\],
+html.dark .bg-\[\#08165B\]:not(aside):not(nav),
+html.dark .bg-\[\#0D5C3A\]:not(aside):not(nav) {
+  background-color: #0D5C3A !important;
   color: #FFFFFF !important;
 }
 
-html.dark button.bg-\[\#08165B\]:hover {
-  background-color: #2563EB !important;
+html.dark button.bg-\[\#08165B\]:hover,
+html.dark button.bg-\[\#0D5C3A\]:hover {
+  background-color: #0F766E !important;
 }
 
-/* Soft Blue Action Pills & Badges in Dark Mode */
-html.dark .bg-blue-50 {
-  background-color: rgba(30, 58, 138, 0.35) !important;
-  color: #93C5FD !important;
+/* Soft Action Pills & Badges in Dark Mode */
+html.dark .bg-blue-50,
+html.dark .bg-\[\#EBF5F0\],
+html.dark .bg-\[\#F4F9F6\] {
+  background-color: rgba(13, 92, 58, 0.25) !important;
+  color: #6EE7B7 !important;
 }
 
 /* Border Contrasts */
@@ -489,6 +496,7 @@ html.dark .bg-white.rounded-2xl {
 
 /* Hover highlights */
 html.dark .hover\:bg-blue-50:hover,
+html.dark .hover\:bg-\[\#EBF5F0\]:hover,
 html.dark .hover\:bg-slate-50:hover,
 html.dark .hover\:bg-slate-100:hover {
   background-color: #1E2E55 !important;
