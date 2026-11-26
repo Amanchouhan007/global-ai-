@@ -17,9 +17,11 @@ import {
   Cpu
 } from 'lucide-react';
 import { useAdminStore } from '../store/adminStore';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function UploadDocumentScreen({ navigateTo, showToast }) {
   const { addDocument, documents, settings } = useAdminStore();
+  const { t } = useLanguage();
 
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -200,10 +202,10 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
         <div>
           <h2 className="text-lg sm:text-xl font-black text-[#08165B] dark:text-white flex items-center gap-2">
             <UploadCloud className="w-6 h-6 text-[#1677E8] dark:text-blue-400" />
-            <span>Upload Healthcare Knowledge Document</span>
+            <span>{t('admin', 'uploadTitle', 'Upload Healthcare Knowledge Document')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 font-medium mt-1">
-            All documents uploaded by the Administrator are automatically verified and indexed as approved knowledge sources.
+            {t('admin', 'uploadSubtitle', 'Add medical guidelines, clinical trials, or triage protocols to knowledge base.')}
           </p>
         </div>
 
@@ -247,15 +249,15 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
             </div>
 
             <div className="text-sm font-black text-[#08165B] dark:text-white mb-1">
-              Drag & Drop your document here
+              {t('admin', 'dropzoneTitle', 'Drag & Drop your document here')}
             </div>
             
             <div className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-              or <span className="text-[#1677E8] dark:text-blue-400 font-bold underline">browse files</span> from your computer
+              <span>or </span><span className="text-[#1677E8] dark:text-blue-400 font-bold underline">{t('admin', 'browseFiles', 'browse files')}</span> <span>{t('admin', 'fromComputer', 'from your computer')}</span>
             </div>
 
             <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-400 dark:text-slate-300 bg-slate-50 dark:bg-[#0B132B] px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-800">
-              <span>Supports PDF, DOCX, TXT</span>
+              <span>{t('admin', 'supportsFileTypes', 'Supports PDF, DOCX, TXT')}</span>
               <span>•</span>
               <span>Max {settings.systemLimits?.maxFileSizeMB || 50} MB</span>
             </div>
@@ -314,9 +316,9 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
         {/* Right Column (7 cols): Document Metadata Form */}
         <div className="lg:col-span-7 bg-white dark:bg-[#0F1C36] rounded-2xl p-6 sm:p-8 border border-[#D6E6FA] dark:border-slate-800 shadow-xs space-y-5">
           <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-            <h3 className="text-base font-black text-[#08165B] dark:text-white">Document Metadata & Taxonomy</h3>
+            <h3 className="text-base font-black text-[#08165B] dark:text-white">{t('admin', 'docTaxonomyTitle', 'Document Metadata & Taxonomy')}</h3>
             <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">
-              Provide clinical categorization so the AI retrieval engine can filter by relevant domain.
+              {t('admin', 'docTaxonomyDesc', 'Provide clinical categorization so the AI retrieval engine can filter by relevant domain.')}
             </p>
           </div>
 
@@ -324,7 +326,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
             {/* Title */}
             <div>
               <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
-                Document Title <span className="text-rose-500">*</span>
+                {t('admin', 'docTitleLabel', 'Document Title')} <span className="text-rose-500">*</span>
               </label>
               <input
                 type="text"
@@ -339,7 +341,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
-                  Medical Category <span className="text-rose-500">*</span>
+                  {t('admin', 'medCategoryLabel', 'Medical Category')} <span className="text-rose-500">*</span>
                 </label>
                 <select
                   value={formData.category}
@@ -357,7 +359,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
 
               <div>
                 <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
-                  Source Type <span className="text-rose-500">*</span>
+                  {t('admin', 'sourceTypeLabel', 'Source Type')} <span className="text-rose-500">*</span>
                 </label>
                 <select
                   value={formData.sourceType}
@@ -377,7 +379,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
             {/* Language & Tags Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">Language</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">{t('admin', 'docLanguageLabel', 'Language')}</label>
                 <select
                   value={formData.language}
                   onChange={(e) => setFormData({ ...formData, language: e.target.value })}
@@ -391,7 +393,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">Tags / Keywords</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">{t('admin', 'tagsLabel', 'Tags / Keywords')}</label>
                 <input
                   type="text"
                   value={formData.tags}
@@ -404,7 +406,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
 
             {/* Description */}
             <div>
-              <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">Description (Optional)</label>
+              <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">{t('admin', 'docDescOptional', 'Description (Optional)')}</label>
               <textarea
                 rows={3}
                 value={formData.description}
@@ -427,7 +429,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
                 }`}
               >
                 <UploadCloud className="w-5 h-5 stroke-[2.2]" />
-                <span>Upload & Start Knowledge Indexing</span>
+                <span>{t('admin', 'uploadAndIndexBtn', 'Upload & Start Knowledge Indexing')}</span>
               </button>
             )}
 
@@ -466,19 +468,19 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-semibold">
                   <div className={`p-2 rounded-lg flex items-center gap-1.5 ${pipelineState.progress >= 25 ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Validated</span>
+                    <span>{t('admin', 'stepValidated', 'Validated')}</span>
                   </div>
                   <div className={`p-2 rounded-lg flex items-center gap-1.5 ${pipelineState.progress >= 50 ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Extracted</span>
+                    <span>{t('admin', 'stepExtracted', 'Extracted')}</span>
                   </div>
                   <div className={`p-2 rounded-lg flex items-center gap-1.5 ${pipelineState.progress >= 75 ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Chunked</span>
+                    <span>{t('admin', 'stepChunked', 'Chunked')}</span>
                   </div>
                   <div className={`p-2 rounded-lg flex items-center gap-1.5 ${pipelineState.progress === 100 ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Indexed</span>
+                    <span>{t('admin', 'stepIndexed', 'Indexed')}</span>
                   </div>
                 </div>
 

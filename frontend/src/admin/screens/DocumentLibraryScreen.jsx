@@ -24,9 +24,11 @@ import {
   Info
 } from 'lucide-react';
 import { useAdminStore } from '../store/adminStore';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function DocumentLibraryScreen({ navigateTo, showToast }) {
   const { documents, deleteDocument, reindexDocument, updateDocument } = useAdminStore();
+  const { t } = useLanguage();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -65,6 +67,32 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
       setActiveDoc(prev => ({ ...prev, fileUrl: url, originalFileName: file.name }));
       if (showToast) showToast(`Original file "${file.name}" linked successfully!`);
     }
+  };
+
+  const getCategoryName = (cat) => {
+    if (cat === 'Medical Research') return t('admin', 'catMedicalResearch', 'Medical Research');
+    if (cat === 'Health Guidelines') return t('admin', 'catHealthGuidelines', 'Health Guidelines');
+    if (cat === 'Educational Content') return t('admin', 'catEducationalContent', 'Educational Content');
+    if (cat === 'Clinical Practice') return t('admin', 'catClinicalPractice', 'Clinical Practice');
+    if (cat === 'Pharmacology') return t('admin', 'catPharmacology', 'Pharmacology');
+    if (cat === 'Other Content') return t('admin', 'catOtherContent', 'Other Content');
+    return cat;
+  };
+
+  const getLanguageName = (lang) => {
+    if (lang === 'English') return t('admin', 'langEnglish', 'English');
+    if (lang === 'Hindi') return t('admin', 'langHindi', 'Hindi');
+    if (lang === 'Marathi') return t('admin', 'langMarathi', 'Marathi');
+    if (lang === 'Spanish') return t('admin', 'langSpanish', 'Spanish');
+    return lang;
+  };
+
+  const getStatusName = (status) => {
+    if (status === 'Successfully Indexed') return t('admin', 'statusIndexed', 'Successfully Indexed');
+    if (status === 'Indexing') return t('admin', 'statusIndexing', 'Indexing');
+    if (status === 'Processing') return t('admin', 'statusProcessing', 'Processing');
+    if (status === 'Processing Failed') return t('admin', 'statusFailed', 'Processing Failed');
+    return status;
   };
 
   // Filter & Search Logic
@@ -129,10 +157,10 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
         <div>
           <h2 className="text-lg sm:text-xl font-black text-[#08165B] flex items-center gap-2">
             <BookOpen className="w-6 h-6 text-[#1677E8]" />
-            <span>Clinical Document Library</span>
+            <span>{t('admin', 'libraryTitle', 'Clinical Document Library')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-            Browse, inspect semantic chunks, and manage verified medical knowledge assets available for AI retrieval.
+            {t('admin', 'librarySubtitle', 'Review, re-index, and manage all indexed medical literature and protocols.')}
           </p>
         </div>
 
@@ -141,7 +169,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-black text-xs transition-colors self-start sm:self-auto shadow-xs cursor-pointer"
         >
           <Upload className="w-4 h-4 stroke-[2.2]" />
-          <span>Upload New Document</span>
+          <span>{t('admin', 'upload', 'Upload New Document')}</span>
         </button>
       </div>
 
@@ -159,7 +187,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="Search documents by title, clinical tag, or keyword..."
+              placeholder={t('admin', 'searchDocPlaceholder', 'Search documents by title, clinical tag, or keyword...')}
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D6E6FA] focus:border-[#1677E8] outline-none text-xs sm:text-sm text-[#08165B] font-medium"
             />
             {searchQuery && (
@@ -173,16 +201,16 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
           </div>
 
           <div className="flex items-center gap-2 w-full md:w-auto shrink-0">
-            <span className="text-xs font-bold text-slate-500 whitespace-nowrap hidden sm:inline">Sort by:</span>
+            <span className="text-xs font-bold text-slate-500 whitespace-nowrap hidden sm:inline">{t('admin', 'sortBy', 'Sort by:')}</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="px-3 py-2.5 rounded-xl border border-[#D6E6FA] text-xs font-bold text-[#08165B] bg-white outline-none w-full md:w-auto"
             >
-              <option value="newest">Newest Upload</option>
-              <option value="oldest">Oldest Upload</option>
-              <option value="title">Title (A-Z)</option>
-              <option value="chunks">Most Chunks</option>
+              <option value="newest">{t('admin', 'sortNewest', 'Newest Upload')}</option>
+              <option value="oldest">{t('admin', 'sortOldest', 'Oldest Upload')}</option>
+              <option value="title">{t('admin', 'sortTitle', 'Title (A-Z)')}</option>
+              <option value="chunks">{t('admin', 'sortChunks', 'Most Chunks')}</option>
             </select>
           </div>
         </div>
@@ -191,7 +219,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
         <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs">
           <div className="flex items-center gap-1.5 text-slate-400 font-bold mr-1">
             <Filter className="w-3.5 h-3.5 text-[#1677E8]" />
-            <span>Filters:</span>
+            <span>{t('admin', 'filtersLabel', 'Filters:')}</span>
           </div>
 
           {/* Category Filter */}
@@ -200,12 +228,12 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
             onChange={(e) => { setSelectedCategory(e.target.value); setCurrentPage(1); }}
             className="px-2.5 py-1.5 rounded-lg border border-[#D6E6FA] font-medium text-slate-700 bg-slate-50 outline-none text-xs"
           >
-            <option value="All">All Categories</option>
-            <option value="Health Guidelines">Health Guidelines</option>
-            <option value="Medical Research">Medical Research</option>
-            <option value="Educational Content">Educational Content</option>
-            <option value="Clinical Practice">Clinical Practice</option>
-            <option value="Pharmacology">Pharmacology</option>
+            <option value="All">{t('admin', 'allCategories', 'All Categories')}</option>
+            <option value="Health Guidelines">{t('admin', 'catHealthGuidelines', 'Health Guidelines')}</option>
+            <option value="Medical Research">{t('admin', 'catMedicalResearch', 'Medical Research')}</option>
+            <option value="Educational Content">{t('admin', 'catEducationalContent', 'Educational Content')}</option>
+            <option value="Clinical Practice">{t('admin', 'catClinicalPractice', 'Clinical Practice')}</option>
+            <option value="Pharmacology">{t('admin', 'catPharmacology', 'Pharmacology')}</option>
           </select>
 
           {/* File Type Filter */}
@@ -214,10 +242,10 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
             onChange={(e) => { setSelectedFileType(e.target.value); setCurrentPage(1); }}
             className="px-2.5 py-1.5 rounded-lg border border-[#D6E6FA] font-medium text-slate-700 bg-slate-50 outline-none text-xs"
           >
-            <option value="All">All Types</option>
-            <option value="PDF">PDF Documents</option>
-            <option value="DOCX">DOCX Files</option>
-            <option value="TXT">TXT Transcripts</option>
+            <option value="All">{t('admin', 'allTypes', 'All Types')}</option>
+            <option value="PDF">PDF</option>
+            <option value="DOCX">DOCX</option>
+            <option value="TXT">TXT</option>
           </select>
 
           {/* Language Filter */}
@@ -226,11 +254,11 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
             onChange={(e) => { setSelectedLanguage(e.target.value); setCurrentPage(1); }}
             className="px-2.5 py-1.5 rounded-lg border border-[#D6E6FA] font-medium text-slate-700 bg-slate-50 outline-none text-xs"
           >
-            <option value="All">All Languages</option>
-            <option value="English">English</option>
-            <option value="Hindi">Hindi</option>
-            <option value="Marathi">Marathi</option>
-            <option value="Spanish">Spanish</option>
+            <option value="All">{t('admin', 'allLanguages', 'All Languages')}</option>
+            <option value="English">{t('admin', 'langEnglish', 'English')}</option>
+            <option value="Hindi">{t('admin', 'langHindi', 'Hindi')}</option>
+            <option value="Marathi">{t('admin', 'langMarathi', 'Marathi')}</option>
+            <option value="Spanish">{t('admin', 'langSpanish', 'Spanish')}</option>
           </select>
 
           {/* Status Filter */}
@@ -239,11 +267,11 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
             onChange={(e) => { setSelectedStatus(e.target.value); setCurrentPage(1); }}
             className="px-2.5 py-1.5 rounded-lg border border-[#D6E6FA] font-medium text-slate-700 bg-slate-50 outline-none text-xs"
           >
-            <option value="All">All Processing Statuses</option>
-            <option value="Successfully Indexed">Successfully Indexed</option>
-            <option value="Indexing">Indexing</option>
-            <option value="Processing">Processing</option>
-            <option value="Processing Failed">Processing Failed</option>
+            <option value="All">{t('admin', 'allStatuses', 'All Processing Statuses')}</option>
+            <option value="Successfully Indexed">{t('admin', 'statusIndexed', 'Successfully Indexed')}</option>
+            <option value="Indexing">{t('admin', 'statusIndexing', 'Indexing')}</option>
+            <option value="Processing">{t('admin', 'statusProcessing', 'Processing')}</option>
+            <option value="Processing Failed">{t('admin', 'statusFailed', 'Processing Failed')}</option>
           </select>
 
           {(selectedCategory !== 'All' || selectedFileType !== 'All' || selectedLanguage !== 'All' || selectedStatus !== 'All' || searchQuery !== '') && (
@@ -258,7 +286,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
               }}
               className="text-[#F04B0A] hover:underline font-bold text-xs ml-auto"
             >
-              Reset Filters
+              {t('admin', 'resetFilters', 'Reset Filters')}
             </button>
           )}
         </div>
@@ -271,13 +299,13 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F2F7FF] border-b border-[#D6E6FA] text-[11px] font-black text-[#08165B] uppercase tracking-wider">
-                <th className="py-3.5 px-4 sm:px-6">Document Name</th>
-                <th className="py-3.5 px-4">Category</th>
-                <th className="py-3.5 px-3">Type</th>
-                <th className="py-3.5 px-3">Language</th>
-                <th className="py-3.5 px-4">Upload Date</th>
-                <th className="py-3.5 px-4">Processing Status</th>
-                <th className="py-3.5 px-4 text-right">Actions</th>
+                <th className="py-3.5 px-4 sm:px-6">{t('admin', 'colDocName', 'Document Name')}</th>
+                <th className="py-3.5 px-4">{t('admin', 'colCategory', 'Category')}</th>
+                <th className="py-3.5 px-3">{t('admin', 'colType', 'Type')}</th>
+                <th className="py-3.5 px-3">{t('admin', 'colLanguage', 'Language')}</th>
+                <th className="py-3.5 px-4">{t('admin', 'colUploadDate', 'Upload Date')}</th>
+                <th className="py-3.5 px-4">{t('admin', 'colProcessingStatus', 'Processing Status')}</th>
+                <th className="py-3.5 px-4 text-right">{t('admin', 'colActions', 'Actions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-xs">
@@ -285,8 +313,8 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-400">
                     <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <div className="font-bold text-slate-600">No documents found</div>
-                    <div className="text-xs text-slate-400 mt-1">Try clearing your search query or filters.</div>
+                    <div className="font-bold text-slate-600">{t('admin', 'noDocsFound', 'No documents found')}</div>
+                    <div className="text-xs text-slate-400 mt-1">{t('admin', 'noDocsFoundSub', 'Try clearing your search query or filters.')}</div>
                   </td>
                 </tr>
               ) : (
@@ -312,7 +340,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                           <div className="text-[10px] text-slate-400 flex items-center gap-1.5 mt-0.5">
                             <span>{doc.fileSize}</span>
                             <span>•</span>
-                            <span>{doc.chunksCount} chunks</span>
+                            <span>{doc.chunksCount} {t('admin', 'chunksLabel', 'chunks')}</span>
                           </div>
                         </div>
                       </div>
@@ -321,7 +349,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                     {/* Category */}
                     <td className="py-3.5 px-4 whitespace-nowrap">
                       <span className="px-2.5 py-1 rounded-full bg-blue-50 text-[#08165B] font-bold text-[11px] border border-blue-100">
-                        {doc.category}
+                        {getCategoryName(doc.category)}
                       </span>
                     </td>
 
@@ -334,7 +362,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
 
                     {/* Language */}
                     <td className="py-3.5 px-3 whitespace-nowrap font-medium text-slate-600">
-                      {doc.language}
+                      {getLanguageName(doc.language)}
                     </td>
 
                     {/* Upload Date */}
@@ -354,7 +382,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                         <span className={`w-1.5 h-1.5 rounded-full ${
                           doc.status === 'Successfully Indexed' ? 'bg-emerald-500' : 'bg-amber-500'
                         }`}></span>
-                        <span>{doc.status}</span>
+                        <span>{getStatusName(doc.status)}</span>
                       </span>
                     </td>
 
@@ -407,8 +435,8 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
         {/* Pagination Bar */}
         <div className="p-4 border-t border-[#D6E6FA] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
           <div>
-            Showing <strong className="text-[#08165B]">{paginatedDocs.length}</strong> of{' '}
-            <strong className="text-[#08165B]">{filteredDocuments.length}</strong> filtered documents
+            {t('admin', 'showingDocs', 'Showing')} <strong className="text-[#08165B]">{paginatedDocs.length}</strong> {t('admin', 'ofFilteredDocs', 'of')}{' '}
+            <strong className="text-[#08165B]">{filteredDocuments.length}</strong> {t('admin', 'filteredDocsSuffix', 'filtered documents')}
           </div>
 
           <div className="flex items-center gap-2">
@@ -420,7 +448,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
               <ChevronLeft className="w-4 h-4" />
             </button>
             <span className="font-bold text-[#08165B]">
-              Page {currentPage} of {totalPages}
+              {t('admin', 'pageLabel', 'Page')} {currentPage} {t('admin', 'ofPageLabel', 'of')} {totalPages}
             </span>
             <button
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}

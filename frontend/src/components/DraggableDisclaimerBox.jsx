@@ -188,7 +188,7 @@ export default function DraggableDisclaimerBox({
         title="Open DPDP Disclaimer"
       >
         <ShieldCheck className="w-4 h-4 text-emerald-300" />
-        <span>DPDP Disclaimer</span>
+        <span>{t('draggableDisclaimer', 'pillBtn', 'DPDP Disclaimer')}</span>
       </button>
     );
   }
@@ -314,13 +314,13 @@ export default function DraggableDisclaimerBox({
             <div className="p-3 rounded-xl bg-amber-50/90 border border-amber-200 text-amber-950 space-y-1">
               <div className="flex items-center gap-1.5 font-black text-xs text-amber-900">
                 <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>Clinical Scope & Educational Nature</span>
+                <span>{t('draggableDisclaimer', 'scopeTitle', 'Clinical Scope & Educational Nature')}</span>
               </div>
               <p className="text-[11.5px] leading-relaxed text-amber-900/90 font-medium">
-                {BRAND.name}™ is a clinical guidance and triage platform developed under the medical supervision of {FOUNDER_INFO.name} ({FOUNDER_INFO.experience}). It does <strong>not</strong> establish a doctor-patient relationship and is <strong>not an emergency hospital service</strong>.
+                {t('draggableDisclaimer', 'scopeBody', `${BRAND.name}™ is a clinical guidance and triage platform developed under the medical supervision of ${FOUNDER_INFO.name} (${FOUNDER_INFO.experience}). It does not establish a doctor-patient relationship and is not an emergency hospital service.`)}
               </p>
               <p className="text-[10.5px] font-bold text-red-600 pt-0.5">
-                In acute emergencies (chest pain, breathing distress, sudden weakness), immediately dial 108 or 112.
+                {t('draggableDisclaimer', 'emergencyBody', 'In acute emergencies (chest pain, breathing distress, sudden weakness), immediately dial 108 or 112.')}
               </p>
             </div>
 
@@ -328,20 +328,20 @@ export default function DraggableDisclaimerBox({
             <div className="p-3 rounded-xl bg-[#F4F9F6] border border-emerald-200 space-y-2">
               <div className="flex items-center gap-1.5 font-black text-xs text-[#0D5C3A]">
                 <Lock className="w-4 h-4 text-[#0D5C3A] shrink-0" />
-                <span>DPDP Act 2023 • Local-First Architecture</span>
+                <span>{t('draggableDisclaimer', 'dpdpArchTitle', 'DPDP Act 2023 • Local-First Architecture')}</span>
               </div>
               <ul className="space-y-1.5 text-[11px] text-slate-700 leading-snug">
                 <li className="flex items-start gap-1.5">
                   <span className="text-[#0D5C3A] font-bold">✓</span>
-                  <span><strong>Zero Server Profiling:</strong> Your symptom queries and card notes remain in your device session. They are never sold or sent to ad brokers.</span>
+                  <span><strong>{t('draggableDisclaimer', 'zeroProfilingTitle', 'Zero Server Profiling:')}</strong> {t('draggableDisclaimer', 'zeroProfilingBody', 'Your symptom queries and card notes remain in your device session. They are never sold or sent to ad brokers.')}</span>
                 </li>
                 <li className="flex items-start gap-1.5">
                   <span className="text-[#0D5C3A] font-bold">✓</span>
-                  <span><strong>Purpose Limitation:</strong> Language preferences and anonymous feedback are used solely for UI rendering.</span>
+                  <span><strong>{t('draggableDisclaimer', 'purposeTitle', 'Purpose Limitation:')}</strong> {t('draggableDisclaimer', 'purposeBody', 'Language preferences and anonymous feedback are used solely for UI rendering.')}</span>
                 </li>
                 <li className="flex items-start gap-1.5">
                   <span className="text-[#0D5C3A] font-bold">✓</span>
-                  <span><strong>Statutory 48h Grievance Redressal:</strong> Dedicated Data Protection Officer reachable at <a href={`mailto:${COMPANY_INFO.grievanceEmail}`} className="text-[#0D5C3A] font-bold underline">{COMPANY_INFO.grievanceEmail}</a>.</span>
+                  <span><strong>{t('draggableDisclaimer', 'grievanceTitle', 'Statutory 48h Grievance Redressal:')}</strong> {t('draggableDisclaimer', 'grievanceBody', 'Dedicated Data Protection Officer reachable at')} <a href={`mailto:${COMPANY_INFO.grievanceEmail}`} className="text-[#0D5C3A] font-bold underline">{COMPANY_INFO.grievanceEmail}</a>.</span>
                 </li>
               </ul>
             </div>

@@ -8,7 +8,7 @@ export function LanguageProvider({ children }) {
     try {
       if (typeof window !== 'undefined') {
         const saved = localStorage.getItem('healthorbit_language');
-        if (saved && SUPPORTED_LANGUAGES.some(l => l.code === saved)) {
+        if (saved && SUPPORTED_LANGUAGES.some(l => (l.code || l) === saved)) {
           return saved;
         }
       }
@@ -32,7 +32,7 @@ export function LanguageProvider({ children }) {
   }, [currentLang]);
 
   const setLanguage = (code) => {
-    if (SUPPORTED_LANGUAGES.some(l => l.code === code)) {
+    if (SUPPORTED_LANGUAGES.some(l => (l.code || l) === code)) {
       setCurrentLang(code);
     }
   };

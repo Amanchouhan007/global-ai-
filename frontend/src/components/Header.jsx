@@ -36,7 +36,16 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
   ];
 
   // Dropdown menu options for interactive header links
-  const dropdownMenus = {};
+  const dropdownMenus = {
+    categories: [
+      { label: `${t('categories', 'symptomsTitle', 'My Symptoms')} (${t('categories', 'symptomsBadge', '1,000+ Health Cards')})`, targetId: 'categories' },
+      { label: `${t('categories', 'personalHealthTitle', 'My Personal Health')}`, targetId: 'categories' },
+      { label: `${t('categories', 'familyTitle', 'My Family')}`, targetId: 'categories' },
+      { label: `${t('categories', 'parentingTitle', 'My Parenting')}`, targetId: 'categories' },
+      { label: `${t('categories', 'mindTitle', 'My Mind')}`, targetId: 'categories' },
+      { label: `${t('categories', 'viewAll', 'Explore All 10 Categories')} →`, targetId: 'categories', isCta: true }
+    ]
+  };
 
   useEffect(() => {
     function handleClickOutside(e) {

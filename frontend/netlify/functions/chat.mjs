@@ -1,4 +1,35 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { GoogleGenAI, Type } from '@google/genai';
+
+function loadRootEnvFallback() {
+  if (process.env.GEMINI_API_KEY) return;
+  const candidates = [
+    path.resolve(process.cwd(), '.env'),
+    path.resolve(process.cwd(), '..', '.env'),
+    path.resolve(process.cwd(), '..', '..', '.env'),
+  ];
+  for (const envPath of candidates) {
+    try {
+      if (!fs.existsSync(envPath)) continue;
+      const lines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
+      for (const rawLine of lines) {
+        const line = rawLine.trim();
+        if (!line || line.startsWith('#')) continue;
+        const eqIdx = line.indexOf('=');
+        if (eqIdx === -1) continue;
+        const key = line.slice(0, eqIdx).trim();
+        const val = line.slice(eqIdx + 1).trim().replace(/^["']|["']$/g, '');
+        if ((key === 'GEMINI_API_KEY' || key === 'GEMINI_MODEL') && val && !process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+      if (process.env.GEMINI_API_KEY) break;
+    } catch {
+      // Ignore unreadable local .env files
+    }
+  }
+}
 
 const MAX_BODY_BYTES = 32 * 1024; // 32 KB request cap
 const MAX_MESSAGE_CHARS = 2000;
@@ -212,6 +243,7 @@ export default async function handler(req, context) {
       .filter(Boolean);
   }
 
+  loadRootEnvFallback();
   const apiKey = process.env.GEMINI_API_KEY?.trim();
   if (!apiKey) {
     return jsonResponse(503, {

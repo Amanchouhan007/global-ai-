@@ -25,12 +25,12 @@ export default function RiskLevelsSection({ onStartAssessment }) {
       tagColor: 'bg-red-600 text-white',
       definition: t('risk', 'redDef', 'Life-threatening or time-sensitive physiological conditions requiring immediate hospital evaluation.'),
       sampleCondition: t('risk', 'redSample', 'Acute Crushing Chest Pain with Shortness of Breath'),
-      signs: [
+      signs: t('risk', 'redSigns', [
         'Sudden, severe chest pressure or radiation to arm/jaw',
         'Acute difficulty breathing or cyanosis (blue lips)',
         'Sudden weakness, facial droop, or slurred speech (FAST signs)',
         'Uncontrolled bleeding, severe trauma, or loss of consciousness'
-      ],
+      ]),
       action: t('risk', 'redAction', 'Call emergency medical services (108 in India / 911 in US) or go to the nearest emergency department immediately. Do not attempt to drive yourself.')
     },
     YELLOW: {
@@ -42,12 +42,12 @@ export default function RiskLevelsSection({ onStartAssessment }) {
       tagColor: 'bg-amber-500 text-white',
       definition: t('risk', 'yellowDef', 'Sub-acute symptoms requiring physical examination, lab tests, or prescription medications by a licensed clinician.'),
       sampleCondition: t('risk', 'yellowSample', 'Persistent High Fever with Productive Cough (> 3 Days)'),
-      signs: [
+      signs: t('risk', 'yellowSigns', [
         'Fever exceeding 101°F (38.3°C) that persists past 72 hours',
         'Unexplained weight loss or severe nocturnal sweating',
         'Persistent abdominal pain or inability to retain fluids',
         'Worsening chronic condition flare-up (asthma, hypertension, diabetes)'
-      ],
+      ]),
       action: t('risk', 'yellowAction', 'Schedule an in-person consultation with a qualified general practitioner or relevant specialist within 24 to 48 hours for clinical evaluation and diagnostics.')
     },
     GREEN: {
@@ -59,12 +59,12 @@ export default function RiskLevelsSection({ onStartAssessment }) {
       tagColor: 'bg-[#0D5C3A] text-white',
       definition: t('risk', 'greenDef', 'Mild, self-limiting symptoms that typically resolve with rest, balanced hydration, and gentle home supportive care.'),
       sampleCondition: t('risk', 'greenSample', 'Mild Tension Headache or Seasonal Runny Nose'),
-      signs: [
+      signs: t('risk', 'greenSigns', [
         'Mild nasal congestion without facial pain or high fever',
         'Transient muscle fatigue after exercise with normal vital signs',
         'Occasional acid reflux after a heavy meal without weight loss',
         'Minor superficial scratches or bruises without swelling'
-      ],
+      ]),
       action: t('risk', 'greenAction', 'Maintain hydration, prioritize 7–8 hours of restorative sleep, and monitor symptoms. If symptoms fail to improve or worsen after 48–72 hours, consult a physician.')
     }
   };
@@ -143,7 +143,7 @@ export default function RiskLevelsSection({ onStartAssessment }) {
               </h3>
             </div>
             <span className="text-xs font-bold text-slate-500 self-start sm:self-auto">
-              Sample: {currentSeverity.sampleCondition}
+              {t('risk', 'samplePrefix', 'Sample:')} {currentSeverity.sampleCondition}
             </span>
           </div>
 
@@ -154,7 +154,7 @@ export default function RiskLevelsSection({ onStartAssessment }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             <div className="space-y-3">
               <h4 className="text-xs font-black uppercase tracking-wider text-slate-900">
-                Key Symptoms & Manifestations:
+                {t('risk', 'keySymptomsTitle', 'Key Symptoms & Manifestations:')}
               </h4>
               <ul className="space-y-2">
                 {currentSeverity.signs.map((sign, idx) => (
@@ -170,7 +170,7 @@ export default function RiskLevelsSection({ onStartAssessment }) {
               <div className="space-y-1.5">
                 <span className="text-xs font-black uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
                   <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  Mandated Clinical Action:
+                  {t('risk', 'mandatedAction', 'Mandated Clinical Action:')}
                 </span>
                 <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
                   {currentSeverity.action}
@@ -183,7 +183,7 @@ export default function RiskLevelsSection({ onStartAssessment }) {
                   onClick={onStartAssessment}
                   className="w-full py-2.5 rounded-xl bg-[#0D5C3A] text-white text-xs font-bold hover:bg-[#0A4D30] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <span>Evaluate Your Symptoms In This Tier</span>
+                  <span>{t('risk', 'evalBtn', 'Evaluate Your Symptoms In This Tier')}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>

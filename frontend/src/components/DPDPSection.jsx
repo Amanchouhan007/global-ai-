@@ -101,27 +101,27 @@ export default function DPDPSection() {
           <div className="flex items-center justify-between flex-wrap gap-2">
             <span className="text-xs font-black text-[#0D5C3A] uppercase tracking-wider flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#0D5C3A]" />
-              Architectural Verification: How We Protect Your Clinical Privacy
+              {t('dpdp', 'archTitle', 'Architectural Verification: How We Protect Your Clinical Privacy')}
             </span>
             <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-[#0D5C3A] border border-emerald-200">
-              Session-Isolated Standard
+              {t('dpdp', 'sessionIsolated', 'Session-Isolated Standard')}
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="p-4 rounded-2xl bg-[#F8FAF9] border border-emerald-100 space-y-1">
-              <span className="text-xs font-bold text-slate-900 block">1. Ephemeral Client Execution</span>
-              <p className="text-[11px] text-slate-600 leading-snug">Symptom analysis runs locally inside browser memory. Once you close your tab, search state vanishes unless saved as offline doctor note.</p>
+              <span className="text-xs font-bold text-slate-900 block">{t('dpdp', 'arch1Title', '1. Ephemeral Client Execution')}</span>
+              <p className="text-[11px] text-slate-600 leading-snug">{t('dpdp', 'arch1Desc', 'Symptom analysis runs locally inside browser memory. Once you close your tab, search state vanishes unless saved as offline doctor note.')}</p>
             </div>
 
             <div className="p-4 rounded-2xl bg-[#F8FAF9] border border-emerald-100 space-y-1">
-              <span className="text-xs font-bold text-slate-900 block">2. No Commercial Trackers</span>
-              <p className="text-[11px] text-slate-600 leading-snug">Zero Google Analytics health tags, zero Meta Pixel tracking, and zero advertising broker network scripts.</p>
+              <span className="text-xs font-bold text-slate-900 block">{t('dpdp', 'arch2Title', '2. No Commercial Trackers')}</span>
+              <p className="text-[11px] text-slate-600 leading-snug">{t('dpdp', 'arch2Desc', 'Zero Google Analytics health tags, zero Meta Pixel tracking, and zero advertising broker network scripts.')}</p>
             </div>
 
             <div className="p-4 rounded-2xl bg-[#F8FAF9] border border-emerald-100 space-y-1">
-              <span className="text-xs font-bold text-slate-900 block">3. One-Click Statutory Purge</span>
-              <p className="text-[11px] text-slate-600 leading-snug">Full compliance with Section 12 (Right to Erasure) of the Indian DPDP Act 2023 via instant client-side deletion.</p>
+              <span className="text-xs font-bold text-slate-900 block">{t('dpdp', 'arch3Title', '3. One-Click Statutory Purge')}</span>
+              <p className="text-[11px] text-slate-600 leading-snug">{t('dpdp', 'arch3Desc', 'Full compliance with Section 12 (Right to Erasure) of the Indian DPDP Act 2023 via instant client-side deletion.')}</p>
             </div>
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function DPDPSection() {
             <div className="space-y-2 text-left">
               <div className="flex items-center gap-3">
                 <span className="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-300">
-                  Data Consent Status
+                  {t('dpdp', 'consentStatusLabel', 'Data Consent Status')}
                 </span>
                 {consentGranted ? (
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
@@ -146,11 +146,11 @@ export default function DPDPSection() {
                   </span>
                 )}
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white">Manage Your Privacy & Local Device Records</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-white">{t('dpdp', 'managePrivacyTitle', 'Manage Your Privacy & Local Device Records')}</h3>
               <p className="text-xs text-emerald-100 max-w-2xl leading-relaxed">
                 {consentGranted 
-                  ? 'Your device currently keeps temporary offline checklists to help you during doctor appointments. You can purge them at any moment.'
-                  : 'Ephemeral mode is active. No search history or checklist states are saved to your browser storage.'}
+                  ? t('dpdp', 'consentActiveDesc', 'Your device currently keeps temporary offline checklists to help you during doctor appointments. You can purge them at any moment.')
+                  : t('dpdp', 'consentWithdrawnDesc', 'Ephemeral mode is active. No search history or checklist states are saved to your browser storage.')}
               </p>
             </div>
 
@@ -187,17 +187,17 @@ export default function DPDPSection() {
           {/* Grievance Officer details bar */}
           <div className="mt-6 pt-5 border-t border-emerald-900/80 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-emerald-200/80 text-left">
             <div>
-              <span className="block text-emerald-400/80 font-bold uppercase tracking-wider text-[10px]">Data Protection Officer</span>
+              <span className="block text-emerald-400/80 font-bold uppercase tracking-wider text-[10px]">{t('dpdp', 'dpoLabel', 'Data Protection Officer')}</span>
               <span className="text-white font-medium">Dr. Pratap Madhukar, Chief Clinical Officer</span>
             </div>
             <div>
-              <span className="block text-emerald-400/80 font-bold uppercase tracking-wider text-[10px]">Statutory Grievance Email</span>
+              <span className="block text-emerald-400/80 font-bold uppercase tracking-wider text-[10px]">{t('dpdp', 'grievanceEmailLabel', 'Statutory Grievance Email')}</span>
               <a href={`mailto:${COMPANY_INFO.grievanceEmail}`} className="text-emerald-300 hover:underline flex items-center gap-1 font-mono">
                 <Mail className="w-3.5 h-3.5" /> {COMPANY_INFO.grievanceEmail}
               </a>
             </div>
             <div>
-              <span className="block text-emerald-400/80 font-bold uppercase tracking-wider text-[10px]">Jurisdiction & Governing Law</span>
+              <span className="block text-emerald-400/80 font-bold uppercase tracking-wider text-[10px]">{t('dpdp', 'jurisdictionLabel', 'Jurisdiction & Governing Law')}</span>
               <span className="text-white font-medium">Mumbai, India • DPDP Act 2023</span>
             </div>
           </div>

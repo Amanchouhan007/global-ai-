@@ -19,12 +19,16 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { BRAND } from '../config/brand';
 import HealthOrbitLogo from './common/HealthOrbitLogo';
+import ThemeToggle from './common/ThemeToggle';
+import LanguageSelector from './common/LanguageSelector';
 
 export default function LoginPage({ onNavigate, notice }) {
   const { login, loginWithGoogle, register } = useAuth();
   const { isDark } = useTheme();
+  const { t } = useLanguage();
   const [googleLoading, setGoogleLoading] = useState(false);
 
   // Role: 'admin' | 'user'
@@ -182,7 +186,7 @@ export default function LoginPage({ onNavigate, notice }) {
           : 'bg-gradient-to-br from-[#EEF5FF] via-[#F6FAFF] to-[#E5F0FF] text-[#08165B]'
       }`}
     >
-      {/* Top Floating Controls: Back button & Dark/Light Mode Toggle */}
+      {/* Top Floating Controls: Back button, Language Selector & Dark/Light Mode Toggle */}
       <div className="absolute top-3 sm:top-5 left-3 sm:left-6 right-3 sm:right-6 z-30 flex items-center justify-between pointer-events-auto">
         <button
           type="button"
@@ -194,8 +198,13 @@ export default function LoginPage({ onNavigate, notice }) {
           }`}
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Homepage</span>
+          <span>{t('auth', 'backToHome', 'Back to Homepage')}</span>
         </button>
+
+        <div className="flex items-center gap-2">
+          <LanguageSelector />
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* 1. ANIMATED BACKGROUND PARTICLES & GRADIENTS */}
@@ -389,7 +398,7 @@ export default function LoginPage({ onNavigate, notice }) {
                   }`}
                 >
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>ADMIN LOGIN</span>
+                  <span>{t('auth', 'adminRole', 'ADMIN LOGIN')}</span>
                 </button>
 
                 <button
@@ -403,7 +412,7 @@ export default function LoginPage({ onNavigate, notice }) {
                         : 'bg-transparent text-[#08165B] hover:bg-white/60'
                   }`}
                 >
-                  <span>USER LOGIN</span>
+                  <span>{t('auth', 'userRole', 'USER LOGIN')}</span>
                 </button>
               </div>
             </div>
@@ -439,7 +448,7 @@ export default function LoginPage({ onNavigate, notice }) {
                 <label className={`block text-xs font-bold ${
                   isDark ? 'text-slate-200' : 'text-[#08165B]'
                 }`}>
-                  Email Address
+                  {t('auth', 'email', 'Email Address')}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -465,7 +474,7 @@ export default function LoginPage({ onNavigate, notice }) {
                 <label className={`block text-xs font-bold ${
                   isDark ? 'text-slate-200' : 'text-[#08165B]'
                 }`}>
-                  Password
+                  {t('auth', 'password', 'Password')}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -502,7 +511,9 @@ export default function LoginPage({ onNavigate, notice }) {
                     onChange={(e) => setRememberMe(e.target.checked)}
                     className="w-3.5 h-3.5 rounded border-slate-300 text-[#F04B0A] focus:ring-[#F04B0A]/30 accent-[#F04B0A]"
                   />
-                  <span className={`font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>Remember Me</span>
+                  <span className={`font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                    {t('auth', 'rememberMe', 'Remember Me')}
+                  </span>
                 </label>
                 <button
                   type="button"
@@ -523,11 +534,11 @@ export default function LoginPage({ onNavigate, notice }) {
                   {isLoading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin text-white" />
-                      <span>Authenticating...</span>
+                      <span>{t('auth', 'signingIn', 'Authenticating...')}</span>
                     </>
                   ) : (
                     <>
-                      <span>Sign In to Your Dashboard</span>
+                      <span>{selectedRole === 'admin' ? t('auth', 'signInAdmin', 'Sign In as Administrator') : t('auth', 'signInUser', 'Sign In as Patient')}</span>
                       <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                     </>
                   )}
@@ -579,7 +590,7 @@ export default function LoginPage({ onNavigate, notice }) {
 
             {/* Register New User Link */}
             <div className="mt-3.5 text-center text-xs">
-              <span className={`font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Don't have an account? </span>
+              <span className={`font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{t('auth', 'noAccount', "Don't have an account?")} </span>
               <button
                 type="button"
                 onClick={() => {
@@ -589,7 +600,7 @@ export default function LoginPage({ onNavigate, notice }) {
                 }}
                 className="font-bold text-[#F04B0A] hover:text-[#c2410c] hover:underline cursor-pointer"
               >
-                Register New User
+                {t('auth', 'createAccount', 'Register New User')}
               </button>
             </div>
 

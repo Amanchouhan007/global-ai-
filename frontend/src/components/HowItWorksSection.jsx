@@ -63,24 +63,24 @@ export default function HowItWorksSection({ onStartAssessment }) {
               {/* UI Preview Box */}
               <div className="p-4 rounded-2xl bg-[#F8FAF9] border border-emerald-100 space-y-2.5">
                 <div className="flex items-center justify-between text-[11px] font-bold text-slate-500">
-                  <span>Input Interface Preview</span>
-                  <span className="text-[#0D5C3A] font-extrabold flex items-center gap-1">● Voice Dictation Active</span>
+                  <span>{t('howItWorks', 'previewInputTitle', 'Input Interface Preview')}</span>
+                  <span className="text-[#0D5C3A] font-extrabold flex items-center gap-1">● {t('howItWorks', 'previewVoiceActive', 'Voice Dictation Active')}</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-800 shadow-2xs">
-                  "Severe right-sided throbbing headache with light sensitivity since yesterday morning..."
+                  {t('howItWorks', 'previewSampleSymptom', '"Severe right-sided throbbing headache with light sensitivity since yesterday morning..."')}
                 </div>
                 <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-[#0D5C3A] border border-emerald-200">✓ Natural English</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-50 text-[#0F766E] border border-teal-200">✓ Hindi / Regional</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-pink-50 text-[#D81B60] border border-pink-200">✓ Lab PDF Attached</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-[#0D5C3A] border border-emerald-200">{t('howItWorks', 'previewPillEnglish', '✓ Natural English')}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-50 text-[#0F766E] border border-teal-200">{t('howItWorks', 'previewPillRegional', '✓ Hindi / Regional')}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-pink-50 text-[#D81B60] border border-pink-200">{t('howItWorks', 'previewPillPdf', '✓ Lab PDF Attached')}</span>
                 </div>
               </div>
             </div>
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-bold text-emerald-800">
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Clinical safety validated</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> {t('howItWorks', 'previewSafetyValidated', 'Clinical safety validated')}</span>
               <button type="button" onClick={onStartAssessment} className="text-xs font-black text-[#0D5C3A] hover:underline flex items-center gap-1">
-                Try Input <ArrowRight className="w-3.5 h-3.5" />
+                {t('howItWorks', 'previewTryInput', 'Try Input')} <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -114,27 +114,39 @@ export default function HowItWorksSection({ onStartAssessment }) {
               {/* UI Preview Box */}
               <div className="p-4 rounded-2xl bg-[#F8FAF9] border border-teal-100 space-y-2.5">
                 <div className="flex items-center justify-between text-[11px] font-bold text-slate-500">
-                  <span>Stratification Result Preview</span>
-                  <span className="px-2 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-black">Yellow Caution</span>
+                  <span>{t('howItWorks', 'previewStratTitle', 'Stratification Result Preview')}</span>
+                  <span className="px-2 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-black">
+                    {t('howItWorks', 'previewYellowCaution', 'Yellow Caution')}
+                  </span>
                 </div>
                 <div className="p-3 rounded-xl bg-white border border-slate-200 space-y-1 shadow-2xs">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-black text-slate-900">Acute Migraine with Aura</span>
-                    <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">96% Match</span>
+                    <span className="text-xs font-black text-slate-900">
+                      {t('howItWorks', 'previewMigraineMatch', 'Acute Migraine with Aura')}
+                    </span>
+                    <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      {t('howItWorks', 'previewMatchPercent', '96% Match')}
+                    </span>
                   </div>
-                  <p className="text-[11px] text-slate-600 font-medium">Urgency: Schedule consultation with a general physician within 24 to 48 hours.</p>
+                  <p className="text-[11px] text-slate-600 font-medium">
+                    {t('howItWorks', 'previewUrgencyText', 'Urgency: Schedule consultation with a general physician within 24 to 48 hours.')}
+                  </p>
                 </div>
                 <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-50 text-[#0F766E] border border-teal-200">✓ ICMR Protocol Matched</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-[#0D5C3A] border border-emerald-200">✓ Zero Hallucination Guard</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-50 text-[#0F766E] border border-teal-200">
+                    {t('howItWorks', 'previewPillIcmr', '✓ ICMR Protocol Matched')}
+                  </span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-[#0D5C3A] border border-emerald-200">
+                    {t('howItWorks', 'previewPillZeroHal', '✓ Zero Hallucination Guard')}
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-bold text-teal-800">
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-teal-600" /> Evidence-based protocol</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-teal-600" /> {t('howItWorks', 'previewEvidenceProtocol', 'Evidence-based protocol')}</span>
               <button type="button" onClick={onStartAssessment} className="text-xs font-black text-[#0F766E] hover:underline flex items-center gap-1">
-                See Triage <ArrowRight className="w-3.5 h-3.5" />
+                {t('howItWorks', 'previewSeeTriage', 'See Triage')} <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -168,30 +180,36 @@ export default function HowItWorksSection({ onStartAssessment }) {
               {/* UI Preview Box */}
               <div className="p-4 rounded-2xl bg-[#F8FAF9] border border-emerald-100 space-y-2.5">
                 <div className="flex items-center justify-between text-[11px] font-bold text-slate-500">
-                  <span>Structured Guidance Output</span>
-                  <span className="text-emerald-800 font-extrabold text-[11px]">~100 Words Briefing</span>
+                  <span>{t('howItWorks', 'previewGuidanceTitle', 'Structured Guidance Output')}</span>
+                  <span className="text-emerald-800 font-extrabold text-[11px]">
+                    {t('howItWorks', 'previewBriefingTag', '~100 Words Briefing')}
+                  </span>
                 </div>
                 <div className="p-3 rounded-xl bg-white border border-slate-200 space-y-2 text-xs text-slate-700 shadow-2xs">
                   <div className="flex items-start gap-1.5 text-emerald-900 font-bold">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>Safe Steps: Rest in dark, quiet room with cold compress.</span>
+                    <span>{t('howItWorks', 'previewSafeSteps', 'Safe Steps: Rest in dark, quiet room with cold compress.')}</span>
                   </div>
                   <div className="flex items-start gap-1.5 text-rose-900 font-bold">
                     <ShieldCheck className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-                    <span>Do Not: Take repeated painkillers without blood pressure check.</span>
+                    <span>{t('howItWorks', 'previewDoNot', 'Do Not: Take repeated painkillers without blood pressure check.')}</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between pt-0.5 text-slate-600">
-                  <span className="text-[11px] font-bold text-[#0D5C3A]">✓ Doctor Appointment Checklist</span>
-                  <span className="text-[10px] font-black px-2 py-0.5 rounded bg-[#FDE047] text-slate-900 border border-amber-300">Offline Ready</span>
+                  <span className="text-[11px] font-bold text-[#0D5C3A]">
+                    {t('howItWorks', 'previewPillChecklist', '✓ Doctor Appointment Checklist')}
+                  </span>
+                  <span className="text-[10px] font-black px-2 py-0.5 rounded bg-[#FDE047] text-slate-900 border border-amber-300">
+                    {t('howItWorks', 'previewOfflineReady', 'Offline Ready')}
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-bold text-emerald-800">
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Actionable guidance</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> {t('howItWorks', 'previewActionable', 'Actionable guidance')}</span>
               <button type="button" onClick={onStartAssessment} className="text-xs font-black text-[#0D5C3A] hover:underline flex items-center gap-1">
-                Start Now <ArrowRight className="w-3.5 h-3.5" />
+                {t('howItWorks', 'previewStartNow', 'Start Now')} <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
