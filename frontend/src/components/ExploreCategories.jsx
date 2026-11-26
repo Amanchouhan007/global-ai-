@@ -223,7 +223,7 @@ export default function ExploreCategories({ onActiveCategoryChange }) {
   });
 
   return (
-    <section id="categories" className="pt-2 pb-8 sm:pt-3 sm:pb-10 max-w-[1520px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8 scroll-mt-20">
+    <section id="categories" className="pt-4 pb-8 sm:pt-5 sm:pb-10 max-w-[1520px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8 scroll-mt-0 min-h-screen">
 
       {/* Section Header matching Client Reference Image */}
       <div className="flex items-center justify-between mb-3.5 sm:mb-4">

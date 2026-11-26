@@ -82,12 +82,27 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
       return;
     }
     if (id === 'chat-assistant' || id === 'search-section') {
-      const el = document.getElementById('chat-assistant') || document.getElementById('search-section');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const chatSection = document.getElementById('chat-assistant') || document.getElementById('search-section');
+      const inlineChat = document.getElementById('inline-category-chatboard');
+      const categoriesEl = document.getElementById('categories');
+
+      if (!chatSection && !inlineChat && categoriesEl) {
+        const symptomsTab = categoriesEl.querySelector('[role="tab"]');
+        if (symptomsTab) symptomsTab.click();
+      }
+
+      const scrollTarget = chatSection || categoriesEl || inlineChat;
+      if (scrollTarget) {
+        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(() => {
-          const input = el.querySelector('input[type="text"]') || document.querySelector('input[placeholder*="symptom"], input[type="text"]');
-          if (input) input.focus();
+          const chatContainer =
+            document.getElementById('chat-assistant') ||
+            document.getElementById('inline-category-chatboard') ||
+            scrollTarget;
+          const input =
+            chatContainer.querySelector('input[type="text"], input:not([type="file"]):not([type="hidden"]), textarea') ||
+            document.querySelector('input[placeholder*="symptom"], input[type="text"]');
+          if (input) input.focus({ preventScroll: true });
         }, 450);
       }
       return;

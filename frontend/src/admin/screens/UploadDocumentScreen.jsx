@@ -198,10 +198,10 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
     <div className="max-w-[1200px] mx-auto space-y-6 sm:space-y-8 animate-in fade-in duration-300">
       
       {/* Header Info Banner */}
-      <div className="bg-white dark:bg-[#0F1C36] rounded-2xl p-6 border border-[#D6E6FA] dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#0F1C36] rounded-2xl p-6 border border-emerald-200/80 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-black text-[#08165B] dark:text-white flex items-center gap-2">
-            <UploadCloud className="w-6 h-6 text-[#1677E8] dark:text-blue-400" />
+          <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <UploadCloud className="w-6 h-6 text-[#0D5C3A] dark:text-emerald-400" />
             <span>{t('admin', 'uploadTitle', 'Upload Healthcare Knowledge Document')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 font-medium mt-1">
@@ -231,8 +231,8 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
             onClick={() => fileInputRef.current && fileInputRef.current.click()}
             className={`border-2 border-dashed rounded-2xl p-6 sm:p-8 text-center transition-all cursor-pointer bg-white dark:bg-[#0F1C36] flex flex-col items-center justify-center min-h-[240px] ${
               isDragging
-                ? 'border-[#1677E8] bg-blue-50/60 dark:bg-[#15274D] scale-[1.01]'
-                : 'border-[#D6E6FA] dark:border-slate-800 hover:border-[#1677E8] dark:hover:border-blue-400 hover:bg-blue-50/20 dark:hover:bg-slate-800/40'
+                ? 'border-[#0D5C3A] bg-[#F4F9F6] dark:bg-[#15274D] scale-[1.01]'
+                : 'border-emerald-200/80 dark:border-slate-800 hover:border-[#0D5C3A] dark:hover:border-emerald-400 hover:bg-[#F4F9F6] dark:hover:bg-slate-800/40'
             }`}
           >
             <input
@@ -244,16 +244,16 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
               className="hidden"
             />
             
-            <div className="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/50 text-[#1677E8] dark:text-blue-400 flex items-center justify-center mb-3 shadow-xs">
+            <div className="w-14 h-14 rounded-2xl bg-[#EBF5F0] dark:bg-emerald-900/50 text-[#0D5C3A] dark:text-emerald-400 flex items-center justify-center mb-3 shadow-xs">
               <UploadCloud className="w-7 h-7 stroke-[2.2]" />
             </div>
 
-            <div className="text-sm font-black text-[#08165B] dark:text-white mb-1">
+            <div className="text-sm font-black text-slate-900 dark:text-white mb-1">
               {t('admin', 'dropzoneTitle', 'Drag & Drop your document here')}
             </div>
             
             <div className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-              <span>or </span><span className="text-[#1677E8] dark:text-blue-400 font-bold underline">{t('admin', 'browseFiles', 'browse files')}</span> <span>{t('admin', 'fromComputer', 'from your computer')}</span>
+              <span>or </span><span className="text-[#0D5C3A] dark:text-emerald-400 font-bold underline">{t('admin', 'browseFiles', 'browse files')}</span> <span>{t('admin', 'fromComputer', 'from your computer')}</span>
             </div>
 
             <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-400 dark:text-slate-300 bg-slate-50 dark:bg-[#0B132B] px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-800">
@@ -265,7 +265,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
 
           {/* Selected File List */}
           {files.length > 0 && (
-            <div className="bg-white dark:bg-[#0F1C36] rounded-2xl p-4 border border-[#D6E6FA] dark:border-slate-800 shadow-xs space-y-2">
+            <div className="bg-white dark:bg-[#0F1C36] rounded-2xl p-4 border border-emerald-200/80 dark:border-slate-800 shadow-xs space-y-2">
               <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 flex items-center justify-between">
                 <span>Selected Documents ({files.length})</span>
                 <span className="text-emerald-600 dark:text-emerald-400 font-bold text-[11px]">Ready for extraction</span>
@@ -274,12 +274,12 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
               {files.map((file, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-blue-50/50 dark:bg-[#0B132B] border border-blue-100 dark:border-slate-800 text-xs"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/70 dark:border-slate-800 text-xs"
                 >
                   <div className="flex items-center gap-2.5 truncate">
-                    <FileText className="w-4 h-4 text-[#1677E8] dark:text-blue-400 shrink-0" />
+                    <FileText className="w-4 h-4 text-[#0D5C3A] dark:text-emerald-400 shrink-0" />
                     <div className="truncate">
-                      <div className="font-bold text-[#08165B] dark:text-white truncate">{file.name}</div>
+                      <div className="font-bold text-slate-900 dark:text-white truncate">{file.name}</div>
                       <div className="text-[10px] text-slate-400 dark:text-slate-400">
                         {(file.size / (1024 * 1024)).toFixed(2)} MB • {file.name.split('.').pop().toUpperCase()}
                       </div>
@@ -301,9 +301,9 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
           )}
 
           {/* Guidelines Box */}
-          <div className="bg-blue-50/60 dark:bg-[#0B132B] rounded-2xl p-4 border border-blue-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-200 space-y-1.5">
-            <div className="font-bold text-[#08165B] dark:text-white flex items-center gap-1.5">
-              <Info className="w-3.5 h-3.5 text-[#1677E8] dark:text-blue-400" />
+          <div className="bg-[#F4F9F6] dark:bg-[#0B132B] rounded-2xl p-4 border border-emerald-200/70 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-200 space-y-1.5">
+            <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+              <Info className="w-3.5 h-3.5 text-[#0D5C3A] dark:text-emerald-400" />
               <span>Indexing Standards</span>
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-300 leading-relaxed">
@@ -314,9 +314,9 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
         </div>
 
         {/* Right Column (7 cols): Document Metadata Form */}
-        <div className="lg:col-span-7 bg-white dark:bg-[#0F1C36] rounded-2xl p-6 sm:p-8 border border-[#D6E6FA] dark:border-slate-800 shadow-xs space-y-5">
+        <div className="lg:col-span-7 bg-white dark:bg-[#0F1C36] rounded-2xl p-6 sm:p-8 border border-emerald-200/80 dark:border-slate-800 shadow-xs space-y-5">
           <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-            <h3 className="text-base font-black text-[#08165B] dark:text-white">{t('admin', 'docTaxonomyTitle', 'Document Metadata & Taxonomy')}</h3>
+            <h3 className="text-base font-black text-slate-900 dark:text-white">{t('admin', 'docTaxonomyTitle', 'Document Metadata & Taxonomy')}</h3>
             <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">
               {t('admin', 'docTaxonomyDesc', 'Provide clinical categorization so the AI retrieval engine can filter by relevant domain.')}
             </p>
@@ -325,7 +325,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
           <div className="space-y-4 text-xs">
             {/* Title */}
             <div>
-              <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
+              <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1.5">
                 {t('admin', 'docTitleLabel', 'Document Title')} <span className="text-rose-500">*</span>
               </label>
               <input
@@ -333,20 +333,20 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="e.g. Clinical Practice Guidelines for Adult Diabetes 2026"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] focus:border-[#1677E8] dark:focus:border-blue-400 outline-none text-xs sm:text-sm text-[#08165B] dark:text-white font-medium"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] focus:border-[#0D5C3A] dark:focus:border-emerald-400 outline-none text-xs sm:text-sm text-slate-900 dark:text-white font-medium"
               />
             </div>
 
             {/* Category & Source Type Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1.5">
                   {t('admin', 'medCategoryLabel', 'Medical Category')} <span className="text-rose-500">*</span>
                 </label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 focus:border-[#1677E8] dark:focus:border-blue-400 outline-none text-xs sm:text-sm text-[#08165B] dark:text-white font-medium bg-white dark:bg-[#0B132B]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 focus:border-[#0D5C3A] dark:focus:border-emerald-400 outline-none text-xs sm:text-sm text-slate-900 dark:text-white font-medium bg-white dark:bg-[#0B132B]"
                 >
                   <option value="Health Guidelines" className="dark:bg-[#0B132B] dark:text-white">Health Guidelines</option>
                   <option value="Medical Research" className="dark:bg-[#0B132B] dark:text-white">Medical Research</option>
@@ -358,13 +358,13 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1.5">
                   {t('admin', 'sourceTypeLabel', 'Source Type')} <span className="text-rose-500">*</span>
                 </label>
                 <select
                   value={formData.sourceType}
                   onChange={(e) => setFormData({ ...formData, sourceType: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 focus:border-[#1677E8] dark:focus:border-blue-400 outline-none text-xs sm:text-sm text-[#08165B] dark:text-white font-medium bg-white dark:bg-[#0B132B]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 focus:border-[#0D5C3A] dark:focus:border-emerald-400 outline-none text-xs sm:text-sm text-slate-900 dark:text-white font-medium bg-white dark:bg-[#0B132B]"
                 >
                   <option value="WHO Guideline" className="dark:bg-[#0B132B] dark:text-white">WHO Guideline</option>
                   <option value="Clinical Protocol" className="dark:bg-[#0B132B] dark:text-white">Clinical Protocol</option>
@@ -379,11 +379,11 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
             {/* Language & Tags Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">{t('admin', 'docLanguageLabel', 'Language')}</label>
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1.5">{t('admin', 'docLanguageLabel', 'Language')}</label>
                 <select
                   value={formData.language}
                   onChange={(e) => setFormData({ ...formData, language: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 focus:border-[#1677E8] dark:focus:border-blue-400 outline-none text-xs sm:text-sm text-[#08165B] dark:text-white font-medium bg-white dark:bg-[#0B132B]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 focus:border-[#0D5C3A] dark:focus:border-emerald-400 outline-none text-xs sm:text-sm text-slate-900 dark:text-white font-medium bg-white dark:bg-[#0B132B]"
                 >
                   <option value="English" className="dark:bg-[#0B132B] dark:text-white">English</option>
                   <option value="Hindi" className="dark:bg-[#0B132B] dark:text-white">Hindi (हिंदी)</option>
@@ -393,26 +393,26 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">{t('admin', 'tagsLabel', 'Tags / Keywords')}</label>
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1.5">{t('admin', 'tagsLabel', 'Tags / Keywords')}</label>
                 <input
                   type="text"
                   value={formData.tags}
                   onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
                   placeholder="Comma-separated tags (e.g. Cardiology, BP, Adult)"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] focus:border-[#1677E8] dark:focus:border-blue-400 outline-none text-xs sm:text-sm text-[#08165B] dark:text-white font-medium"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] focus:border-[#0D5C3A] dark:focus:border-emerald-400 outline-none text-xs sm:text-sm text-slate-900 dark:text-white font-medium"
                 />
               </div>
             </div>
 
             {/* Description */}
             <div>
-              <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">{t('admin', 'docDescOptional', 'Description (Optional)')}</label>
+              <label className="block font-bold text-slate-900 dark:text-slate-200 mb-1.5">{t('admin', 'docDescOptional', 'Description (Optional)')}</label>
               <textarea
                 rows={3}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Brief summary of document clinical scope and audience..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] focus:border-[#1677E8] dark:focus:border-blue-400 outline-none text-xs sm:text-sm text-[#08165B] dark:text-white font-medium resize-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] focus:border-[#0D5C3A] dark:focus:border-emerald-400 outline-none text-xs sm:text-sm text-slate-900 dark:text-white font-medium resize-none"
               ></textarea>
             </div>
 
@@ -424,7 +424,7 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
                 disabled={files.length === 0}
                 className={`w-full py-3.5 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                   files.length > 0
-                    ? 'bg-[#1677E8] hover:bg-[#08165B] text-white shadow-md shadow-blue-500/20'
+                    ? 'bg-[#0D5C3A] hover:bg-[#0A4D30] text-white shadow-md shadow-emerald-900/15'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed'
                 }`}
               >
@@ -435,13 +435,13 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
 
             {/* PROCESSING PIPELINE STATUS DISPLAY */}
             {pipelineState && (
-              <div className="p-5 rounded-2xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800 space-y-4 animate-in fade-in">
+              <div className="p-5 rounded-2xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/80 dark:border-slate-800 space-y-4 animate-in fade-in">
                 <div className="flex items-center justify-between">
-                  <span className="font-black text-[#08165B] dark:text-white text-sm flex items-center gap-2">
+                  <span className="font-black text-slate-900 dark:text-white text-sm flex items-center gap-2">
                     {pipelineState.step === 'completed' ? (
                       <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                     ) : (
-                      <RefreshCw className="w-5 h-5 text-[#1677E8] dark:text-blue-400 animate-spin" />
+                      <RefreshCw className="w-5 h-5 text-[#0D5C3A] dark:text-emerald-400 animate-spin" />
                     )}
                     <span>
                       {pipelineState.step === 'validating' && 'Stage 1/4: File Validation & Security Scan...'}
@@ -451,14 +451,14 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
                       {pipelineState.step === 'completed' && 'Processing Complete! Available to AI.'}
                     </span>
                   </span>
-                  <span className="font-black text-[#1677E8] dark:text-blue-400 text-sm">{pipelineState.progress}%</span>
+                  <span className="font-black text-[#0D5C3A] dark:text-emerald-400 text-sm">{pipelineState.progress}%</span>
                 </div>
 
                 {/* Progress Bar */}
-                <div className="w-full h-2.5 rounded-full bg-blue-100 overflow-hidden">
+                <div className="w-full h-2.5 rounded-full bg-emerald-100 overflow-hidden">
                   <div
                     className={`h-full transition-all duration-500 ${
-                      pipelineState.step === 'completed' ? 'bg-emerald-500' : 'bg-[#1677E8]'
+                      pipelineState.step === 'completed' ? 'bg-emerald-500' : 'bg-[#0D5C3A]'
                     }`}
                     style={{ width: `${pipelineState.progress}%` }}
                   ></div>
@@ -489,13 +489,13 @@ export default function UploadDocumentScreen({ navigateTo, showToast }) {
                   <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
                     <button
                       onClick={() => navigateTo('library')}
-                      className="w-full sm:w-auto flex-1 py-2.5 px-4 rounded-xl bg-[#1677E8] text-white font-bold text-xs hover:bg-[#08165B] transition-colors cursor-pointer text-center"
+                      className="w-full sm:w-auto flex-1 py-2.5 px-4 rounded-xl bg-[#0D5C3A] text-white font-bold text-xs hover:bg-[#0A4D30] transition-colors cursor-pointer text-center"
                     >
                       View in Document Library
                     </button>
                     <button
                       onClick={resetForm}
-                      className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-white border border-[#D6E6FA] text-[#08165B] font-bold text-xs hover:bg-slate-50 transition-colors cursor-pointer text-center"
+                      className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-white border border-emerald-200/80 text-slate-900 font-bold text-xs hover:bg-slate-50 transition-colors cursor-pointer text-center"
                     >
                       Upload Another Document
                     </button>

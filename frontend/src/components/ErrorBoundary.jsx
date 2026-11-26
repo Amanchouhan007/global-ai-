@@ -64,8 +64,8 @@ export default class ErrorBoundary extends React.Component {
       const componentStack = this.state.errorInfo?.componentStack || '';
 
       return (
-        <div className="min-h-screen w-full bg-[#F2F7FF] dark:bg-[#080D1A] flex items-center justify-center p-4 font-sans text-slate-800 dark:text-slate-100 antialiased">
-          <div className="max-w-lg w-full bg-white dark:bg-[#0F172A] rounded-2xl shadow-xl border border-blue-100 dark:border-slate-800 p-6 sm:p-8 space-y-6 text-center">
+        <div className="min-h-screen w-full bg-[#F8FAF9] dark:bg-[#080D1A] flex items-center justify-center p-4 font-sans text-slate-800 dark:text-slate-100 antialiased">
+          <div className="max-w-lg w-full bg-white dark:bg-[#0F172A] rounded-2xl shadow-xl border border-emerald-200/80 dark:border-slate-800 p-6 sm:p-8 space-y-6 text-center">
 
             {/* Brand Logo */}
             <div className="flex items-center justify-center gap-2 select-none">
@@ -101,7 +101,7 @@ export default class ErrorBoundary extends React.Component {
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button
                 onClick={this.handleReload}
-                className="flex-1 py-3 px-4 rounded-xl bg-[#1677E8] hover:bg-[#115fc4] text-white font-semibold text-xs sm:text-sm shadow-sm transition-all duration-150 cursor-pointer flex items-center justify-center gap-2"
+                className="flex-1 py-3 px-4 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-semibold text-xs sm:text-sm shadow-sm transition-all duration-150 cursor-pointer flex items-center justify-center gap-2"
               >
                 Reload Page
               </button>

@@ -180,10 +180,10 @@ export default function LoginPage({ onNavigate, notice }) {
 
   return (
     <div
-      className={`min-h-screen w-full relative flex items-center justify-center p-3 sm:p-5 lg:p-6 overflow-y-auto font-sans antialiased transition-colors duration-300 selection:bg-blue-100 selection:text-blue-900 ${
+      className={`min-h-screen w-full relative flex items-center justify-center p-3 sm:p-5 lg:p-6 overflow-y-auto font-sans antialiased transition-colors duration-300 selection:bg-emerald-100 selection:text-emerald-900 ${
         isDark
           ? 'bg-gradient-to-br from-[#080D1A] via-[#0B132B] to-[#040814] text-slate-100'
-          : 'bg-gradient-to-br from-[#EEF5FF] via-[#F6FAFF] to-[#E5F0FF] text-[#08165B]'
+          : 'bg-gradient-to-br from-[#ECFDF5] via-[#F6FBF8] to-[#E6F7EE] text-slate-900'
       }`}
     >
       {/* Top Floating Controls: Back button, Language Selector & Dark/Light Mode Toggle */}
@@ -194,7 +194,7 @@ export default function LoginPage({ onNavigate, notice }) {
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition-all shadow-2xs hover:shadow-xs cursor-pointer ${
             isDark
               ? 'bg-slate-800/80 hover:bg-slate-800 border-slate-700 text-slate-200'
-              : 'bg-white/90 hover:bg-white border-blue-200 text-[#08165B]'
+              : 'bg-white/90 hover:bg-white border-emerald-200 text-[#0D5C3A]'
           }`}
         >
           <ArrowLeft className="w-3.5 h-3.5" />
@@ -210,22 +210,22 @@ export default function LoginPage({ onNavigate, notice }) {
       {/* 1. ANIMATED BACKGROUND PARTICLES & GRADIENTS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
         <div className={`absolute -top-32 -left-32 w-96 h-96 rounded-full blur-3xl ${
-          isDark ? 'bg-blue-900/20' : 'bg-blue-300/20'
+          isDark ? 'bg-emerald-900/20' : 'bg-emerald-300/25'
         }`} />
         <div className={`absolute -bottom-32 -right-32 w-96 h-96 rounded-full blur-3xl ${
-          isDark ? 'bg-cyan-900/20' : 'bg-cyan-300/20'
+          isDark ? 'bg-teal-900/20' : 'bg-teal-300/20'
         }`} />
         <div className={`absolute top-1/2 left-1/3 -translate-y-1/2 w-[550px] h-[550px] rounded-full border pointer-events-none ${
-          isDark ? 'border-blue-900/30 opacity-30' : 'border-blue-200/40 opacity-40'
+          isDark ? 'border-emerald-900/30 opacity-30' : 'border-emerald-200/50 opacity-45'
         }`} />
         <div className={`absolute top-1/2 left-1/3 -translate-y-1/2 w-[350px] h-[350px] rounded-full border pointer-events-none ${
-          isDark ? 'border-blue-900/40 opacity-40' : 'border-blue-200/50 opacity-50'
+          isDark ? 'border-emerald-900/40 opacity-40' : 'border-emerald-200/60 opacity-55'
         }`} />
 
         {particles.map((p, i) => (
           <span
             key={i}
-            className={`absolute rounded-full ${p.size} ${isDark ? 'bg-blue-400/20' : 'bg-blue-500/30'}`}
+            className={`absolute rounded-full ${p.size} ${isDark ? 'bg-emerald-400/20' : 'bg-emerald-500/25'}`}
             style={{
               top: p.top,
               left: p.left,
@@ -268,13 +268,13 @@ export default function LoginPage({ onNavigate, notice }) {
           {/* Hero Headlines */}
           <div className="space-y-1 sm:space-y-1.5">
             <h1 className={`text-2xl sm:text-3xl lg:text-[38px] font-black tracking-tight leading-[1.15] ${
-              isDark ? 'text-white' : 'text-[#08165B]'
+              isDark ? 'text-white' : 'text-slate-900'
             }`}>
               Your Health, <br className="hidden sm:inline" />
               <span className={
                 isDark
-                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-sky-200 to-indigo-300'
-                  : 'text-transparent bg-clip-text bg-gradient-to-r from-[#08165B] via-[#1677E8] to-[#08165B]'
+                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400'
+                  : 'text-transparent bg-clip-text bg-gradient-to-r from-[#0D5C3A] via-[#0F766E] to-[#0D5C3A]'
               }>
                 Your Knowledge.
               </span>
@@ -293,16 +293,16 @@ export default function LoginPage({ onNavigate, notice }) {
           <div className={`backdrop-blur-xl border rounded-2xl p-3.5 sm:p-4 max-w-[500px] space-y-2.5 transition-colors duration-200 ${
             isDark
               ? 'bg-[#0F1C36]/80 border-slate-700/80 text-slate-100 shadow-xl'
-              : 'bg-white/70 border-white/90 text-slate-800 shadow-sm'
+              : 'bg-white/80 border-emerald-100 text-slate-800 shadow-sm'
           }`}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#1677E8] to-[#0ea5e9] text-white flex items-center justify-center shadow-xs shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0D5C3A] to-[#0F766E] text-white flex items-center justify-center shadow-xs shrink-0">
                 <Stethoscope className="w-5 h-5 stroke-[2.3]" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className={`text-xs sm:text-[13px] font-bold tracking-tight ${
-                    isDark ? 'text-white' : 'text-[#08165B]'
+                    isDark ? 'text-white' : 'text-slate-900'
                   }`}>
                     Clinical Knowledge Base
                   </span>
@@ -321,14 +321,14 @@ export default function LoginPage({ onNavigate, notice }) {
             </div>
 
             <div className={`grid grid-cols-2 gap-2 pt-2 border-t text-[10.5px] font-semibold ${
-              isDark ? 'border-slate-700/80 text-slate-300' : 'border-slate-200/70 text-slate-700'
+              isDark ? 'border-slate-700/80 text-slate-300' : 'border-emerald-100 text-slate-700'
             }`}>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
                 <span>1,000 Symptom Cards</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#0D5C3A] dark:text-emerald-400 shrink-0" />
                 <span>256-Bit SSL Encrypted</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -349,16 +349,16 @@ export default function LoginPage({ onNavigate, notice }) {
           <div className={`w-full max-w-[450px] backdrop-blur-[24px] border rounded-[24px] p-5 sm:p-6 lg:p-7 transition-all duration-300 relative ${
             isDark
               ? 'bg-[#0F1C36]/90 border-slate-700/90 text-slate-100 shadow-2xl'
-              : 'bg-white/80 border-white/95 text-slate-800 shadow-[0_16px_45px_rgba(8,22,91,0.08)]'
+              : 'bg-white/85 border-emerald-100 text-slate-800 shadow-[0_16px_45px_rgba(13,92,58,0.08)]'
           }`}>
             
-            {/* Top Cyan/Blue Glow Accent Line */}
-            <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#1677E8]/50 to-transparent rounded-full" />
+            {/* Top Emerald Glow Accent Line */}
+            <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#0D5C3A]/50 to-transparent rounded-full" />
 
             {/* Card Header */}
             <div className="mb-4">
               <h2 className={`text-xl sm:text-2xl font-black tracking-tight ${
-                isDark ? 'text-white' : 'text-[#08165B]'
+                isDark ? 'text-white' : 'text-slate-900'
               }`}>
                 Welcome Back!
               </h2>
@@ -384,17 +384,17 @@ export default function LoginPage({ onNavigate, notice }) {
                 Select Portal Access:
               </div>
               <div className={`grid grid-cols-2 gap-1.5 p-1 border rounded-xl backdrop-blur-md ${
-                isDark ? 'bg-slate-900/60 border-slate-700/80' : 'bg-white/50 border-[#D6E6FA]'
+                isDark ? 'bg-slate-900/60 border-slate-700/80' : 'bg-[#F8FAF9] border-emerald-200/80'
               }`}>
                 <button
                   type="button"
                   onClick={() => handleRoleChange('admin')}
                   className={`py-2 px-2.5 rounded-lg font-bold text-xs tracking-wide transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
                     selectedRole === 'admin'
-                      ? 'bg-gradient-to-r from-[#F04B0A] to-[#ff6224] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] text-white shadow-xs'
                       : isDark
                         ? 'bg-transparent text-slate-300 hover:bg-slate-800'
-                        : 'bg-transparent text-[#08165B] hover:bg-white/60'
+                        : 'bg-transparent text-slate-700 hover:bg-white/80'
                   }`}
                 >
                   <ShieldCheck className="w-3.5 h-3.5" />
@@ -406,10 +406,10 @@ export default function LoginPage({ onNavigate, notice }) {
                   onClick={() => handleRoleChange('user')}
                   className={`py-2 px-2.5 rounded-lg font-bold text-xs tracking-wide transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
                     selectedRole === 'user'
-                      ? 'bg-gradient-to-r from-[#F04B0A] to-[#ff6224] text-white shadow-xs'
+                      ? 'bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] text-white shadow-xs'
                       : isDark
                         ? 'bg-transparent text-slate-300 hover:bg-slate-800'
-                        : 'bg-transparent text-[#08165B] hover:bg-white/60'
+                        : 'bg-transparent text-slate-700 hover:bg-white/80'
                   }`}
                 >
                   <span>{t('auth', 'userRole', 'USER LOGIN')}</span>
@@ -419,14 +419,14 @@ export default function LoginPage({ onNavigate, notice }) {
 
             {/* Quick Demo Credentials Pill */}
             <div className={`mb-3.5 flex items-center justify-between px-3 py-1.5 rounded-xl border text-[11px] ${
-              isDark ? 'bg-slate-900/60 border-slate-700/80 text-slate-200' : 'bg-white/60 border-blue-200/70 text-[#08165B]'
+              isDark ? 'bg-slate-900/60 border-slate-700/80 text-slate-200' : 'bg-[#F4F9F6] border-emerald-200/80 text-slate-800'
             }`}>
               <div className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#F04B0A]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#D81B60]" />
                 <span className="font-semibold">Demo Credentials:</span>
               </div>
               <span className={`font-bold px-2 py-0.5 rounded-md border ${
-                isDark ? 'bg-slate-800 border-slate-700 text-blue-300' : 'bg-white/80 border-blue-100 text-[#1677E8]'
+                isDark ? 'bg-slate-800 border-slate-700 text-emerald-300' : 'bg-[#EBF5F0] border-emerald-200 text-[#0D5C3A]'
               }`}>
                 {selectedRole === 'admin' ? 'admin@gmail.com' : 'user@gmail.com'}
               </span>
@@ -446,7 +446,7 @@ export default function LoginPage({ onNavigate, notice }) {
               {/* Email Input */}
               <div className="space-y-1">
                 <label className={`block text-xs font-bold ${
-                  isDark ? 'text-slate-200' : 'text-[#08165B]'
+                  isDark ? 'text-slate-200' : 'text-slate-800'
                 }`}>
                   {t('auth', 'email', 'Email Address')}
                 </label>
@@ -462,8 +462,8 @@ export default function LoginPage({ onNavigate, notice }) {
                     placeholder="Enter your email"
                     className={`w-full pl-9 pr-3 py-2 rounded-xl border text-xs font-medium outline-none transition-all shadow-2xs ${
                       isDark
-                        ? 'bg-[#0B132B] border-slate-700 text-white placeholder-slate-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20'
-                        : 'bg-white/90 border-[#D6E6FA] text-slate-800 placeholder-slate-400 focus:border-[#1677E8] focus:ring-2 focus:ring-[#1677E8]/10'
+                        ? 'bg-[#0B132B] border-slate-700 text-white placeholder-slate-500 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20'
+                        : 'bg-white/90 border-emerald-200/90 text-slate-800 placeholder-slate-400 focus:border-[#0D5C3A] focus:ring-2 focus:ring-[#0D5C3A]/15'
                     }`}
                   />
                 </div>
@@ -472,7 +472,7 @@ export default function LoginPage({ onNavigate, notice }) {
               {/* Password Input */}
               <div className="space-y-1">
                 <label className={`block text-xs font-bold ${
-                  isDark ? 'text-slate-200' : 'text-[#08165B]'
+                  isDark ? 'text-slate-200' : 'text-slate-800'
                 }`}>
                   {t('auth', 'password', 'Password')}
                 </label>
@@ -488,8 +488,8 @@ export default function LoginPage({ onNavigate, notice }) {
                     placeholder="Enter your password"
                     className={`w-full pl-9 pr-9 py-2 rounded-xl border text-xs font-medium outline-none transition-all shadow-2xs ${
                       isDark
-                        ? 'bg-[#0B132B] border-slate-700 text-white placeholder-slate-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20'
-                        : 'bg-white/90 border-[#D6E6FA] text-slate-800 placeholder-slate-400 focus:border-[#1677E8] focus:ring-2 focus:ring-[#1677E8]/10'
+                        ? 'bg-[#0B132B] border-slate-700 text-white placeholder-slate-500 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20'
+                        : 'bg-white/90 border-emerald-200/90 text-slate-800 placeholder-slate-400 focus:border-[#0D5C3A] focus:ring-2 focus:ring-[#0D5C3A]/15'
                     }`}
                   />
                   <button
@@ -509,7 +509,7 @@ export default function LoginPage({ onNavigate, notice }) {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-3.5 h-3.5 rounded border-slate-300 text-[#F04B0A] focus:ring-[#F04B0A]/30 accent-[#F04B0A]"
+                    className="w-3.5 h-3.5 rounded border-slate-300 text-[#0D5C3A] focus:ring-[#0D5C3A]/30 accent-[#0D5C3A]"
                   />
                   <span className={`font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                     {t('auth', 'rememberMe', 'Remember Me')}
@@ -518,7 +518,7 @@ export default function LoginPage({ onNavigate, notice }) {
                 <button
                   type="button"
                   onClick={() => alert('For this demo, please use password: 12345678')}
-                  className="font-semibold text-[#1677E8] hover:underline transition-colors cursor-pointer"
+                  className="font-semibold text-[#0D5C3A] dark:text-emerald-400 hover:underline transition-colors cursor-pointer"
                 >
                   Forgot Password?
                 </button>
@@ -623,7 +623,7 @@ export default function LoginPage({ onNavigate, notice }) {
           <div className={`w-full max-w-[460px] max-h-[92vh] overflow-y-auto backdrop-blur-2xl rounded-3xl p-6 sm:p-7 border shadow-2xl relative animate-in zoom-in-95 duration-200 ${
             isDark
               ? 'bg-[#0F1C36] border-slate-700 text-slate-100'
-              : 'bg-white/95 border-blue-200 text-slate-800'
+              : 'bg-white/95 border-emerald-200 text-slate-800'
           }`}>
             
             {/* Top Controls in Modal: Close Button */}
@@ -642,12 +642,12 @@ export default function LoginPage({ onNavigate, notice }) {
 
             {/* Modal Header */}
             <div className="mb-4 pr-16">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-500 text-[10.5px] font-bold mb-2 border border-blue-500/20">
-                <Sparkles className="w-3 h-3 text-[#F04B0A]" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-[#0D5C3A] dark:text-emerald-400 text-[10.5px] font-bold mb-2 border border-emerald-500/20">
+                <Sparkles className="w-3 h-3 text-[#D81B60]" />
                 <span>Instant Patient & Caregiver Access</span>
               </div>
               <h3 className={`text-xl sm:text-2xl font-black tracking-tight ${
-                isDark ? 'text-white' : 'text-[#08165B]'
+                isDark ? 'text-white' : 'text-slate-900'
               }`}>
                 Create Your Account
               </h3>
@@ -679,7 +679,7 @@ export default function LoginPage({ onNavigate, notice }) {
               {/* Full Name */}
               <div className="space-y-1">
                 <label className={`block text-xs font-bold ${
-                  isDark ? 'text-slate-200' : 'text-[#08165B]'
+                  isDark ? 'text-slate-200' : 'text-slate-800'
                 }`}>
                   Full Name
                 </label>
@@ -695,8 +695,8 @@ export default function LoginPage({ onNavigate, notice }) {
                     placeholder="Enter your name"
                     className={`w-full pl-9 pr-3 py-2 rounded-xl border text-xs focus:outline-none transition-all ${
                       isDark
-                        ? 'bg-[#080D1A] border-slate-700 text-white placeholder-slate-500 focus:border-blue-400'
-                        : 'bg-slate-50 border-[#D6E6FA] text-slate-800 placeholder-slate-400 focus:border-[#1677E8]'
+                        ? 'bg-[#080D1A] border-slate-700 text-white placeholder-slate-500 focus:border-emerald-400'
+                        : 'bg-slate-50 border-emerald-200/90 text-slate-800 placeholder-slate-400 focus:border-[#0D5C3A]'
                     }`}
                   />
                 </div>
@@ -705,7 +705,7 @@ export default function LoginPage({ onNavigate, notice }) {
               {/* Email Address */}
               <div className="space-y-1">
                 <label className={`block text-xs font-bold ${
-                  isDark ? 'text-slate-200' : 'text-[#08165B]'
+                  isDark ? 'text-slate-200' : 'text-slate-800'
                 }`}>
                   Email Address
                 </label>
@@ -721,8 +721,8 @@ export default function LoginPage({ onNavigate, notice }) {
                     placeholder="you@example.com"
                     className={`w-full pl-9 pr-3 py-2 rounded-xl border text-xs focus:outline-none transition-all ${
                       isDark
-                        ? 'bg-[#080D1A] border-slate-700 text-white placeholder-slate-500 focus:border-blue-400'
-                        : 'bg-slate-50 border-[#D6E6FA] text-slate-800 placeholder-slate-400 focus:border-[#1677E8]'
+                        ? 'bg-[#080D1A] border-slate-700 text-white placeholder-slate-500 focus:border-emerald-400'
+                        : 'bg-slate-50 border-emerald-200/90 text-slate-800 placeholder-slate-400 focus:border-[#0D5C3A]'
                     }`}
                   />
                 </div>
@@ -732,7 +732,7 @@ export default function LoginPage({ onNavigate, notice }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <div className="space-y-1">
                   <label className={`block text-xs font-bold ${
-                    isDark ? 'text-slate-200' : 'text-[#08165B]'
+                    isDark ? 'text-slate-200' : 'text-slate-800'
                   }`}>
                     Password
                   </label>
@@ -745,8 +745,8 @@ export default function LoginPage({ onNavigate, notice }) {
                       placeholder="Min 6 chars"
                       className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none transition-all ${
                         isDark
-                          ? 'bg-[#080D1A] border-slate-700 text-white placeholder-slate-500 focus:border-blue-400'
-                          : 'bg-slate-50 border-[#D6E6FA] text-slate-800 placeholder-slate-400 focus:border-[#1677E8]'
+                          ? 'bg-[#080D1A] border-slate-700 text-white placeholder-slate-500 focus:border-emerald-400'
+                          : 'bg-slate-50 border-emerald-200/90 text-slate-800 placeholder-slate-400 focus:border-[#0D5C3A]'
                       }`}
                     />
                   </div>
@@ -754,7 +754,7 @@ export default function LoginPage({ onNavigate, notice }) {
 
                 <div className="space-y-1">
                   <label className={`block text-xs font-bold ${
-                    isDark ? 'text-slate-200' : 'text-[#08165B]'
+                    isDark ? 'text-slate-200' : 'text-slate-800'
                   }`}>
                     Confirm Password
                   </label>
@@ -767,8 +767,8 @@ export default function LoginPage({ onNavigate, notice }) {
                       placeholder="Repeat password"
                       className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none transition-all ${
                         isDark
-                          ? 'bg-[#080D1A] border-slate-700 text-white placeholder-slate-500 focus:border-blue-400'
-                          : 'bg-slate-50 border-[#D6E6FA] text-slate-800 placeholder-slate-400 focus:border-[#1677E8]'
+                          ? 'bg-[#080D1A] border-slate-700 text-white placeholder-slate-500 focus:border-emerald-400'
+                          : 'bg-slate-50 border-emerald-200/90 text-slate-800 placeholder-slate-400 focus:border-[#0D5C3A]'
                       }`}
                     />
                   </div>
@@ -778,7 +778,7 @@ export default function LoginPage({ onNavigate, notice }) {
               {/* Role Option */}
               <div className="space-y-1 pt-1">
                 <label className={`block text-xs font-bold ${
-                  isDark ? 'text-slate-200' : 'text-[#08165B]'
+                  isDark ? 'text-slate-200' : 'text-slate-800'
                 }`}>
                   Account Type
                 </label>
@@ -788,7 +788,7 @@ export default function LoginPage({ onNavigate, notice }) {
                     onClick={() => setRegRole('user')}
                     className={`py-1.5 px-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                       regRole === 'user'
-                        ? 'bg-blue-500/10 border-blue-500 text-blue-500 font-black'
+                        ? 'bg-emerald-500/10 border-[#0D5C3A] text-[#0D5C3A] dark:text-emerald-400 font-black'
                         : isDark
                           ? 'bg-slate-800/60 border-slate-700 text-slate-300'
                           : 'bg-white border-slate-200 text-slate-600'
@@ -817,7 +817,7 @@ export default function LoginPage({ onNavigate, notice }) {
                 <button
                   type="submit"
                   disabled={regLoading || regSuccess}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#F04B0A] to-[#ff6224] hover:from-[#c2410c] hover:to-[#9a3412] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
+                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] hover:from-[#0A4D30] hover:to-[#083F27] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
                 >
                   {regLoading ? (
                     <>
@@ -838,9 +838,9 @@ export default function LoginPage({ onNavigate, notice }) {
                 <button
                   type="button"
                   onClick={() => setShowRegisterModal(false)}
-                  className={`text-xs font-semibold ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-[#08165B]'}`}
+                  className={`text-xs font-semibold ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-[#0D5C3A]'}`}
                 >
-                  Already have an account? <span className="text-[#1677E8] font-bold hover:underline">Sign In</span>
+                  Already have an account? <span className="text-[#0D5C3A] dark:text-emerald-400 font-bold hover:underline">Sign In</span>
                 </button>
               </div>
 

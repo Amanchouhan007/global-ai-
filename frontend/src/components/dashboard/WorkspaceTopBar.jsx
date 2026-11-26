@@ -24,7 +24,7 @@ export default function WorkspaceTopBar({
       className={`sticky top-0 z-30 h-14 backdrop-blur-md border-b px-2.5 sm:px-6 lg:px-8 flex items-center justify-between transition-colors duration-200 w-full max-w-full ${
         isDark
           ? 'bg-[#080D1A]/95 border-slate-800 text-slate-100'
-          : 'bg-white/80 border-blue-100/80 text-slate-800'
+          : 'bg-white/80 border-emerald-200/80 text-slate-800'
       }`}
     >
       
@@ -42,14 +42,14 @@ export default function WorkspaceTopBar({
         {/* Minimalist Breadcrumb / Focused Mode Pill */}
         <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden">
           {activeView === 'library' ? (
-            <span className="inline-flex items-center gap-1.5 px-2.5 xs:px-3 py-1 rounded-full bg-blue-50 dark:bg-slate-800 text-[#08165B] dark:text-blue-300 border border-blue-200 dark:border-slate-700 text-xs font-semibold truncate max-w-full">
+            <span className="inline-flex items-center gap-1.5 px-2.5 xs:px-3 py-1 rounded-full bg-[#EBF5F0] dark:bg-slate-800 text-[#0D5C3A] dark:text-emerald-300 border border-emerald-200 dark:border-slate-700 text-xs font-semibold truncate max-w-full">
               <span>{t('dashboard', 'personalHealthLibrary', 'Personal Health Library')}</span>
             </span>
           ) : activeCategory ? (
-            <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 rounded-full bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 border border-blue-200/90 dark:border-slate-700 text-xs font-medium shadow-2xs min-w-0 max-w-full">
+            <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 rounded-full bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 border border-emerald-200/90 dark:border-slate-700 text-xs font-medium shadow-2xs min-w-0 max-w-full">
               <span className={`w-2 h-2 rounded-full ${activeCategory.dotColor} shrink-0`} />
               <span className="text-slate-500 dark:text-slate-400 text-[10.5px] xs:text-[11px] font-normal shrink-0 hidden xs:inline">{t('dashboard', 'focused', 'Focused:')}</span>
-              <span className="font-bold text-[#08165B] dark:text-white truncate">{getCategoryName(activeCategory)}</span>
+              <span className="font-bold text-slate-900 dark:text-white truncate">{getCategoryName(activeCategory)}</span>
               <button
                 type="button"
                 onClick={() => onSelectCategory && onSelectCategory(null)}
@@ -60,10 +60,10 @@ export default function WorkspaceTopBar({
               </button>
             </div>
           ) : (
-            <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 rounded-full bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 border border-blue-200/80 dark:border-slate-700 text-xs font-medium shadow-2xs min-w-0 max-w-full">
-              <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#1677E8] to-[#F04B0A] shrink-0" />
+            <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 rounded-full bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 border border-emerald-200/80 dark:border-slate-700 text-xs font-medium shadow-2xs min-w-0 max-w-full">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#0D5C3A] to-[#0F766E] shrink-0" />
               <span className="text-slate-500 dark:text-slate-400 text-[10.5px] xs:text-[11px] font-normal shrink-0 hidden xs:inline">{t('dashboard', 'triageMode', 'Triage Mode:')}</span>
-              <span className="font-bold text-[#08165B] dark:text-white truncate text-xs">{t('dashboard', 'allCategories', 'All Categories / General')}</span>
+              <span className="font-bold text-slate-900 dark:text-white truncate text-xs">{t('dashboard', 'allCategories', 'All Categories / General')}</span>
             </div>
           )}
         </div>

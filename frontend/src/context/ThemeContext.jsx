@@ -151,8 +151,8 @@ export function useTheme() {
  * Organic Liquid Ink Bleed / Grunge Screen-Tear Overlay
  */
 function InkBleedOverlay({ state }) {
-  const fillColor = state.targetTheme === 'dark' ? '#080D1A' : '#F2F7FF';
-  const glowColor = state.targetTheme === 'dark' ? '#1677E8' : '#F04B0A';
+  const fillColor = state.targetTheme === 'dark' ? '#080D1A' : '#F8FAF9';
+  const glowColor = state.targetTheme === 'dark' ? '#0F766E' : '#0D5C3A';
 
   return (
     <div

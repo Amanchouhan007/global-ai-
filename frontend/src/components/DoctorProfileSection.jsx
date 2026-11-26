@@ -13,15 +13,16 @@ export default function DoctorProfileSection({ onStartAssessment }) {
   const { currentLang, t } = useLanguage();
 
   return (
-    <section id="about" className="py-16 sm:py-20 lg:py-24 bg-white border-b border-emerald-950/10 scroll-mt-24 relative">
-      <div id="founder" className="absolute -top-24 left-0"></div>
-      <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Clinical Leadership & Founder Spotlight Card */}
-        <div className="bg-gradient-to-br from-[#0D5C3A] via-[#0E6B44] to-[#09432A] rounded-3xl p-7 sm:p-12 lg:p-14 text-white shadow-2xl relative overflow-hidden">
+    <section id="about" className="w-full min-h-screen flex items-center py-8 sm:py-12 bg-gradient-to-br from-[#0D5C3A] via-[#0E6B44] to-[#09432A] text-white border-b border-emerald-950/10 scroll-mt-0 relative overflow-hidden">
+      <div id="founder" className="absolute top-0 left-0"></div>
 
-          {/* Subtle background decoration */}
-          <div className="absolute right-0 bottom-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+      {/* Subtle background decoration */}
+      <div className="absolute right-0 bottom-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10 w-full relative z-10">
+        
+        {/* Clinical Leadership & Founder Spotlight */}
+        <div className="w-full relative">
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
 
