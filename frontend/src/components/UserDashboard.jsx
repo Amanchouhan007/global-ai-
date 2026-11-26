@@ -10,7 +10,6 @@ import MinimalLibraryView from './dashboard/MinimalLibraryView';
 import HelpModal from './dashboard/HelpModal';
 import ProfileSettingsModal from './dashboard/ProfileSettingsModal';
 import FloatingHealthChatbot from './dashboard/FloatingHealthChatbot';
-import CategoryMicroApp from './microapps/CategoryMicroApp';
 import { getClientCategories } from './ExploreCategories';
 import { userPortalStorage } from '../services/userPortalStorage';
 import {
@@ -480,18 +479,6 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                   })}
                 </div>
               </div>
-
-              {/* Interactive Category Micro-App matching the selected category */}
-              {activeCategory && (
-                <div className="pt-1">
-                  <CategoryMicroApp
-                    key={`microapp-${activeCategory.id}`}
-                    categoryId={activeCategory.id}
-                    category={activeCategory}
-                    onAskAI={(q) => setExternalPrompt({ text: q, nonce: Date.now() })}
-                  />
-                </div>
-              )}
 
             </div>
           )}
