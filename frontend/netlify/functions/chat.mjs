@@ -253,19 +253,19 @@ export default async function handler(req, context) {
   }
 
   const deterministicEmergency = detectEmergencyRedFlags(message);
-  const modelName = process.env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash';
+  const modelName = process.env.GEMINI_MODEL?.trim() || 'gemini-3.7-flash';
 
   try {
-    const ai = new GoogleGenAI({ apiKey });
+    const ai = new GoogleGenAI({ apiKey, httpOptions: { timeout: 10000 } });
     const contents = [...safeHistory, { role: 'user', parts: [{ text: message }] }];
-
     const response = await ai.models.generateContent({
       model: modelName,
       contents,
       config: {
         systemInstruction: buildSystemInstruction(rawLang, category, deterministicEmergency),
         temperature: 0.25,
-        maxOutputTokens: 900,
+        maxOutputTokens: 700,
+        thinkingConfig: { thinkingBudget: 0 },
         responseMimeType: 'application/json',
         responseSchema: {
           type: Type.OBJECT,

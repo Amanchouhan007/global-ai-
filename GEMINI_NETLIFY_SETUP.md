@@ -7,7 +7,7 @@
 2. Paste your Google AI Studio key into `GEMINI_API_KEY`:
    ```env
    GEMINI_API_KEY=your_actual_gemini_api_key_here
-   GEMINI_MODEL=gemini-2.5-flash
+   GEMINI_MODEL=gemini-3.7-flash
    ```
    *(Do not prefix with `VITE_`, and never commit `.env`.)*
 
@@ -27,7 +27,7 @@
 ## 2. Production Deployment (Netlify Dashboard)
 Configure the same variables in **Netlify Dashboard -> Site configuration -> Environment variables**:
 - `GEMINI_API_KEY` — Your Google Gemini API key (server-side only).
-- `GEMINI_MODEL` *(optional)* — Defaults to `gemini-2.5-flash`.
+- `GEMINI_MODEL` *(optional)* — Defaults to `gemini-3.7-flash`.
 
 ## 3. Endpoint Contract (`POST /api/chat`)
 - **Request JSON:** `{ "message": "...", "language": "EN|HI|MR|GU|BN|AR", "category": "symptoms", "history": [] }`

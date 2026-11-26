@@ -31,7 +31,6 @@ function WhatsAppIcon({ className = "w-3.5 h-3.5" }) {
   );
 }
 import {
-  generateHealthAssessment,
   detectEmergencyRedFlags,
   HEALTH_CATEGORIES
 } from '../../data/healthKnowledgeBase';
@@ -301,7 +300,34 @@ export default function FloatingHealthChatbot({
     }
   }, [externalPrompt]);
 
-  const handleSend = (textToSend = inputMessage) => {
+  const buildUnavailableReply = (text, currentAttachment) => {
+    const isEmergency = detectEmergencyRedFlags(text);
+    const unavailableMessages = {
+      EN: 'Live AI guidance is temporarily unavailable right now. Please try sending your question again in a moment.',
+      HI: 'लाइव AI सेवा अभी अस्थायी रूप से उपलब्ध नहीं है। कृपया थोड़ी देर बाद अपना प्रश्न फिर से भेजें।',
+      MR: 'थेट AI सेवा सध्या तात्पुरती उपलब्ध नाही. कृपया थोड्या वेळाने तुमचा प्रश्न पुन्हा पाठवा.',
+      GU: 'લાઇવ AI સેવા હાલમાં અસ્થાયી રૂપે ઉપલબ્ધ નથી. કૃપા કરીને થોડી વાર પછી ફરી પ્રયાસ કરો.',
+      BN: 'লাইভ AI পরিষেবাটি সাময়িকভাবে উপলব্ধ নয়। অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন।',
+      AR: 'خدمة الذكاء الاصطناعي المباشرة غير متاحة مؤقتاً حالياً. يرجى إعادة إرسال سؤالك بعد قليل.'
+    };
+    const emergencyPrefix = {
+      EN: 'URGENT: Your message mentions symptoms that may require immediate emergency medical care. Please call 108 / 112 (India) or 911 (US) or go to the nearest emergency room right away.\n\n',
+      HI: 'आपातकालीन सूचना: आपके संदेश में गंभीर लक्षणों का उल्लेख है। कृपया तुरंत 108 / 112 (भारत) या नजदीकी आपातकालीन अस्पताल से संपर्क करें।\n\n',
+      MR: 'तातडीची सूचना: तुमच्या संदेशात गंभीर लक्षणांचा उल्लेख आहे. कृपया ताबडतोब 108 / 112 (भारत) वर कॉल करा किंवा जवळच्या रुग्णालयात जा.\n\n',
+      GU: 'તાત્કાલિક સૂચના: તમારા સંદેશમાં ગંભીર લક્ષણોનો ઉલ્લેખ છે. કૃપા કરીને તરત જ 108 / 112 (ભારત) પર કૉલ કરો અથવા નજીકની હોસ્પিটલમાં જાઓ.\n\n',
+      BN: 'জরুরি সতর্কতা: আপনার বার্তায় গুরুতর উপসর্গের উল্লেখ রয়েছে। অনুগ্রহ করে অবিলম্বে 108 / 112 (ভারত) নম্বরে কল করুন বা নিকটস্থ জরুরি বিভাগে যান।\n\n',
+      AR: 'تنبيه عاجل: تتضمن رسالتك أعراضاً قد تستدعي رعاية طبية طارئة فوراً. يرجى الاتصال برقم الطوارئ (108 / 112 في الهند أو 911 في أمريكا) أو التوجه لأقرب قسم طوارئ.\n\n'
+    };
+
+    if (currentAttachment) {
+      return `${unavailableMessages[currentLang] || unavailableMessages.EN} File attachments ("${currentAttachment.name}") are not yet analyzed by live AI.`;
+    }
+
+    const baseMsg = unavailableMessages[currentLang] || unavailableMessages.EN;
+    return isEmergency ? `${emergencyPrefix[currentLang] || emergencyPrefix.EN}${baseMsg}` : baseMsg;
+  };
+
+  const handleSend = async (textToSend = inputMessage) => {
     const text = (typeof textToSend === 'string' ? textToSend : inputMessage).trim();
     if ((!text && !attachedFile) || isTyping) return;
 
@@ -311,6 +337,10 @@ export default function FloatingHealthChatbot({
     }
 
     const currentAttachment = attachedFile;
+    const recentHistory = messages
+      .filter((m) => m.id !== 'welcome' && m.id !== 'welcome-reset')
+      .slice(-6)
+      .map((m) => ({ sender: m.sender, text: m.text }));
 
     const userMsg = {
       id: Date.now().toString(),
@@ -325,65 +355,59 @@ export default function FloatingHealthChatbot({
     setAttachedFile(null);
     setIsTyping(true);
 
-    // Simulate smart clinical evaluation response using verified knowledge base
-    setTimeout(() => {
-      let replyText = '';
-      if (currentAttachment) {
-        replyText = `Thank you for sharing the medical report/image "${currentAttachment.name}". Dr. Pratap's clinical triage protocols have reviewed the document context.\n\nPreliminary Observations:\n• Please verify that all test dates, units of measurement, and physician notes are legible.\n• Any flagged abnormal values or emergency red flags require direct in-person clinical review.\n\nNext Steps:\n• You can ask specific questions about any values or lines in this report, or describe current symptoms.`;
-      } else {
-        const assessment = generateHealthAssessment(text, activeCategory?.id || 'symptoms');
-        replyText = assessment.understanding || 'Thank you for sharing your symptoms. Here is the clinical assessment:';
-        
-        const considerationsLabel = {
-          HI: 'नैदानिक विचार (Clinical Considerations):',
-          MR: 'वैद्यकीय विचार (Clinical Considerations):',
-          GU: 'તબીબી વિચારણા (Clinical Considerations):',
-          BN: 'ক্লিনিক্যাল বিবেচনা (Clinical Considerations):',
-          AR: 'الاعتبارات السريرية:',
-          EN: 'Clinical Considerations:'
-        }[currentLang] || 'Clinical Considerations:';
+    if (currentAttachment) {
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          id: (Date.now() + 1).toString(),
+          sender: 'ai',
+          text: buildUnavailableReply(text, currentAttachment),
+          urgency: detectEmergencyRedFlags(text) ? 'RED' : null,
+          sources: [],
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }]);
+        setIsTyping(false);
+      }, 300);
+      return;
+    }
 
-        const nextStepsLabel = {
-          HI: 'सुरक्षित अगले कदम (Safe Next Steps):',
-          MR: 'सुरक्षित पुढील पावले (Safe Next Steps):',
-          GU: 'સુરક્ષિત આગલા પગલાં (Safe Next Steps):',
-          BN: 'নিরাপদ পরবর্তী পদক্ষেপ (Safe Next Steps):',
-          AR: 'الخطوات الآمنة التالية:',
-          EN: 'Safe Next Steps:'
-        }[currentLang] || 'Safe Next Steps:';
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          language: currentLang || 'EN',
+          category: activeCategory?.id || 'symptoms',
+          history: recentHistory
+        })
+      });
 
-        const guidanceLabel = {
-          HI: 'मार्गदर्शन (Guidance):',
-          MR: 'मार्गदर्शन (Guidance):',
-          GU: 'માર્ગદર્શન (Guidance):',
-          BN: 'নির্দেশনা (Guidance):',
-          AR: 'الإرشادات:',
-          EN: 'Guidance:'
-        }[currentLang] || 'Guidance:';
-
-        if (assessment.possibleExplanations && assessment.possibleExplanations.length > 0) {
-          replyText += `\n\n${considerationsLabel}\n• ` + assessment.possibleExplanations.slice(0, 3).join('\n• ');
-        }
-        if (assessment.nextSteps && assessment.nextSteps.length > 0) {
-          replyText += `\n\n${nextStepsLabel}\n• ` + assessment.nextSteps.slice(0, 3).join('\n• ');
-        }
-        if (assessment.whenToSeekHelp) {
-          replyText += `\n\n${guidanceLabel} ${assessment.whenToSeekHelp}`;
-        }
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data?.replyText) {
+        throw new Error(data?.error || `AI request failed (${response.status})`);
       }
 
-      const aiMsg = {
+      setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         sender: 'ai',
-        text: replyText,
-        urgency: null,
-        sources: ['ICMR/WHO Clinical Practice Guidelines', 'GlobalHealth Peer-Reviewed Protocols'],
+        text: data.replyText,
+        urgency: data.urgency || null,
+        sources: Array.isArray(data.sources) && data.sources.length > 0 ? data.sources : [],
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-
-      setMessages(prev => [...prev, aiMsg]);
+      }]);
+    } catch {
+      const isEmergency = detectEmergencyRedFlags(text);
+      setMessages(prev => [...prev, {
+        id: (Date.now() + 1).toString(),
+        sender: 'ai',
+        text: buildUnavailableReply(text, null),
+        urgency: isEmergency ? 'RED' : null,
+        sources: [],
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }]);
+    } finally {
       setIsTyping(false);
-    }, 600);
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -481,11 +505,11 @@ export default function FloatingHealthChatbot({
 
                 <div className="text-xs sm:text-[13.5px] leading-relaxed">{msg.text}</div>
 
-                {/* Grounded Citation */}
+                {/* Response Sources (only when explicitly returned) */}
                 {isAi && msg.sources && msg.sources.length > 0 && (
                   <div className="mt-3 pt-2.5 border-t border-slate-100 text-[10px] text-slate-500 flex items-center gap-1.5 flex-wrap">
                     <ShieldCheck className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0" />
-                    <span>{t('chat', 'groundedEvidence', 'Grounded in verified clinical research PDFs and ICMR/WHO guidelines')}</span>
+                    <span>{msg.sources.join(' • ')}</span>
                   </div>
                 )}
               </div>
