@@ -1,0 +1,338 @@
+{
+  "hi": {
+    "file": "doctor-welcome-hi.mp4",
+    "size_mb": 5.26,
+    "total_duration": 90.62,
+    "chapters": [
+      {
+        "id": 1,
+        "title": "Welcome & Mission",
+        "start": 0.0,
+        "end": 20.95,
+        "duration": 20.952
+      },
+      {
+        "id": 2,
+        "title": "AI Symptom Checker",
+        "start": 20.95,
+        "end": 33.84,
+        "duration": 12.888
+      },
+      {
+        "id": 3,
+        "title": "1,000+ Health Cards",
+        "start": 33.84,
+        "end": 45.41,
+        "duration": 11.568
+      },
+      {
+        "id": 4,
+        "title": "Personal & Family Health",
+        "start": 45.41,
+        "end": 58.32,
+        "duration": 12.912
+      },
+      {
+        "id": 5,
+        "title": "Multilingual Selection",
+        "start": 58.32,
+        "end": 67.32,
+        "duration": 9.0
+      },
+      {
+        "id": 6,
+        "title": "DPDP Privacy & Clinical Safety",
+        "start": 67.32,
+        "end": 80.74,
+        "duration": 13.416
+      },
+      {
+        "id": 7,
+        "title": "Closing Guidance",
+        "start": 80.74,
+        "end": 90.62,
+        "duration": 9.888
+      }
+    ]
+  },
+  "en": {
+    "file": "doctor-welcome-en.mp4",
+    "size_mb": 4.88,
+    "total_duration": 83.06,
+    "chapters": [
+      {
+        "id": 1,
+        "title": "Welcome & Mission",
+        "start": 0.0,
+        "end": 17.33,
+        "duration": 17.328
+      },
+      {
+        "id": 2,
+        "title": "AI Symptom Checker",
+        "start": 17.33,
+        "end": 28.66,
+        "duration": 11.328
+      },
+      {
+        "id": 3,
+        "title": "1,000+ Health Cards",
+        "start": 28.66,
+        "end": 40.46,
+        "duration": 11.808
+      },
+      {
+        "id": 4,
+        "title": "Personal & Family Health",
+        "start": 40.46,
+        "end": 51.94,
+        "duration": 11.472
+      },
+      {
+        "id": 5,
+        "title": "Multilingual Selection",
+        "start": 51.94,
+        "end": 60.41,
+        "duration": 8.472
+      },
+      {
+        "id": 6,
+        "title": "DPDP Privacy & Clinical Safety",
+        "start": 60.41,
+        "end": 73.87,
+        "duration": 13.464
+      },
+      {
+        "id": 7,
+        "title": "Closing Guidance",
+        "start": 73.87,
+        "end": 83.06,
+        "duration": 9.192
+      }
+    ]
+  },
+  "mr": {
+    "file": "doctor-welcome-mr.mp4",
+    "size_mb": 4.95,
+    "total_duration": 76.73,
+    "chapters": [
+      {
+        "id": 1,
+        "title": "Welcome & Mission",
+        "start": 0.0,
+        "end": 20.88,
+        "duration": 20.88
+      },
+      {
+        "id": 2,
+        "title": "AI Symptom Checker",
+        "start": 20.88,
+        "end": 31.25,
+        "duration": 10.368
+      },
+      {
+        "id": 3,
+        "title": "1,000+ Health Cards",
+        "start": 31.25,
+        "end": 39.96,
+        "duration": 8.712
+      },
+      {
+        "id": 4,
+        "title": "Personal & Family Health",
+        "start": 39.96,
+        "end": 49.01,
+        "duration": 9.048
+      },
+      {
+        "id": 5,
+        "title": "Multilingual Selection",
+        "start": 49.01,
+        "end": 56.21,
+        "duration": 7.2
+      },
+      {
+        "id": 6,
+        "title": "DPDP Privacy & Clinical Safety",
+        "start": 56.21,
+        "end": 66.94,
+        "duration": 10.728
+      },
+      {
+        "id": 7,
+        "title": "Closing Guidance",
+        "start": 66.94,
+        "end": 76.73,
+        "duration": 9.792
+      }
+    ]
+  },
+  "gu": {
+    "file": "doctor-welcome-gu.mp4",
+    "size_mb": 4.93,
+    "total_duration": 76.97,
+    "chapters": [
+      {
+        "id": 1,
+        "title": "Welcome & Mission",
+        "start": 0.0,
+        "end": 20.57,
+        "duration": 20.568
+      },
+      {
+        "id": 2,
+        "title": "AI Symptom Checker",
+        "start": 20.57,
+        "end": 31.39,
+        "duration": 10.824
+      },
+      {
+        "id": 3,
+        "title": "1,000+ Health Cards",
+        "start": 31.39,
+        "end": 40.18,
+        "duration": 8.784
+      },
+      {
+        "id": 4,
+        "title": "Personal & Family Health",
+        "start": 40.18,
+        "end": 49.15,
+        "duration": 8.976
+      },
+      {
+        "id": 5,
+        "title": "Multilingual Selection",
+        "start": 49.15,
+        "end": 57.07,
+        "duration": 7.92
+      },
+      {
+        "id": 6,
+        "title": "DPDP Privacy & Clinical Safety",
+        "start": 57.07,
+        "end": 67.54,
+        "duration": 10.464
+      },
+      {
+        "id": 7,
+        "title": "Closing Guidance",
+        "start": 67.54,
+        "end": 76.97,
+        "duration": 9.432
+      }
+    ]
+  },
+  "bn": {
+    "file": "doctor-welcome-bn.mp4",
+    "size_mb": 4.23,
+    "total_duration": 65.02,
+    "chapters": [
+      {
+        "id": 1,
+        "title": "Welcome & Mission",
+        "start": 0.0,
+        "end": 17.59,
+        "duration": 17.592
+      },
+      {
+        "id": 2,
+        "title": "AI Symptom Checker",
+        "start": 17.59,
+        "end": 26.88,
+        "duration": 9.288
+      },
+      {
+        "id": 3,
+        "title": "1,000+ Health Cards",
+        "start": 26.88,
+        "end": 34.56,
+        "duration": 7.68
+      },
+      {
+        "id": 4,
+        "title": "Personal & Family Health",
+        "start": 34.56,
+        "end": 42.0,
+        "duration": 7.44
+      },
+      {
+        "id": 5,
+        "title": "Multilingual Selection",
+        "start": 42.0,
+        "end": 48.07,
+        "duration": 6.072
+      },
+      {
+        "id": 6,
+        "title": "DPDP Privacy & Clinical Safety",
+        "start": 48.07,
+        "end": 56.3,
+        "duration": 8.232
+      },
+      {
+        "id": 7,
+        "title": "Closing Guidance",
+        "start": 56.3,
+        "end": 65.02,
+        "duration": 8.712
+      }
+    ]
+  },
+  "ar": {
+    "file": "doctor-welcome-ar.mp4",
+    "size_mb": 4.11,
+    "total_duration": 69.74,
+    "chapters": [
+      {
+        "id": 1,
+        "title": "Welcome & Mission",
+        "start": 0.0,
+        "end": 15.36,
+        "duration": 15.36
+      },
+      {
+        "id": 2,
+        "title": "AI Symptom Checker",
+        "start": 15.36,
+        "end": 24.89,
+        "duration": 9.528
+      },
+      {
+        "id": 3,
+        "title": "1,000+ Health Cards",
+        "start": 24.89,
+        "end": 34.37,
+        "duration": 9.48
+      },
+      {
+        "id": 4,
+        "title": "Personal & Family Health",
+        "start": 34.37,
+        "end": 44.33,
+        "duration": 9.96
+      },
+      {
+        "id": 5,
+        "title": "Multilingual Selection",
+        "start": 44.33,
+        "end": 51.34,
+        "duration": 7.008
+      },
+      {
+        "id": 6,
+        "title": "DPDP Privacy & Clinical Safety",
+        "start": 51.34,
+        "end": 60.34,
+        "duration": 9.0
+      },
+      {
+        "id": 7,
+        "title": "Closing Guidance",
+        "start": 60.34,
+        "end": 69.74,
+        "duration": 9.408
+      }
+    ]
+  }
+}

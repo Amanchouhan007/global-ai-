@@ -207,6 +207,36 @@ export default function DemoVideoSection() {
     }
   };
 
+  // Keyboard shortcut: Spacebar Play / Pause toggle with input safety guards
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code !== 'Space' && e.key !== ' ') return;
+
+      const activeEl = document.activeElement;
+      const target = e.target;
+      const isInput =
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT' ||
+        target.isContentEditable ||
+        activeEl?.tagName === 'INPUT' ||
+        activeEl?.tagName === 'TEXTAREA' ||
+        activeEl?.isContentEditable ||
+        target.closest?.('input, textarea, select, [contenteditable="true"]');
+
+      if (isInput) return;
+
+      // Prevent window scroll on Space press
+      e.preventDefault();
+      togglePlay();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isPlaying, videoError]);
+
   // Fallback timer when neither video nor audio is available
   useEffect(() => {
     let interval = null;
@@ -286,6 +316,7 @@ export default function DemoVideoSection() {
               <button
                 key={code}
                 type="button"
+                data-lang={code}
                 onClick={() => handleLangChange(code)}
                 className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                   selectedLang === code
@@ -371,14 +402,6 @@ export default function DemoVideoSection() {
                         alt={activeScene.title}
                         className="w-full h-full object-cover object-top"
                       />
-                      {/* PiP Avatar */}
-                      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 w-24 sm:w-36 aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-emerald-400/90 ring-4 ring-black/40 z-20 bg-slate-900">
-                        <img
-                          src="/assets/avatar_doctor_clinic_16x9.png"
-                          alt="Physician Avatar"
-                          className="w-full h-full object-cover object-center"
-                        />
-                      </div>
                     </div>
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40 pointer-events-none" />
@@ -566,6 +589,7 @@ export default function DemoVideoSection() {
                     <button
                       key={scene.id}
                       type="button"
+                      data-chapter-id={scene.id}
                       onClick={() => handleChapterClick(scene.startTime)}
                       className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition-all cursor-pointer ${
                         isActive
