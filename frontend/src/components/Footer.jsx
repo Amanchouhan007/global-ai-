@@ -105,10 +105,9 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
             <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4">{t('footer', 'quickTitle', 'Health Platform')}</h4>
             <ul className="space-y-3 text-sm text-slate-400 font-medium">
               <li><button type="button" onClick={(e) => handleScrollTo(e, 'home')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('nav', 'home', 'Home')}</button></li>
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'clinical-search')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('insights', 'title', 'Clinical Insights')}</button></li>
+              <li><button type="button" onClick={(e) => handleScrollTo(e, 'chat-assistant')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('chat', 'title', 'Clinical Chat Assistant')}</button></li>
               <li><button type="button" onClick={(e) => handleScrollTo(e, 'categories')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('categories', 'title', 'Specialty Categories')}</button></li>
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'health-card-showcase')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('cards', 'cardHeadache', 'Health Card H-032')}</button></li>
-              <li><button type="button" onClick={(e) => handleScrollTo(e, 'free-access')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('footer', 'cards1000', '100% Free Access')}</button></li>
+              <li><button type="button" onClick={(e) => handleScrollTo(e, 'how-it-works')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('howItWorks', 'title', 'How It Works')}</button></li>
               <li><button type="button" onClick={(e) => handleScrollTo(e, 'demo-videos')} className="hover:text-white transition-colors py-0.5 block text-left cursor-pointer">{t('videos', 'title', 'Platform Walkthrough')}</button></li>
             </ul>
           </div>

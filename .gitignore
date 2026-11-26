@@ -13,12 +13,22 @@ npm-debug.log*
 
 # Environment
 .env
-.env.local
+.env.*
+!.env.example
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Test artifacts
+# Test artifacts, screenshots & audit files
 test_dummy_report.pdf
 scratch/
+frontend/redesign-screenshots/
+frontend/raw_assets/
+frontend/backup_thumbnails/
+frontend/audit_results.json
+*.mjs
+*.cjs
+verify_*.js
+audit_*.js
+

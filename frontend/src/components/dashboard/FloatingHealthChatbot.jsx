@@ -41,7 +41,9 @@ export default function FloatingHealthChatbot({
   user,
   activeCategory,
   inline = false,
-  onStartAssessment
+  onStartAssessment,
+  customQuickPrompts = null,
+  externalPrompt = null
 }) {
   const { currentLang, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
@@ -50,12 +52,15 @@ export default function FloatingHealthChatbot({
   const [attachedFile, setAttachedFile] = useState(null);
   const [isListening, setIsListening] = useState(false);
   const [showUploadMenu, setShowUploadMenu] = useState(false);
+  const categoryTitle = activeCategory?.title || activeCategory?.name;
   const [messages, setMessages] = useState(() => [
     {
       id: 'welcome',
       sender: 'ai',
       timestamp: 'Just now',
-      text: t('chat', 'welcome', `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`),
+      text: categoryTitle
+        ? `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 Welcome to **${categoryTitle}**. ${activeCategory?.desc || activeCategory?.description || ''} Ask any question or tap a topic below for instant, clinically grounded guidance supervised by Dr. Pratap Madhukar.`
+        : t('chat', 'welcome', `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`),
       urgency: null
     }
   ]);
@@ -277,14 +282,24 @@ export default function FloatingHealthChatbot({
   }, [messages, isTyping]);
 
   // Quick prompt suggestions dynamically translated
-  const quickPrompts = [
-    t('chat', 'quickPrompt1', 'Severe right-side headache with sensitivity to bright lights'),
-    t('chat', 'quickPrompt2', 'Chest tightness on exertion radiating to left shoulder'),
-    t('chat', 'quickPrompt3', 'Mild dry cough and low-grade fever for 2 days'),
-    t('chat', 'quickPrompt4', 'What are red-flag emergency symptoms?'),
-    t('chat', 'quickPrompt5', 'What is a normal blood pressure reading?'),
-    t('chat', 'quickPrompt6', 'High BP reading (155/95) with temple ache')
-  ];
+  const quickPrompts = customQuickPrompts && customQuickPrompts.length > 0
+    ? customQuickPrompts
+    : [
+        t('chat', 'quickPrompt1', 'Severe right-side headache with sensitivity to bright lights'),
+        t('chat', 'quickPrompt2', 'Chest tightness on exertion radiating to left shoulder'),
+        t('chat', 'quickPrompt3', 'Mild dry cough and low-grade fever for 2 days'),
+        t('chat', 'quickPrompt4', 'What are red-flag emergency symptoms?'),
+        t('chat', 'quickPrompt5', 'What is a normal blood pressure reading?'),
+        t('chat', 'quickPrompt6', 'High BP reading (155/95) with temple ache')
+      ];
+
+  const lastExternalNonceRef = useRef(null);
+  useEffect(() => {
+    if (externalPrompt?.text && externalPrompt.nonce !== lastExternalNonceRef.current) {
+      lastExternalNonceRef.current = externalPrompt.nonce;
+      handleSend(externalPrompt.text);
+    }
+  }, [externalPrompt]);
 
   const handleSend = (textToSend = inputMessage) => {
     const text = (typeof textToSend === 'string' ? textToSend : inputMessage).trim();
@@ -680,14 +695,14 @@ export default function FloatingHealthChatbot({
           onChange={(e) => setInputMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={isListening ? "Listening... Speak now..." : t('chat', 'placeholder', "Ask Dr. Pratap AI: Describe any symptom or query...")}
-          className="flex-1 bg-transparent px-2 py-1 text-xs text-slate-900 placeholder-slate-400 focus:outline-none"
+          className="flex-1 min-w-0 bg-transparent px-1.5 sm:px-2 py-1 text-xs text-slate-900 placeholder-slate-400 focus:outline-none"
         />
 
         {/* WhatsApp Share Button */}
         <button
           type="button"
           onClick={handleWhatsAppShare}
-          className="p-1.5 rounded-lg text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer shrink-0"
+          className="inline-flex p-1.5 rounded-lg text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer shrink-0"
           title="Share consultation to WhatsApp"
         >
           <WhatsAppIcon className="w-4 h-4" />
@@ -697,11 +712,11 @@ export default function FloatingHealthChatbot({
         <button
           type="submit"
           disabled={(!inputMessage.trim() && !attachedFile) || isTyping}
-          className="px-3 py-1.5 rounded-lg bg-[#0D5C3A] hover:bg-[#0A4D30] disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1 transition-all cursor-pointer shrink-0"
+          className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#0D5C3A] hover:bg-[#0A4D30] disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1 transition-all cursor-pointer shrink-0"
           title="Send message"
         >
-          <span>{t('chat', 'sendBtn', 'Send')}</span>
-          <Send className="w-3 h-3" />
+          <span className="inline">{t('chat', 'sendBtn', 'Send')}</span>
+          <Send className="w-3.5 h-3.5" />
         </button>
       </form>
 

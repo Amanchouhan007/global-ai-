@@ -139,3 +139,15 @@ Thumbs.db
 .idea
 *.sublime-workspace
 *.sublime-project
+
+# Temporary test scripts, audits & screenshots
+redesign-screenshots/
+raw_assets/
+backup_thumbnails/
+audit_results.json
+*.mjs
+*.cjs
+verify_*.js
+audit_*.js
+*.zip
+

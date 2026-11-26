@@ -153,7 +153,7 @@ export default function DisclaimerModal({ isOpen, onClose }) {
 
   const handleAcknowledge = () => {
     try {
-      localStorage.setItem('healthorbit_disclaimer_ack', 'true');
+      sessionStorage.setItem('healthorbit_disclaimer_ack', 'true');
     } catch {
       // ignore
     }
