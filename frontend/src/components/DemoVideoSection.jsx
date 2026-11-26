@@ -49,6 +49,7 @@ export default function DemoVideoSection() {
   const [isLoading, setIsLoading] = useState(false);
 
   const videoRef = useRef(null);
+  const audioRef = useRef(null);
   const videoContainerRef = useRef(null);
 
   const videoData = getVideoData(selectedLang);
@@ -63,10 +64,14 @@ export default function DemoVideoSection() {
     }
   }, [currentLang]);
 
+  // Dynamic chapters and duration for currently selected language
+  const currentChapters = videoData.chapters || ONBOARDING_SCENES;
+  const activeDuration = videoData.totalDurationSec || duration || 85;
+
   // Current scene identification based on currentTime
-  const activeScene = ONBOARDING_SCENES.find(
+  const activeScene = currentChapters.find(
     s => currentTime >= s.startTime && currentTime < s.endTime
-  ) || ONBOARDING_SCENES[0];
+  ) || currentChapters[0];
 
   // Current subtitle text
   const currentSubtitleObj = videoData.scriptLines?.find(
@@ -79,10 +84,14 @@ export default function DemoVideoSection() {
     const upper = String(code).toUpperCase();
     if (!DEMO_VIDEOS[upper]) return;
 
-    // Stop current video
+    // Stop current video & audio
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
+    }
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
     }
     setIsPlaying(false);
     setCurrentTime(0);
@@ -94,15 +103,39 @@ export default function DemoVideoSection() {
     }
   };
 
-  // Video playback controls
-  const togglePlay = () => {
-    if (!videoRef.current) return;
+  // Chapter navigation with immediate playback
+  const handleChapterClick = (startTime) => {
+    handleSeek(startTime);
+    if (!videoError && videoRef.current) {
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else if (audioRef.current) {
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    }
+  };
 
+  // Playback controls (Supports dual Video / Audio stream synchronization)
+  const togglePlay = () => {
     if (videoError) {
-      // In case video file is not yet rendered, simulate timeline playback for review
-      setIsPlaying(!isPlaying);
+      // If MP4 video stream is pending, play the authentic clinical audio voiceover
+      if (audioRef.current) {
+        if (audioRef.current.paused || audioRef.current.ended) {
+          audioRef.current.play().then(() => {
+            setIsPlaying(true);
+          }).catch(err => {
+            console.warn('Audio playback error:', err);
+            setIsPlaying(false);
+          });
+        } else {
+          audioRef.current.pause();
+          setIsPlaying(false);
+        }
+      } else {
+        setIsPlaying(!isPlaying);
+      }
       return;
     }
+
+    if (!videoRef.current) return;
 
     if (videoRef.current.paused || videoRef.current.ended) {
       videoRef.current.play().then(() => {
@@ -110,6 +143,10 @@ export default function DemoVideoSection() {
       }).catch(err => {
         console.warn('Playback error or file pending:', err);
         setVideoError(true);
+        // Fall back immediately to audio
+        if (audioRef.current) {
+          audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        }
       });
     } else {
       videoRef.current.pause();
@@ -122,12 +159,19 @@ export default function DemoVideoSection() {
     if (videoRef.current && !videoError) {
       videoRef.current.currentTime = newTime;
     }
+    if (audioRef.current && videoError) {
+      audioRef.current.currentTime = newTime;
+    }
   };
 
   const handleReplay = () => {
     handleSeek(0);
     if (videoRef.current && !videoError) {
       videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+    if (audioRef.current && videoError) {
+      audioRef.current.play().catch(() => {});
       setIsPlaying(true);
     }
   };
@@ -137,6 +181,9 @@ export default function DemoVideoSection() {
     if (videoRef.current) {
       videoRef.current.playbackRate = speed;
     }
+    if (audioRef.current) {
+      audioRef.current.playbackRate = speed;
+    }
   };
 
   const toggleMute = () => {
@@ -144,6 +191,9 @@ export default function DemoVideoSection() {
     setIsMuted(newMuted);
     if (videoRef.current) {
       videoRef.current.muted = newMuted;
+    }
+    if (audioRef.current) {
+      audioRef.current.muted = newMuted;
     }
   };
 
@@ -157,10 +207,10 @@ export default function DemoVideoSection() {
     }
   };
 
-  // Fallback timer when video file is pending render
+  // Fallback timer when neither video nor audio is available
   useEffect(() => {
     let interval = null;
-    if (videoError && isPlaying) {
+    if (videoError && isPlaying && (!audioRef.current || !videoData.audioSrc)) {
       interval = setInterval(() => {
         setCurrentTime(prev => {
           if (prev >= duration) {
@@ -174,7 +224,7 @@ export default function DemoVideoSection() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [videoError, isPlaying, duration, playbackSpeed]);
+  }, [videoError, isPlaying, duration, playbackSpeed, videoData.audioSrc]);
 
   const handleTimeUpdate = () => {
     if (videoRef.current && !videoError) {
@@ -276,6 +326,33 @@ export default function DemoVideoSection() {
                 className={`w-full h-full object-cover transition-opacity duration-300 ${
                   videoError ? 'opacity-0 absolute pointer-events-none' : 'opacity-100'
                 }`}
+              />
+
+              {/* Synchronized Offline Audio Player (Fallback while MP4 is rendering) */}
+              <audio
+                ref={audioRef}
+                key={videoData.audioSrc}
+                src={videoData.audioSrc}
+                preload="auto"
+                onTimeUpdate={() => {
+                  if (audioRef.current && videoError) {
+                    setCurrentTime(audioRef.current.currentTime);
+                  }
+                }}
+                onLoadedMetadata={() => {
+                  if (audioRef.current && videoError) {
+                    setDuration(audioRef.current.duration || 115);
+                    audioRef.current.playbackRate = playbackSpeed;
+                    audioRef.current.muted = isMuted;
+                  }
+                }}
+                onEnded={() => {
+                  setIsPlaying(false);
+                  setCurrentTime(0);
+                }}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                className="hidden"
               />
 
               {/* Graceful Storyboard Scene Fallback if MP4 is awaiting rendering */}
@@ -382,7 +459,7 @@ export default function DemoVideoSection() {
                   <input
                     type="range"
                     min="0"
-                    max={duration || 115}
+                    max={activeDuration}
                     value={currentTime}
                     onChange={(e) => handleSeek(Number(e.target.value))}
                     className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#0D5C3A]"
@@ -420,7 +497,7 @@ export default function DemoVideoSection() {
                     </button>
 
                     <span className="font-mono text-xs text-slate-300">
-                      {formatTime(currentTime)} / {formatTime(duration || 115)}
+                      {formatTime(currentTime)} / {formatTime(activeDuration)}
                     </span>
                   </div>
 
@@ -483,13 +560,13 @@ export default function DemoVideoSection() {
 
               {/* Scene Chapters */}
               <div className="space-y-1.5 max-h-[340px] overflow-y-auto pr-1">
-                {ONBOARDING_SCENES.map((scene) => {
+                {currentChapters.map((scene) => {
                   const isActive = activeScene.id === scene.id;
                   return (
                     <button
                       key={scene.id}
                       type="button"
-                      onClick={() => handleSeek(scene.startTime)}
+                      onClick={() => handleChapterClick(scene.startTime)}
                       className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition-all cursor-pointer ${
                         isActive
                           ? 'bg-[#0D5C3A] text-white shadow-md font-bold'
