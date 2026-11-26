@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 import {
   Search,
   BookMarked,
@@ -22,6 +23,7 @@ export default function MinimalLibraryView({
   onDeleteConversation
 }) {
   const { isDark } = useTheme();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('reports'); // 'reports' | 'conversations'
   const [search, setSearch] = useState('');
   const [previewReport, setPreviewReport] = useState(null);
@@ -52,10 +54,10 @@ export default function MinimalLibraryView({
       <div className="border-b border-slate-200 dark:border-slate-800 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-            Personal Health Library
+            {t('dashboard', 'personalHealthLibrary', 'Personal Health Library')}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            View saved AI health assessments, physician consultation summaries, and past chats.
+            {t('dashboard', 'mySavedReports', 'View saved AI health assessments, physician consultation summaries, and past chats.')}
           </p>
         </div>
 
@@ -68,7 +70,7 @@ export default function MinimalLibraryView({
               activeTab === 'reports' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            Saved Reports ({reports.length})
+            {t('dashboard', 'savedReports', 'Saved Reports')} ({reports.length})
           </button>
           <button
             type="button"
@@ -77,7 +79,7 @@ export default function MinimalLibraryView({
               activeTab === 'conversations' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            Past Chats ({conversations.length})
+            {t('dashboard', 'pastConsultations', 'Past Chats')} ({conversations.length})
           </button>
         </div>
       </div>
@@ -100,7 +102,9 @@ export default function MinimalLibraryView({
           {filteredReports.length === 0 ? (
             <div className="bg-white dark:bg-[#0F1C36] rounded-2xl border border-slate-200 dark:border-slate-800 p-10 text-center space-y-2">
               <FileText className="w-8 h-8 text-slate-300 dark:text-slate-600 mx-auto" />
-              <div className="text-xs font-semibold text-slate-700 dark:text-slate-300">No saved reports found</div>
+              <div className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                {t('dashboard', 'emptyReports', 'No saved reports found')}
+              </div>
               <p className="text-[11px] text-slate-400 dark:text-slate-500">
                 After generating an AI triage assessment, click "Save to Library" to keep it here.
               </p>

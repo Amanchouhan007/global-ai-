@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import MinimalSidebar from './dashboard/MinimalSidebar';
 import WorkspaceTopBar from './dashboard/WorkspaceTopBar';
 import MinimalAIAssessmentCard from './dashboard/MinimalAIAssessmentCard';
@@ -29,6 +30,12 @@ import {
 export default function UserDashboard({ onNavigate, initialSymptom = '', initialCategory = null }) {
   const { user, logout } = useAuth();
   const { isDark } = useTheme();
+  const { t } = useLanguage();
+
+  const getCategoryName = (cat) => {
+    if (!cat) return '';
+    return t('categoryNames', cat.id, cat.name);
+  };
 
   // Active user: use authenticated user, or guest session for direct clinical triage
   const currentUser = user || {
@@ -226,10 +233,10 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
   // Example prompt chips to show below input
   const exampleChips = [
-    activeCategory?.examplePrompt || "Mild fever and dry cough for 3 days",
-    "Feeling anxious and trouble sleeping",
-    "What do high triglycerides mean in blood test?",
-    "Dull lower back pain after prolonged sitting"
+    activeCategory?.examplePrompt || t('chat', 'quickPrompt3', 'Mild dry cough and low-grade fever for 2 days'),
+    t('chat', 'quickPrompt1', 'Severe right-side headache with sensitivity to bright lights'),
+    t('chat', 'quickPrompt2', 'Chest tightness on exertion radiating to left shoulder'),
+    t('chat', 'quickPrompt5', 'What is a normal blood pressure reading?')
   ];
 
   // Route protection
@@ -311,8 +318,8 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                     <Shield className="w-3.5 h-3.5" />
                   </div>
                   <div className="leading-tight min-w-0 flex-1 overflow-hidden">
-                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">Safety First</span>
-                    <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">Red-Flag Triage</span>
+                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">{t('dashboard', 'ribbonSafety', 'Safety First')}</span>
+                    <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">{t('dashboard', 'ribbonSafetySub', 'Red-Flag Triage')}</span>
                   </div>
                 </div>
 
@@ -321,8 +328,8 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                     <BookOpen className="w-3.5 h-3.5" />
                   </div>
                   <div className="leading-tight min-w-0 flex-1 overflow-hidden">
-                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">1,000 Cards</span>
-                    <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">Clinically Reviewed</span>
+                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">{t('dashboard', 'ribbonCards', '1,000 Cards')}</span>
+                    <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">{t('dashboard', 'ribbonCardsSub', 'Clinically Reviewed')}</span>
                   </div>
                 </div>
 
@@ -331,8 +338,8 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                     <Target className="w-3.5 h-3.5" />
                   </div>
                   <div className="leading-tight min-w-0 flex-1 overflow-hidden">
-                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">Specific Answers</span>
-                    <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">≈ 100 Words Guidance</span>
+                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">{t('dashboard', 'ribbonAnswers', 'Specific Answers')}</span>
+                    <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">{t('dashboard', 'ribbonAnswersSub', '≈ 100 Words Guidance')}</span>
                   </div>
                 </div>
 
@@ -341,8 +348,8 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                     <UserCheck className="w-3.5 h-3.5" />
                   </div>
                   <div className="leading-tight min-w-0 flex-1 overflow-hidden">
-                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">Dr P. Madhukar</span>
-                    <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">38 Yrs Clinical Practice</span>
+                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">{t('dashboard', 'ribbonDoctor', 'Dr P. Madhukar')}</span>
+                    <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">{t('dashboard', 'ribbonDoctorSub', '38 Yrs Clinical Practice')}</span>
                   </div>
                 </div>
               </div>
@@ -351,20 +358,20 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
               <div className="text-center space-y-2 pt-1 px-1">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EBF5F0] border border-emerald-200 text-[#0D5C3A] text-xs font-semibold shadow-2xs">
                   <Sparkles className="w-3.5 h-3.5 text-[#0D5C3A]" />
-                  <span>Physician-Curated Symptom Education</span>
+                  <span>{t('dashboard', 'ribbonBadge', 'Physician-Curated Symptom Education')}</span>
                 </div>
 
                 <h1 className="text-xl xs:text-2xl sm:text-3xl lg:text-[34px] font-extrabold text-slate-900 tracking-tight leading-snug break-words">
-                  Know Your Symptoms. <span className="text-[#0D5C3A]">Understand the Possibilities.</span>
+                  {t('dashboard', 'headline', 'Know Your Symptoms. Understand the Possibilities.')}
                 </h1>
 
                 <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
                   {activeCategory ? (
                     <>
-                      Focused assessment active for <strong className="text-[#0D5C3A] font-bold">{activeCategory.name}</strong>. Describe symptoms, lab tests, or questions below.
+                      {t('dashboard', 'focused', 'Focused:')} <strong className="text-[#0D5C3A] font-bold">{getCategoryName(activeCategory)}</strong>. {t('dashboard', 'subheadline', 'Describe your symptoms, ask about lab reports, or check clinical red flags for safe and reliable guidance.')}
                     </>
                   ) : (
-                    'Describe your symptoms, ask about lab reports, or check clinical red flags for safe and reliable guidance.'
+                    t('dashboard', 'subheadline', 'Describe your symptoms, ask about lab reports, or check clinical red flags for safe and reliable guidance.')
                   )}
                 </p>
               </div>
@@ -387,8 +394,8 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                     }}
                     placeholder={
                       activeCategory
-                        ? `Describe what you are experiencing in ${activeCategory.name.toLowerCase()}... (e.g., mild fever and cough for 3 days, headache, or blood sugar questions)`
-                        : 'What symptom are you worried about? e.g. cough, headache, stomach pain, chest heaviness, fever...'
+                        ? `${getCategoryName(activeCategory)}: ${t('dashboard', 'askAnythingPlaceholder', 'Describe what you are experiencing, when it began, and any accompanying discomfort...')}`
+                        : t('dashboard', 'askAnythingPlaceholder', 'What symptom are you worried about? e.g. cough, headache, stomach pain, chest heaviness, fever...')
                     }
                     className="w-full text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm sm:text-base font-normal resize-none focus:outline-none bg-transparent"
                   />
@@ -396,7 +403,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                   {/* Input Actions Footer */}
                   <div className="flex items-center justify-between pt-2.5 border-t border-slate-100 dark:border-slate-800">
                     <div className="flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500">
-                      <span className="hidden sm:inline">Press Enter to check • Shift+Enter for newline</span>
+                      <span className="hidden sm:inline">{t('dashboard', 'inputHint', 'Press Enter to check • Shift+Enter for newline')}</span>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -404,7 +411,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                       <button
                         type="button"
                         onClick={handleVoiceInput}
-                        title="Voice dictation"
+                        title={t('dashboard', 'voiceDictate', 'Voice Dictation')}
                         className={`p-2 rounded-xl transition-colors cursor-pointer ${isListening
                           ? 'bg-red-500 text-white animate-pulse'
                           : 'text-[#1677E8] dark:text-blue-400 hover:text-[#08165B] dark:hover:text-blue-200 hover:bg-blue-50 dark:hover:bg-slate-800 border border-blue-100 dark:border-slate-700'
@@ -419,7 +426,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                         disabled={!promptText.trim()}
                         className="py-2.5 px-5 sm:px-6 rounded-full bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] hover:from-[#0A4D30] hover:to-[#083F27] text-white text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                       >
-                        <span>Check a Symptom</span>
+                        <span>{t('dashboard', 'analyzeSymptoms', 'Check a Symptom')}</span>
                         <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                       </button>
                     </div>
@@ -428,7 +435,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
                 {/* Example Prompt Chips */}
                 <div className="flex flex-wrap items-center gap-2 pt-0.5">
-                  <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500">Try asking:</span>
+                  <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500">{t('chat', 'tryLabel', 'Try asking:')}</span>
                   {exampleChips.map((chip, idx) => (
                     <button
                       key={idx}
@@ -447,10 +454,10 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                 <div className="flex items-center justify-between px-1 mb-2.5">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-bold text-[#08165B] dark:text-white uppercase tracking-wider">
-                      Explore by Health Focus
+                      {t('dashboard', 'healthFocus', 'Explore by Health Focus')}
                     </span>
                     <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                      {activeCategory ? `(Active: ${activeCategory.name})` : '(Select to focus assessment)'}
+                      {activeCategory ? `(${t('dashboard', 'focused', 'Focused:')} ${getCategoryName(activeCategory)})` : `(${t('dashboard', 'allCategories', 'All Categories')})`}
                     </span>
                   </div>
                   {activeCategory && (
@@ -459,7 +466,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                       onClick={() => setActiveCategory(null)}
                       className="text-xs text-[#1677E8] dark:text-blue-400 hover:text-[#08165B] dark:hover:text-white font-bold transition-colors cursor-pointer hover:underline"
                     >
-                      ✕ Clear Focus (General)
+                      ✕ {t('dashboard', 'allCategories', 'Clear Focus (General)')}
                     </button>
                   )}
                 </div>
@@ -482,7 +489,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                           {isCurrent && <Check className="w-3.5 h-3.5 text-[#1677E8] stroke-[2.5]" />}
                         </div>
                         <span className="text-xs font-bold text-[#08165B] dark:text-white leading-tight group-hover:text-[#1677E8] dark:group-hover:text-blue-400 transition-colors truncate">
-                          {cat.name.replace('My ', '')}
+                          {getCategoryName(cat)}
                         </span>
                         <span className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
                           {cat.description}
@@ -498,10 +505,10 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                 <div className="flex items-center justify-between px-1">
                   <span className="text-xs font-bold text-[#08165B] dark:text-white uppercase tracking-wider flex items-center gap-2">
                     <Stethoscope className="w-4 h-4 text-emerald-600" />
-                    <span>Clinical Guidance • Health Card Details (1,000+ Cards Engine)</span>
+                    <span>{t('dashboard', 'cardEngineDetails', 'Clinical Guidance • Health Card Details (1,000+ Cards Engine)')}</span>
                   </span>
                   <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
-                    Active Clinical Card
+                    {t('dashboard', 'activeClinicalCard', 'Active Clinical Card')}
                   </span>
                 </div>
 

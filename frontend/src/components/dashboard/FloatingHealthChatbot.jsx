@@ -53,17 +53,30 @@ export default function FloatingHealthChatbot({
   const [isListening, setIsListening] = useState(false);
   const [showUploadMenu, setShowUploadMenu] = useState(false);
   const categoryTitle = activeCategory?.title || activeCategory?.name;
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState(() => [
     {
       id: 'welcome',
       sender: 'ai',
       timestamp: 'Just now',
       text: categoryTitle
         ? `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 Welcome to **${categoryTitle}**. ${activeCategory?.desc || activeCategory?.description || ''} Ask any question or tap a topic below for instant, clinically grounded guidance supervised by Dr. Pratap Madhukar.`
-        : `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`,
+        : t('chat', 'welcome', `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`),
       urgency: null
     }
   ]);
+
+  // Dynamically update welcome message when language changes
+  useEffect(() => {
+    setMessages(prev => {
+      if (prev.length === 1 && (prev[0].id === 'welcome' || prev[0].id === 'welcome-reset')) {
+        return [{
+          ...prev[0],
+          text: t('chat', 'welcome', `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`)
+        }];
+      }
+      return prev;
+    });
+  }, [currentLang]);
 
   const chatContainerRef = useRef(null);
   const inputRef = useRef(null);
@@ -268,16 +281,16 @@ export default function FloatingHealthChatbot({
     }
   }, [messages, isTyping]);
 
-  // Quick prompt suggestions
+  // Quick prompt suggestions dynamically translated
   const quickPrompts = customQuickPrompts && customQuickPrompts.length > 0
     ? customQuickPrompts
     : [
-        'Severe right-side headache with sensitivity to bright lights',
-        'Chest tightness on exertion radiating to left shoulder',
-        'Mild dry cough and low-grade fever for 2 days',
-        'What are red-flag emergency symptoms?',
-        'What is a normal blood pressure reading?',
-        'High BP reading (155/95) with temple ache'
+        t('chat', 'quickPrompt1', 'Severe right-side headache with sensitivity to bright lights'),
+        t('chat', 'quickPrompt2', 'Chest tightness on exertion radiating to left shoulder'),
+        t('chat', 'quickPrompt3', 'Mild dry cough and low-grade fever for 2 days'),
+        t('chat', 'quickPrompt4', 'What are red-flag emergency symptoms?'),
+        t('chat', 'quickPrompt5', 'What is a normal blood pressure reading?'),
+        t('chat', 'quickPrompt6', 'High BP reading (155/95) with temple ache')
       ];
 
   const lastExternalNonceRef = useRef(null);
@@ -320,14 +333,42 @@ export default function FloatingHealthChatbot({
       } else {
         const assessment = generateHealthAssessment(text, activeCategory?.id || 'symptoms');
         replyText = assessment.understanding || 'Thank you for sharing your symptoms. Here is the clinical assessment:';
+        
+        const considerationsLabel = {
+          HI: 'नैदानिक विचार (Clinical Considerations):',
+          MR: 'वैद्यकीय विचार (Clinical Considerations):',
+          GU: 'તબીબી વિચારણા (Clinical Considerations):',
+          BN: 'ক্লিনিক্যাল বিবেচনা (Clinical Considerations):',
+          AR: 'الاعتبارات السريرية:',
+          EN: 'Clinical Considerations:'
+        }[currentLang] || 'Clinical Considerations:';
+
+        const nextStepsLabel = {
+          HI: 'सुरक्षित अगले कदम (Safe Next Steps):',
+          MR: 'सुरक्षित पुढील पावले (Safe Next Steps):',
+          GU: 'સુરક્ષિત આગલા પગલાં (Safe Next Steps):',
+          BN: 'নিরাপদ পরবর্তী পদক্ষেপ (Safe Next Steps):',
+          AR: 'الخطوات الآمنة التالية:',
+          EN: 'Safe Next Steps:'
+        }[currentLang] || 'Safe Next Steps:';
+
+        const guidanceLabel = {
+          HI: 'मार्गदर्शन (Guidance):',
+          MR: 'मार्गदर्शन (Guidance):',
+          GU: 'માર્ગદર્શન (Guidance):',
+          BN: 'নির্দেশনা (Guidance):',
+          AR: 'الإرشادات:',
+          EN: 'Guidance:'
+        }[currentLang] || 'Guidance:';
+
         if (assessment.possibleExplanations && assessment.possibleExplanations.length > 0) {
-          replyText += `\n\nClinical Considerations:\n• ` + assessment.possibleExplanations.slice(0, 3).join('\n• ');
+          replyText += `\n\n${considerationsLabel}\n• ` + assessment.possibleExplanations.slice(0, 3).join('\n• ');
         }
         if (assessment.nextSteps && assessment.nextSteps.length > 0) {
-          replyText += `\n\nSafe Next Steps:\n• ` + assessment.nextSteps.slice(0, 3).join('\n• ');
+          replyText += `\n\n${nextStepsLabel}\n• ` + assessment.nextSteps.slice(0, 3).join('\n• ');
         }
         if (assessment.whenToSeekHelp) {
-          replyText += `\n\nGuidance: ${assessment.whenToSeekHelp}`;
+          replyText += `\n\n${guidanceLabel} ${assessment.whenToSeekHelp}`;
         }
       }
 
@@ -444,7 +485,7 @@ export default function FloatingHealthChatbot({
                 {isAi && msg.sources && msg.sources.length > 0 && (
                   <div className="mt-3 pt-2.5 border-t border-slate-100 text-[10px] text-slate-500 flex items-center gap-1.5 flex-wrap">
                     <ShieldCheck className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0" />
-                    <span>Grounded in verified clinical research PDFs and ICMR/WHO guidelines</span>
+                    <span>{t('chat', 'groundedEvidence', 'Grounded in verified clinical research PDFs and ICMR/WHO guidelines')}</span>
                   </div>
                 )}
               </div>
@@ -460,7 +501,7 @@ export default function FloatingHealthChatbot({
       {/* Typing Indicator */}
       {isTyping && (
         <div className="flex items-center gap-2 p-3 rounded-2xl bg-white border border-emerald-950/10 shadow-xs max-w-[130px]">
-          <span className="text-xs font-bold text-slate-400">Evaluating</span>
+          <span className="text-xs font-bold text-slate-400">{t('chat', 'evaluating', 'Evaluating')}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#D81B60] animate-bounce"></span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#D81B60] animate-bounce [animation-delay:0.2s]"></span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#D81B60] animate-bounce [animation-delay:0.4s]"></span>
@@ -475,7 +516,7 @@ export default function FloatingHealthChatbot({
       <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 no-scrollbar whitespace-nowrap">
         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
           <Sparkles className="w-3 h-3 text-amber-500" />
-          <span>Try:</span>
+          <span>{t('chat', 'tryLabel', 'Try:')}</span>
         </span>
         {quickPrompts.map((q, idx) => (
           <button
@@ -555,7 +596,7 @@ export default function FloatingHealthChatbot({
               <div className="px-2.5 py-1.5 border-b border-slate-100 flex items-center justify-between mb-1">
                 <span className="text-[11px] font-black text-slate-800 flex items-center gap-1.5">
                   <Bot className="w-3.5 h-3.5 text-[#0D5C3A]" />
-                  <span>Choose Document Type</span>
+                  <span>{t('chat', 'docChooser', 'Choose Document Type')}</span>
                 </span>
                 <button
                   type="button"
@@ -578,10 +619,10 @@ export default function FloatingHealthChatbot({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-bold text-slate-800 group-hover:text-[#0D5C3A]">
-                      Medical Documents & Reports
+                      {t('chat', 'docType1', 'Medical Documents & Reports')}
                     </div>
                     <div className="text-[10px] text-slate-500 truncate">
-                      PDF, DOCX, TXT (Lab reports, summaries)
+                      {t('chat', 'docType1Sub', 'PDF, DOCX, TXT (Lab reports, summaries)')}
                     </div>
                   </div>
                 </button>
@@ -597,10 +638,10 @@ export default function FloatingHealthChatbot({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-bold text-slate-800 group-hover:text-[#D81B60]">
-                      Photos & Medical Images
+                      {t('chat', 'docType2', 'Photos & Medical Images')}
                     </div>
                     <div className="text-[10px] text-slate-500 truncate">
-                      JPG, PNG, WebP (Prescriptions, skin, X-Rays)
+                      {t('chat', 'docType2Sub', 'JPG, PNG, WebP (Prescriptions, skin, X-Rays)')}
                     </div>
                   </div>
                 </button>
@@ -616,17 +657,17 @@ export default function FloatingHealthChatbot({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-bold text-slate-800 group-hover:text-sky-800">
-                      Camera / Scan Document
+                      {t('chat', 'docType3', 'Camera / Scan Document')}
                     </div>
                     <div className="text-[10px] text-slate-500 truncate">
-                      Click photo of prescription or medicine
+                      {t('chat', 'docType3Sub', 'Click photo of prescription or medicine')}
                     </div>
                   </div>
                 </button>
               </div>
 
               <div className="mt-1.5 pt-1.5 border-t border-slate-100 px-2 text-[9px] text-slate-400">
-                🔒 Clinical privacy: Files are analyzed securely for triage guidance only.
+                {t('chat', 'privacyNotice', '🔒 Clinical privacy: Files are analyzed securely for triage guidance only.')}
               </div>
             </div>
           )}
@@ -680,14 +721,14 @@ export default function FloatingHealthChatbot({
       </form>
 
       <div className="flex items-center justify-between text-[9px] text-slate-400 mt-1 px-1">
-        <span>Physician-supervised triage & evidence guidance</span>
+        <span>{t('chat', 'supervisionBadge', 'Physician-supervised triage & evidence guidance')}</span>
         <button
           type="button"
           onClick={handleWhatsAppShare}
           className="inline-flex items-center gap-1 text-emerald-700 hover:text-emerald-800 font-bold hover:underline cursor-pointer"
         >
           <WhatsAppIcon className="w-3 h-3 text-[#25D366]" />
-          <span>Share on WhatsApp</span>
+          <span>{t('chat', 'shareWhatsApp', 'Share on WhatsApp')}</span>
         </button>
       </div>
     </div>
@@ -815,7 +856,7 @@ export default function FloatingHealthChatbot({
                       {t('chat', 'botName', 'Dr. Pratap AI Clinical Assistant')}
                     </h3>
                     <span className="text-[8.5px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40">
-                      Live
+                      {t('chat', 'live', 'Live')}
                     </span>
                   </div>
                   <p className="text-[9.5px] text-emerald-200/80 font-medium">
@@ -841,10 +882,10 @@ export default function FloatingHealthChatbot({
                   title="Clear conversation"
                 >
                   <RotateCcw className="w-2.5 h-2.5" />
-                  <span>Clear</span>
+                  <span>{t('chat', 'clear', 'Clear')}</span>
                 </button>
                 <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-white/10 text-emerald-200 text-[10px] font-semibold border border-white/10">
-                  Free Access
+                  {t('chat', 'freeAccess', 'Free Access')}
                 </span>
               </div>
             </div>
@@ -895,7 +936,7 @@ export default function FloatingHealthChatbot({
           </div>
 
           <span className="text-xs sm:text-sm font-black tracking-tight whitespace-nowrap">
-            {isOpen ? 'Close Chat' : 'Health AI Chat'}
+            {isOpen ? t('chat', 'clear', 'Close') : t('chat', 'title', 'Health AI Chat')}
           </span>
         </button>
       </div>
@@ -919,7 +960,7 @@ export default function FloatingHealthChatbot({
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs sm:text-sm font-black">Health Orbit Pro™</span>
                   <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40">
-                    Live
+                    {t('chat', 'live', 'Live')}
                   </span>
                 </div>
                 <div className="text-[10px] text-emerald-200/90 font-medium">

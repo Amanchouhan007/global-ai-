@@ -36,7 +36,7 @@ import { FOUNDER_INFO } from '../config/company';
  * - AI avatar disclosure and DPDP Act 2023 / Emergency 108/112 compliance notices.
  */
 export default function DemoVideoSection() {
-  const { currentLang, setLanguage } = useLanguage();
+  const { currentLang, setLanguage, t } = useLanguage();
   const [selectedLang, setSelectedLang] = useState(() => (currentLang ? String(currentLang).toUpperCase() : 'HI'));
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -473,8 +473,8 @@ export default function DemoVideoSection() {
           <div className="lg:col-span-4 space-y-4 text-left">
             <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#F4F9F6] to-white border border-emerald-950/10 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-black text-[#0D5C3A] uppercase tracking-wider">
-                  Video Chapter Timeline
+                <span className="text-xs font-black text-[#0D5C3A] uppercase tracking-wider block">
+                  {t?.('videos', 'interactiveChapters', 'Interactive Chapters') || 'Interactive Chapters'} ({videoData.nativeName})
                 </span>
                 <span className="text-xs font-bold text-slate-500">
                   7 Scenes • {videoData.duration}
@@ -515,6 +515,18 @@ export default function DemoVideoSection() {
                     </button>
                   );
                 })}
+              </div>
+
+              {/* Action Button */}
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  className="w-full py-3 px-4 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+                >
+                  {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
+                  <span>{isPlaying ? (currentLang === 'HI' ? 'डेमो रोकें' : 'Pause Video Walkthrough') : `${t?.('videos', 'watchBtn', 'Watch in') || 'Watch in'} ${videoData.nativeName}`}</span>
+                </button>
               </div>
 
               {/* Clinical Governance Disclaimer Notice */}

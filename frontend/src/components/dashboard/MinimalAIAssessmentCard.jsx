@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 import {
   ShieldCheck,
   CheckCircle2,
@@ -19,6 +20,7 @@ export default function MinimalAIAssessmentCard({
   onSaveReport
 }) {
   const { isDark } = useTheme();
+  const { t } = useLanguage();
   const [saved, setSaved] = useState(false);
 
   const scenario = DEMO_TRIAGE_SCENARIOS[activeSeverity] || DEMO_TRIAGE_SCENARIOS.GREEN;
@@ -121,7 +123,7 @@ export default function MinimalAIAssessmentCard({
       {/* 3. Bulleted Safe Next Steps */}
       <div className="space-y-2.5 pt-1">
         <div className="text-xs font-bold uppercase tracking-wider text-[#08165B] dark:text-white">
-          Safe Next Steps:
+          {t('dashboard', 'safeNextSteps', 'Safe Next Steps:')}
         </div>
         
         <div className="space-y-2">
@@ -145,7 +147,7 @@ export default function MinimalAIAssessmentCard({
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 hover:bg-blue-50/50 dark:hover:bg-slate-700 text-xs font-medium text-[#08165B] dark:text-slate-200 transition-colors cursor-pointer"
           >
             {saved ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Bookmark className="w-3.5 h-3.5 text-[#1677E8]" />}
-            <span>{saved ? 'Saved to Library' : 'Save to Library'}</span>
+            <span>{saved ? t('dashboard', 'savedReports', 'Saved to Library') : t('dashboard', 'savedReports', 'Save to Library')}</span>
           </button>
 
           {/* Download PDF / Print */}
@@ -167,14 +169,14 @@ export default function MinimalAIAssessmentCard({
             title="Share via WhatsApp"
           >
             <Share2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-            <span>Share</span>
+            <span>{t('chat', 'shareWhatsApp', 'Share')}</span>
           </button>
         </div>
 
         {/* Small Verified Footer Badge */}
         <div className="flex items-start sm:items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium max-w-full">
           <ShieldCheck className="w-3.5 h-3.5 text-[#1677E8] shrink-0 mt-0.5 sm:mt-0" />
-          <span className="break-words leading-tight">Grounded in Verified Clinical Research PDFs • No Unverified Advice</span>
+          <span className="break-words leading-tight">{t('chat', 'groundedEvidence', 'Grounded in Verified Clinical Research PDFs • No Unverified Advice')}</span>
         </div>
 
       </div>

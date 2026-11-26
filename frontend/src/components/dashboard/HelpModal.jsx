@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
-import { X, HelpCircle, PhoneCall, ShieldCheck, FileCheck, Stethoscope } from 'lucide-react';
+import { X, HelpCircle, PhoneCall, ShieldCheck, Stethoscope } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function HelpModal({ onClose }) {
+  const { t } = useLanguage();
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -27,8 +30,12 @@ export default function HelpModal({ onClose }) {
               <HelpCircle className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">Help & Clinical Guidelines</h3>
-              <p className="text-[11px] text-slate-400 dark:text-slate-500">GlobalHealthAI Educational Platform</p>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                {t('helpModal', 'title') || 'Help & Clinical Guidelines'}
+              </h3>
+              <p className="text-[11px] text-slate-400 dark:text-slate-500">
+                {t('helpModal', 'subtitle') || 'GlobalHealthAI Educational Platform'}
+              </p>
             </div>
           </div>
 
@@ -48,10 +55,10 @@ export default function HelpModal({ onClose }) {
           <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800 text-red-900 dark:text-red-200 space-y-1">
             <div className="flex items-center gap-2 font-bold text-red-800 dark:text-red-300">
               <PhoneCall className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
-              <span>Immediate Medical Emergencies</span>
+              <span>{t('helpModal', 'emergencyTitle') || 'Immediate Medical Emergencies'}</span>
             </div>
             <p className="text-[11px] text-red-700 dark:text-red-300 leading-normal">
-              If experiencing crushing chest pain, sudden difficulty breathing, slurred speech, or heavy uncontrolled bleeding, call <strong>102 / 108 / 112</strong> immediately.
+              {t('helpModal', 'emergencyDesc') || 'If experiencing crushing chest pain, sudden difficulty breathing, slurred speech, or heavy uncontrolled bleeding, call 102 / 108 / 112 immediately.'}
             </p>
           </div>
 
@@ -59,10 +66,10 @@ export default function HelpModal({ onClose }) {
           <div className="space-y-1">
             <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
               <Stethoscope className="w-3.5 h-3.5 text-[#0D9488] dark:text-teal-400" />
-              <span>How GlobalHealthAI Evaluates Symptoms</span>
+              <span>{t('helpModal', 'evalTitle') || 'How GlobalHealthAI Evaluates Symptoms'}</span>
             </div>
             <p className="text-slate-600 dark:text-slate-300">
-              Our system compares user-described health symptoms against 1,000 clinically reviewed cards and peer-reviewed clinical triage protocols curated by physicians.
+              {t('helpModal', 'evalDesc') || 'Our system compares user-described health symptoms against 1,000 clinically reviewed cards and peer-reviewed clinical triage protocols curated by physicians.'}
             </p>
           </div>
 
@@ -70,10 +77,10 @@ export default function HelpModal({ onClose }) {
           <div className="space-y-1">
             <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>Privacy & Confidentiality</span>
+              <span>{t('helpModal', 'privacyTitle') || 'Privacy & Confidentiality'}</span>
             </div>
             <p className="text-slate-600 dark:text-slate-300">
-              Your personal symptom queries and generated reports are stored privately in your browser session and are never commercialized.
+              {t('helpModal', 'privacyDesc') || 'Your personal symptom queries and generated reports are stored privately in your browser session and are never commercialized.'}
             </p>
           </div>
 
@@ -86,7 +93,7 @@ export default function HelpModal({ onClose }) {
             onClick={onClose}
             className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-semibold text-xs cursor-pointer"
           >
-            Got It
+            {t('helpModal', 'gotIt') || 'Got It'}
           </button>
         </div>
 

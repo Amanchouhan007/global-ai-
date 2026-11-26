@@ -21,8 +21,10 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { useAdminStore } from '../store/adminStore';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function AIManagementScreen({ navigateTo, showToast }) {
+  const { t } = useLanguage();
   const {
     aiConfig,
     updateAIConfig,
@@ -149,10 +151,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         <div>
           <h2 className="text-lg sm:text-xl font-black text-[#08165B] dark:text-white flex items-center gap-2">
             <Cpu className="w-6 h-6 text-[#1677E8] dark:text-blue-400" />
-            <span>AI Knowledge & Model Management</span>
+            <span>{t('admin', 'aiTitle', 'AI Knowledge & Model Management')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 font-medium mt-1">
-            Configure LLM parameters, monitor vector embeddings, enforce medical safety, and test evidence-grounded responses.
+            {t('admin', 'aiSubtitle', 'Configure LLM models, triaging rules, temperature parameters, and embedding sync.')}
           </p>
         </div>
 
@@ -178,7 +180,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             }`}
           >
             <Cpu className="w-4 h-4" />
-            <span>Model Configuration</span>
+            <span>{t('admin', 'tabModelConfig', 'Model Configuration')}</span>
           </button>
 
           <button
@@ -190,7 +192,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             }`}
           >
             <Database className="w-4 h-4" />
-            <span>Knowledge Base ({totalChunks} Chunks)</span>
+            <span>{t('admin', 'tabKnowledgeBase', 'Knowledge Base')} ({totalChunks} {t('admin', 'chunksLabel', 'Chunks')})</span>
           </button>
 
           <button
@@ -202,7 +204,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             }`}
           >
             <Sliders className="w-4 h-4" />
-            <span>Retrieval Settings</span>
+            <span>{t('admin', 'tabRetrievalSettings', 'Retrieval Settings')}</span>
           </button>
 
           <button
@@ -214,7 +216,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             }`}
           >
             <ShieldCheck className="w-4 h-4" />
-            <span>AI Safety & Instructions</span>
+            <span>{t('admin', 'tabSafetyInstructions', 'AI Safety & Instructions')}</span>
           </button>
 
           <button
@@ -226,17 +228,19 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             }`}
           >
             <Play className="w-4 h-4" />
-            <span>AI Playground</span>
+            <span>{t('admin', 'tabAIPlayground', 'AI Playground')}</span>
           </button>
         </div>
 
         {/* TAB A: MODEL CONFIGURATION */}
         {activeTab === 'model' && (
           <div className="p-6 sm:p-8 space-y-6">
-            <div className="border-b border-slate-100 pb-3">
-              <h3 className="text-base font-black text-[#08165B]">LLM Provider & Parameter Tuning</h3>
-              <p className="text-xs text-slate-500 font-medium">
-                Choose the foundation language model and adjust generation randomness and token length.
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                {t('admin', 'llmProviderTuningTitle', 'LLM Provider & Parameter Tuning')}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                {t('admin', 'llmProviderTuningSubtitle', 'Choose the foundation language model and adjust generation randomness and token length.')}
               </p>
             </div>
 
@@ -245,14 +249,16 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 
                 {/* Provider */}
                 <div>
-                  <label className="block font-bold text-[#08165B] mb-2">AI Provider</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                    {t('admin', 'aiProviderLabel', 'AI Provider')}
+                  </label>
                   <select
                     value={modelForm.provider}
                     onChange={(e) => setModelForm({ ...modelForm, provider: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] font-medium text-[#08165B] bg-white outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-medium text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none"
                   >
-                    <option value="Google Gemini">Google Gemini (Recommended for Healthcare)</option>
-                    <option value="OpenAI">OpenAI GPT-4 Series</option>
+                    <option value="Google Gemini">Google Gemini</option>
+                    <option value="OpenAI">OpenAI GPT-4</option>
                     <option value="Anthropic">Anthropic Claude</option>
                     <option value="Self-Hosted vLLM">Self-Hosted Clinical LLM (vLLM)</option>
                   </select>
@@ -260,11 +266,13 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
 
                 {/* Model Selection */}
                 <div>
-                  <label className="block font-bold text-[#08165B] mb-2">Model Selection</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                    {t('admin', 'modelSelectionLabel', 'Model Selection')}
+                  </label>
                   <select
                     value={modelForm.model}
                     onChange={(e) => setModelForm({ ...modelForm, model: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] font-medium text-[#08165B] bg-white outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-medium text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none"
                   >
                     <option value="Gemini 1.5 Pro (Healthcare Tuned)">Gemini 1.5 Pro (Healthcare Tuned)</option>
                     <option value="Gemini 1.5 Flash (Ultra Fast)">Gemini 1.5 Flash (Ultra Fast)</option>
@@ -276,12 +284,14 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               </div>
 
               {/* API Security Notice */}
-              <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-100 flex items-start gap-3 text-xs text-slate-600">
+              <div className="p-4 rounded-xl bg-blue-50/50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-800 flex items-start gap-3 text-xs text-slate-600 dark:text-slate-300">
                 <Lock className="w-4 h-4 text-[#1677E8] shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-bold text-[#08165B]">API Keys Securely Managed Server-Side</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
-                    Credentials are stored in server environment variables and never exposed to client-side code. Status: <strong className="text-emerald-600">Connected & Encrypted (AES-256)</strong>.
+                  <div className="font-bold text-[#08165B] dark:text-white">
+                    {t('admin', 'apiSecurityTitle', 'API Keys Securely Managed Server-Side')}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                    {t('admin', 'apiSecuritySubtitle', 'Credentials are stored in server environment variables and never exposed to client-side code.')}
                   </div>
                 </div>
               </div>
@@ -292,7 +302,9 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 {/* Temperature */}
                 <div className="space-y-2">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#08165B]">Temperature (Creativity vs Determinism)</span>
+                    <span className="text-[#08165B] dark:text-slate-200">
+                      {t('admin', 'tempSliderLabel', 'Temperature (Creativity vs Determinism)')}
+                    </span>
                     <span className="text-[#1677E8] font-black">{modelForm.temperature}</span>
                   </div>
                   <input
@@ -305,16 +317,18 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     className="w-full accent-[#1677E8]"
                   />
                   <div className="flex justify-between text-[10px] text-slate-400 font-medium">
-                    <span>0.0 (Deterministic / Medical Guidance)</span>
-                    <span>1.0 (Creative / Exploratory)</span>
+                    <span>{t('admin', 'tempDeterministic', '0.0 (Deterministic / Medical Guidance)')}</span>
+                    <span>{t('admin', 'tempCreative', '1.0 (Creative / Exploratory)')}</span>
                   </div>
                 </div>
 
                 {/* Max Tokens */}
                 <div className="space-y-2">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#08165B]">Maximum Output Tokens</span>
-                    <span className="text-[#1677E8] font-black">{modelForm.maxOutputTokens} tokens</span>
+                    <span className="text-[#08165B] dark:text-slate-200">
+                      {t('admin', 'maxTokensLabel', 'Maximum Output Tokens')}
+                    </span>
+                    <span className="text-[#1677E8] font-black">{modelForm.maxOutputTokens} {t('admin', 'tokensUnit', 'tokens')}</span>
                   </div>
                   <input
                     type="range"
@@ -326,40 +340,42 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     className="w-full accent-[#1677E8]"
                   />
                   <div className="flex justify-between text-[10px] text-slate-400 font-medium">
-                    <span>512 tokens</span>
-                    <span>8,192 tokens</span>
+                    <span>512 {t('admin', 'tokensUnit', 'tokens')}</span>
+                    <span>8,192 {t('admin', 'tokensUnit', 'tokens')}</span>
                   </div>
                 </div>
 
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <button
                   type="button"
                   onClick={handleTestConnection}
                   disabled={testingConnection}
-                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-blue-200 hover:bg-blue-50 text-[#1677E8] font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-blue-200 dark:border-slate-700 hover:bg-blue-50 dark:hover:bg-slate-800 text-[#1677E8] dark:text-blue-400 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {testingConnection ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Server className="w-4 h-4" />}
-                  <span>Test Connection</span>
+                  <span>{t('admin', 'testConnectionBtn', 'Test Connection')}</span>
                 </button>
 
                 <button
                   type="submit"
                   className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-bold text-xs transition-colors cursor-pointer"
                 >
-                  Save Model Configuration
+                  {t('admin', 'saveModelConfigBtn', 'Save Model Configuration')}
                 </button>
               </div>
 
               {connectionResult && (
-                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between animate-in fade-in">
+                <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300 flex items-center justify-between animate-in fade-in">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    <span>Connection Active. Latency: <strong>{connectionResult.latency} ms</strong>. Tested at {connectionResult.timestamp}.</span>
+                    <span>
+                      {t('admin', 'connectionActive', 'Connection Active. Latency:')} <strong>{connectionResult.latency} ms</strong>. {t('admin', 'testedAt', 'Tested at')} {connectionResult.timestamp}.
+                    </span>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900 font-bold text-[10px]">
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-900 text-emerald-900 dark:text-emerald-200 font-bold text-[10px]">
                     200 OK
                   </span>
                 </div>
@@ -371,11 +387,13 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         {/* TAB B: KNOWLEDGE BASE */}
         {activeTab === 'knowledge' && (
           <div className="p-6 sm:p-8 space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
               <div>
-                <h3 className="text-base font-black text-[#08165B]">Knowledge Base & Vector Store</h3>
-                <p className="text-xs text-slate-500 font-medium">
-                  Review indexed clinical documents and initiate complete vector collection reindexing.
+                <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                  {t('admin', 'kbVectorStoreTitle', 'Knowledge Base & Vector Store')}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                  {t('admin', 'kbVectorStoreSubtitle', 'Review indexed clinical documents and initiate complete vector collection reindexing.')}
                 </p>
               </div>
 
@@ -385,57 +403,69 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-bold text-xs transition-colors cursor-pointer self-start sm:self-auto"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${reindexing ? 'animate-spin' : ''}`} />
-                <span>{reindexing ? 'Reindexing Chunks...' : 'Reindex Entire Knowledge Base'}</span>
+                <span>{reindexing ? t('admin', 'reindexingChunksBtn', 'Reindexing Chunks...') : t('admin', 'reindexEntireKbBtn', 'Reindex Entire Knowledge Base')}</span>
               </button>
             </div>
 
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl bg-[#F2F7FF] border border-[#D6E6FA]">
-                <div className="text-[11px] font-bold text-slate-500">Total Indexed Documents</div>
-                <div className="text-2xl font-black text-[#08165B] mt-1">{totalDocuments}</div>
+              <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800">
+                <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                  {t('admin', 'totalIndexedDocs', 'Total Indexed Documents')}
+                </div>
+                <div className="text-2xl font-black text-[#08165B] dark:text-white mt-1">{totalDocuments}</div>
               </div>
-              <div className="p-4 rounded-xl bg-[#F2F7FF] border border-[#D6E6FA]">
-                <div className="text-[11px] font-bold text-slate-500">Vectorized Chunks</div>
-                <div className="text-2xl font-black text-[#1677E8] mt-1">{totalChunks}</div>
+              <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800">
+                <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                  {t('admin', 'vectorizedChunksCount', 'Vectorized Chunks')}
+                </div>
+                <div className="text-2xl font-black text-[#1677E8] dark:text-blue-400 mt-1">{totalChunks}</div>
               </div>
-              <div className="p-4 rounded-xl bg-[#F2F7FF] border border-[#D6E6FA]">
-                <div className="text-[11px] font-bold text-slate-500">Indexed Clinical Topics</div>
+              <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800">
+                <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                  {t('admin', 'indexedClinicalTopics', 'Indexed Clinical Topics')}
+                </div>
                 <div className="text-2xl font-black text-[#F04B0A] mt-1">{knowledgeTopicsCount}</div>
               </div>
-              <div className="p-4 rounded-xl bg-[#F2F7FF] border border-[#D6E6FA]">
-                <div className="text-[11px] font-bold text-slate-500">Last Synced</div>
-                <div className="text-xs font-black text-emerald-600 mt-2">Just Now</div>
+              <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800">
+                <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                  {t('admin', 'lastSynced', 'Last Synced')}
+                </div>
+                <div className="text-xs font-black text-emerald-600 dark:text-emerald-400 mt-2">
+                  {t('admin', 'justNow', 'Just Now')}
+                </div>
               </div>
             </div>
 
             {/* Document Chunk Inspector */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-xs text-[#08165B]">Active Knowledge Chunks</span>
+                <span className="font-bold text-xs text-[#08165B] dark:text-white">
+                  {t('admin', 'activeKnowledgeChunks', 'Active Knowledge Chunks')}
+                </span>
                 <input
                   type="text"
-                  placeholder="Filter chunks..."
+                  placeholder={t('admin', 'filterChunksPlaceholder', 'Filter chunks...')}
                   value={chunkSearch}
                   onChange={(e) => setChunkSearch(e.target.value)}
-                  className="px-3 py-1.5 rounded-lg border border-[#D6E6FA] text-xs outline-none w-48"
+                  className="px-3 py-1.5 rounded-lg border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] text-[#08165B] dark:text-white text-xs outline-none w-48"
                 />
               </div>
 
-              <div className="border border-[#D6E6FA] rounded-xl overflow-hidden divide-y divide-slate-100 text-xs">
+              <div className="border border-[#D6E6FA] dark:border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 text-xs">
                 {documents
                   .filter(d => !chunkSearch || d.title.toLowerCase().includes(chunkSearch.toLowerCase()))
                   .map((doc) => (
-                    <div key={doc.id} className="p-3.5 hover:bg-slate-50 transition-colors flex items-start justify-between gap-3">
+                    <div key={doc.id} className="p-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors flex items-start justify-between gap-3">
                       <div>
-                        <div className="font-bold text-[#08165B]">{doc.title}</div>
-                        <div className="text-[11px] text-slate-500 font-mono mt-0.5 line-clamp-1">
+                        <div className="font-bold text-[#08165B] dark:text-white">{doc.title}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5 line-clamp-1">
                           {doc.extractedTextSample}
                         </div>
                       </div>
                       <div className="text-right shrink-0">
-                        <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#1677E8] font-bold text-[10px]">
-                          {doc.chunksCount} chunks
+                        <span className="px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-[#1677E8] dark:text-blue-300 font-bold text-[10px]">
+                          {doc.chunksCount} {t('admin', 'chunksLabel', 'chunks')}
                         </span>
                       </div>
                     </div>
@@ -448,10 +478,12 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         {/* TAB C: RETRIEVAL SETTINGS */}
         {activeTab === 'retrieval' && (
           <div className="p-6 sm:p-8 space-y-6">
-            <div className="border-b border-slate-100 pb-3">
-              <h3 className="text-base font-black text-[#08165B]">RAG Retrieval & Semantic Similarity</h3>
-              <p className="text-xs text-slate-500 font-medium">
-                Control how the system searches through indexed documents and ranks clinical evidence for context injection.
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                {t('admin', 'ragRetrievalTitle', 'RAG Retrieval & Semantic Similarity')}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                {t('admin', 'ragRetrievalSubtitle', 'Control how the system searches through indexed documents and ranks clinical evidence for context injection.')}
               </p>
             </div>
 
@@ -461,8 +493,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 {/* Top-K Chunks */}
                 <div className="space-y-2">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#08165B]">Top-K Retrieved Chunks</span>
-                    <span className="text-[#1677E8] font-black">{retrievalForm.topKChunks} chunks</span>
+                    <span className="text-[#08165B] dark:text-slate-200">
+                      {t('admin', 'topKRetrievedChunks', 'Top-K Retrieved Chunks')}
+                    </span>
+                    <span className="text-[#1677E8] font-black">{retrievalForm.topKChunks} {t('admin', 'chunksLabel', 'chunks')}</span>
                   </div>
                   <input
                     type="range"
@@ -473,15 +507,17 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, topKChunks: parseInt(e.target.value) })}
                     className="w-full accent-[#1677E8]"
                   />
-                  <div className="text-[11px] text-slate-500">
-                    Determines how many relevant text passages are fed into the LLM context prompt.
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                    {t('admin', 'topKDesc', 'Determines how many relevant text passages are fed into the LLM context prompt.')}
                   </div>
                 </div>
 
                 {/* Similarity Threshold */}
                 <div className="space-y-2">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#08165B]">Cosine Similarity Threshold</span>
+                    <span className="text-[#08165B] dark:text-slate-200">
+                      {t('admin', 'cosineSimilarityThreshold', 'Cosine Similarity Threshold')}
+                    </span>
                     <span className="text-[#1677E8] font-black">{retrievalForm.similarityThreshold}</span>
                   </div>
                   <input
@@ -493,8 +529,8 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, similarityThreshold: parseFloat(e.target.value) })}
                     className="w-full accent-[#1677E8]"
                   />
-                  <div className="text-[11px] text-slate-500">
-                    Chunks with vector similarity below this threshold are omitted to prevent irrelevant answers.
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                    {t('admin', 'cosineSimilarityDesc', 'Chunks with vector similarity below this threshold are omitted to prevent irrelevant answers.')}
                   </div>
                 </div>
 
@@ -503,28 +539,32 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               {/* Retrieval Strategy & Context Window */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block font-bold text-[#08165B] mb-2">Retrieval Strategy</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                    {t('admin', 'retrievalStrategyLabel', 'Retrieval Strategy')}
+                  </label>
                   <select
                     value={retrievalForm.retrievalStrategy}
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, retrievalStrategy: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] font-medium text-[#08165B] bg-white outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-medium text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none"
                   >
-                    <option value="Hybrid (Dense Vector + BM25 Lexical)">Hybrid (Dense Vector + BM25 Lexical) - Recommended</option>
+                    <option value="Hybrid (Dense Vector + BM25 Lexical)">Hybrid (Dense Vector + BM25 Lexical)</option>
                     <option value="Pure Dense Vector Search">Pure Dense Vector Search</option>
                     <option value="Semantic Re-ranking (Cross-Encoder)">Semantic Re-ranking (Cross-Encoder)</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#08165B] mb-2">Context Window Budget</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                    {t('admin', 'contextWindowBudget', 'Context Window Budget')}
+                  </label>
                   <select
                     value={retrievalForm.contextWindowTokens}
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, contextWindowTokens: parseInt(e.target.value) })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] font-medium text-[#08165B] bg-white outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-medium text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none"
                   >
                     <option value={4096}>4,096 Tokens</option>
-                    <option value={8192}>8,192 Tokens (Balanced)</option>
-                    <option value={16384}>16,384 Tokens (Comprehensive Guidelines)</option>
+                    <option value={8192}>8,192 Tokens</option>
+                    <option value={16384}>16,384 Tokens</option>
                   </select>
                 </div>
               </div>
@@ -538,7 +578,9 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, enableSourceCitations: e.target.checked })}
                     className="w-4 h-4 accent-[#1677E8]"
                   />
-                  <span className="font-bold text-[#08165B]">Enforce Source Citations [Source: Document Title] in generated outputs</span>
+                  <span className="font-bold text-[#08165B] dark:text-slate-200">
+                    {t('admin', 'enforceSourceCitations', 'Enforce Source Citations [Source: Document Title] in generated outputs')}
+                  </span>
                 </label>
 
                 <label className="flex items-center gap-3 cursor-pointer">
@@ -548,16 +590,18 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, showConfidenceScores: e.target.checked })}
                     className="w-4 h-4 accent-[#1677E8]"
                   />
-                  <span className="font-bold text-[#08165B]">Compute and display grounding confidence score on every query</span>
+                  <span className="font-bold text-[#08165B] dark:text-slate-200">
+                    {t('admin', 'showConfidenceScores', 'Compute and display grounding confidence score on every query')}
+                  </span>
                 </label>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 flex justify-end">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
                 <button
                   type="submit"
                   className="px-6 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-bold text-xs transition-colors cursor-pointer"
                 >
-                  Save Retrieval Settings
+                  {t('admin', 'saveRetrievalSettingsBtn', 'Save Retrieval Settings')}
                 </button>
               </div>
             </form>
@@ -567,10 +611,12 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         {/* TAB D: AI SAFETY & INSTRUCTIONS */}
         {activeTab === 'safety' && (
           <div className="p-6 sm:p-8 space-y-6">
-            <div className="border-b border-slate-100 pb-3">
-              <h3 className="text-base font-black text-[#08165B]">Clinical Safety Rules & Guardrails</h3>
-              <p className="text-xs text-slate-500 font-medium">
-                Mandatory health safety constraints: the AI must never diagnose diseases or prescribe medications.
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                {t('admin', 'clinicalSafetyRulesTitle', 'Clinical Safety Rules & Guardrails')}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                {t('admin', 'clinicalSafetyRulesSubtitle', 'Mandatory health safety constraints: the AI must never diagnose diseases or prescribe medications.')}
               </p>
             </div>
 
@@ -578,19 +624,19 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               
               {/* System Instructions Editor */}
               <div>
-                <label className="block font-bold text-[#08165B] mb-2">
-                  System Instructions (Master Clinical Prompt)
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'systemInstructionsLabel', 'System Instructions (Master Clinical Prompt)')}
                 </label>
                 <textarea
                   rows={8}
                   value={safetyForm.systemPrompt}
                   onChange={(e) => setSafetyForm({ ...safetyForm, systemPrompt: e.target.value })}
-                  className="w-full p-4 rounded-xl border border-[#D6E6FA] font-mono text-xs text-slate-800 leading-relaxed outline-none focus:border-[#1677E8]"
+                  className="w-full p-4 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] font-mono text-xs text-slate-800 dark:text-slate-200 leading-relaxed outline-none focus:border-[#1677E8]"
                 ></textarea>
               </div>
 
               {/* Guardrails Checkboxes */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-2xl bg-blue-50/50 border border-blue-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-800">
                 
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
@@ -600,8 +646,12 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     className="w-4 h-4 accent-[#1677E8] mt-0.5"
                   />
                   <div>
-                    <div className="font-black text-[#08165B]">No Confirmed Diagnosis Rule</div>
-                    <div className="text-[11px] text-slate-500">AI clarifies that findings are educational probabilities, not diagnoses.</div>
+                    <div className="font-black text-[#08165B] dark:text-white">
+                      {t('admin', 'noDiagnosisRuleTitle', 'No Confirmed Diagnosis Rule')}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      {t('admin', 'noDiagnosisRuleDesc', 'AI clarifies that findings are educational probabilities, not diagnoses.')}
+                    </div>
                   </div>
                 </label>
 
@@ -613,8 +663,12 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     className="w-4 h-4 accent-[#1677E8] mt-0.5"
                   />
                   <div>
-                    <div className="font-black text-[#08165B]">No Prescription Rule</div>
-                    <div className="text-[11px] text-slate-500">Prohibits suggesting or dosing prescription drugs without physician review.</div>
+                    <div className="font-black text-[#08165B] dark:text-white">
+                      {t('admin', 'noPrescriptionRuleTitle', 'No Prescription Rule')}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      {t('admin', 'noPrescriptionRuleDesc', 'Prohibits suggesting or dosing prescription drugs without physician review.')}
+                    </div>
                   </div>
                 </label>
 
@@ -626,8 +680,12 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     className="w-4 h-4 accent-[#1677E8] mt-0.5"
                   />
                   <div>
-                    <div className="font-black text-[#08165B]">Emergency Red-Flag Escalation</div>
-                    <div className="text-[11px] text-slate-500">Identifies chest pain, dyspnea, or stroke symptoms and triggers ER alert.</div>
+                    <div className="font-black text-[#08165B] dark:text-white">
+                      {t('admin', 'emergencyEscalationTitle', 'Emergency Red-Flag Escalation')}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      {t('admin', 'emergencyEscalationDesc', 'Identifies chest pain, dyspnea, or stroke symptoms and triggers ER alert.')}
+                    </div>
                   </div>
                 </label>
 
@@ -639,19 +697,23 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     className="w-4 h-4 accent-[#1677E8] mt-0.5"
                   />
                   <div>
-                    <div className="font-black text-[#08165B]">Uncertainty & Limitation Transparency</div>
-                    <div className="text-[11px] text-slate-500">Discloses whenever clinical evidence is inconclusive or scarce.</div>
+                    <div className="font-black text-[#08165B] dark:text-white">
+                      {t('admin', 'uncertaintyDisclosureTitle', 'Uncertainty & Limitation Transparency')}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      {t('admin', 'uncertaintyDisclosureDesc', 'Discloses whenever clinical evidence is inconclusive or scarce.')}
+                    </div>
                   </div>
                 </label>
 
               </div>
 
-              <div className="pt-4 border-t border-slate-100 flex justify-end">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
                 <button
                   type="submit"
                   className="px-6 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-bold text-xs transition-colors cursor-pointer"
                 >
-                  Save Safety Instructions
+                  {t('admin', 'saveSafetyInstructionsBtn', 'Save Safety Instructions')}
                 </button>
               </div>
 
@@ -662,31 +724,33 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         {/* TAB E: AI PLAYGROUND */}
         {activeTab === 'playground' && (
           <div className="p-6 sm:p-8 space-y-6">
-            <div className="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="text-base font-black text-[#F04B0A] flex items-center gap-2">
                   <Play className="w-4 h-4" />
-                  <span>Clinical AI Playground</span>
+                  <span>{t('admin', 'playgroundTitle', 'Clinical AI Playground')}</span>
                 </h3>
-                <p className="text-xs text-slate-500 font-medium">
-                  Test sample health questions and verify citation grounding, retrieval relevance, and safety filters.
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                  {t('admin', 'playgroundSubtitle', 'Test sample health questions and verify citation grounding, retrieval relevance, and safety filters.')}
                 </p>
               </div>
 
-              <span className="px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold">
-                Testing Output Only • Not Medical Advice
+              <span className="px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-[11px] font-bold">
+                {t('admin', 'testingOutputOnly', 'Testing Output Only • Not Medical Advice')}
               </span>
             </div>
 
             {/* Presets */}
             <div>
-              <div className="text-xs font-bold text-slate-500 mb-2">Quick Clinical Presets:</div>
+              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">
+                {t('admin', 'quickClinicalPresets', 'Quick Clinical Presets:')}
+              </div>
               <div className="flex flex-wrap gap-2">
                 {sampleQuestions.map((q, i) => (
                   <button
                     key={i}
                     onClick={() => setPlaygroundQuery(q)}
-                    className="text-left px-3 py-1.5 rounded-lg border border-[#D6E6FA] bg-slate-50 hover:bg-blue-50 text-[11px] text-slate-700 font-medium transition-colors cursor-pointer"
+                    className="text-left px-3 py-1.5 rounded-lg border border-[#D6E6FA] dark:border-slate-700 bg-slate-50 dark:bg-[#0B132B] hover:bg-blue-50 dark:hover:bg-slate-800 text-[11px] text-slate-700 dark:text-slate-200 font-medium transition-colors cursor-pointer"
                   >
                     {q}
                   </button>
@@ -722,7 +786,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                   className="px-6 py-3 rounded-xl bg-[#F04B0A] hover:bg-[#d43f07] text-white font-black text-xs flex items-center justify-center gap-2 cursor-pointer shadow-xs transition-colors shrink-0"
                 >
                   {playgroundRunning ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
-                  <span>{playgroundRunning ? 'Executing Test...' : 'Run AI Test'}</span>
+                  <span>{playgroundRunning ? t('admin', 'evaluatingModel', 'Evaluating Model...') : t('admin', 'runAITestBtn', 'Run AI Clinical Assessment')}</span>
                 </button>
               </div>
             </div>

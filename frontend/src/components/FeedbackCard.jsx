@@ -58,10 +58,10 @@ export default function FeedbackCard() {
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-50 dark:bg-pink-950/50 text-[#D81B60] text-xs font-bold border border-pink-200">
               <MessageSquare className="w-3.5 h-3.5" />
-              <span>Continuous Clinical Quality Improvement</span>
+              <span>{t('feedback', 'qualityBadge', 'Continuous Clinical Quality Improvement')}</span>
             </div>
             <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-[#0D5C3A] border border-emerald-200">
-              Direct Physician Review
+              {t('feedback', 'reviewBadge', 'Direct Physician Review')}
             </span>
           </div>
 

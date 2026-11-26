@@ -16,8 +16,10 @@ import {
   Database
 } from 'lucide-react';
 import { useAdminStore } from '../store/adminStore';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function SettingsScreen({ navigateTo, showToast }) {
+  const { t } = useLanguage();
   const { settings, updateSettings, resetToDefaultDemo } = useAdminStore();
 
   const [activeTab, setActiveTab] = useState('general'); // 'general' | 'profile' | 'security' | 'notifications' | 'system'
@@ -92,10 +94,10 @@ export default function SettingsScreen({ navigateTo, showToast }) {
         <div>
           <h2 className="text-lg sm:text-xl font-black text-[#08165B] dark:text-white flex items-center gap-2">
             <Settings className="w-6 h-6 text-[#1677E8] dark:text-blue-400" />
-            <span>Platform Settings & Administration</span>
+            <span>{t('admin', 'settingsTitle', 'Platform Settings & Administration')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 font-medium mt-1">
-            Configure enterprise healthcare parameters, administrator profile, session security, and indexing thresholds.
+            {t('admin', 'settingsSubtitle', 'Configure enterprise healthcare parameters, administrator profile, session security, and indexing thresholds.')}
           </p>
         </div>
 
@@ -122,7 +124,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
             }`}
           >
             <Globe className="w-4 h-4" />
-            <span>General Settings</span>
+            <span>{t('admin', 'tabGeneral', 'General Settings')}</span>
           </button>
 
           <button
@@ -134,7 +136,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
             }`}
           >
             <User className="w-4 h-4" />
-            <span>Admin Profile</span>
+            <span>{t('admin', 'tabProfile', 'Admin Profile')}</span>
           </button>
 
           <button
@@ -146,7 +148,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
             }`}
           >
             <Shield className="w-4 h-4" />
-            <span>Security & Session</span>
+            <span>{t('admin', 'tabSecurity', 'Security & Session')}</span>
           </button>
 
           <button
@@ -158,7 +160,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
             }`}
           >
             <Bell className="w-4 h-4" />
-            <span>Notifications</span>
+            <span>{t('admin', 'tabNotifications', 'Notifications')}</span>
           </button>
 
           <button
@@ -170,7 +172,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
             }`}
           >
             <Sliders className="w-4 h-4" />
-            <span>System Limits</span>
+            <span>{t('admin', 'tabSystem', 'System Limits')}</span>
           </button>
         </div>
 
@@ -178,13 +180,19 @@ export default function SettingsScreen({ navigateTo, showToast }) {
         {activeTab === 'general' && (
           <form onSubmit={handleSaveGeneral} className="p-6 sm:p-8 space-y-6 text-xs sm:text-sm">
             <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">Branding & Internationalization</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">Application identity and clinical default localization.</p>
+              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                {t('admin', 'brandingTitle', 'Branding & Internationalization')}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">
+                {t('admin', 'brandingSubtitle', 'Application identity and clinical default localization.')}
+              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Application Name</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'appNameLabel', 'Application Name')}
+                </label>
                 <input
                   type="text"
                   value={generalForm.appName}
@@ -194,7 +202,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Clinical Tagline</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'clinicalTaglineLabel', 'Clinical Tagline')}
+                </label>
                 <input
                   type="text"
                   value={generalForm.tagline}
@@ -204,7 +214,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Default Clinical Language</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'defaultLangLabel', 'Default Clinical Language')}
+                </label>
                 <select
                   value={generalForm.defaultLanguage}
                   onChange={(e) => setGeneralForm({ ...generalForm, defaultLanguage: e.target.value })}
@@ -218,7 +230,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Platform Timezone</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'platformTimezoneLabel', 'Platform Timezone')}
+                </label>
                 <input
                   type="text"
                   value={generalForm.timezone}
@@ -233,7 +247,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                 type="submit"
                 className="px-6 py-2.5 rounded-xl bg-[#1677E8] text-white font-bold text-xs hover:bg-[#08165B] dark:hover:bg-blue-600 transition-colors shadow-sm shadow-blue-500/20"
               >
-                Save General Settings
+                {t('admin', 'saveGeneralBtn', 'Save General Settings')}
               </button>
             </div>
           </form>
@@ -244,8 +258,12 @@ export default function SettingsScreen({ navigateTo, showToast }) {
           <div className="p-6 sm:p-8 space-y-8 text-xs sm:text-sm">
             <form onSubmit={handleSaveProfile} className="space-y-6">
               <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-                <h3 className="text-base font-black text-[#08165B] dark:text-white">Administrator Credentials</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">Personal profile and verified clinical contact.</p>
+                <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                  {t('admin', 'adminCredsTitle', 'Administrator Credentials')}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">
+                  {t('admin', 'adminCredsSubtitle', 'Personal profile and verified clinical contact.')}
+                </p>
               </div>
 
               <div className="flex items-center gap-4">
@@ -255,13 +273,15 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                 <div>
                   <div className="font-bold text-[#08165B] dark:text-white text-sm">{profileForm.name}</div>
                   <div className="text-xs text-slate-500 dark:text-slate-300 font-medium">{profileForm.role}</div>
-                  <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold mt-0.5">● Verified Administrator</div>
+                  <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold mt-0.5">● {t('admin', 'verifiedAdminBadge', 'Verified Administrator')}</div>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Full Name</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                    {t('admin', 'colUserName', 'Full Name')}
+                  </label>
                   <input
                     type="text"
                     value={profileForm.name}
@@ -271,7 +291,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Email Address</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                    {t('admin', 'colEmail', 'Email Address')}
+                  </label>
                   <input
                     type="email"
                     value={profileForm.email}
@@ -286,17 +308,21 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                   type="submit"
                   className="px-6 py-2.5 rounded-xl bg-[#1677E8] text-white font-bold text-xs hover:bg-[#08165B] dark:hover:bg-blue-600 shadow-sm shadow-blue-500/20"
                 >
-                  Update Profile
+                  {t('admin', 'updateProfileBtn', 'Update Profile')}
                 </button>
               </div>
             </form>
 
             {/* Change Password Sub-form */}
             <form onSubmit={handleChangePassword} className="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800">
-              <div className="font-black text-[#08165B] dark:text-white text-sm">Change Admin Password</div>
+              <div className="font-black text-[#08165B] dark:text-white text-sm">
+                {t('admin', 'changePasswordTitle', 'Change Admin Password')}
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">Current Password</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
+                    {t('admin', 'currentPasswordLabel', 'Current Password')}
+                  </label>
                   <input
                     type="password"
                     placeholder="••••••••"
@@ -306,7 +332,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">New Password</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
+                    {t('admin', 'newPasswordLabel', 'New Password')}
+                  </label>
                   <input
                     type="password"
                     placeholder="••••••••"
@@ -316,7 +344,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">Confirm New Password</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
+                    {t('admin', 'confirmPasswordLabel', 'Confirm New Password')}
+                  </label>
                   <input
                     type="password"
                     placeholder="••••••••"
@@ -332,7 +362,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                   type="submit"
                   className="px-5 py-2.5 rounded-xl bg-slate-800 dark:bg-slate-700 text-white font-bold text-xs hover:bg-black dark:hover:bg-slate-600 transition-colors"
                 >
-                  Change Password
+                  {t('admin', 'changePasswordBtn', 'Change Password')}
                 </button>
               </div>
             </form>
@@ -343,8 +373,12 @@ export default function SettingsScreen({ navigateTo, showToast }) {
         {activeTab === 'security' && (
           <form onSubmit={handleSaveSecurity} className="p-6 sm:p-8 space-y-6 text-xs sm:text-sm">
             <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">Security, 2FA & Session Policies</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">Protect administrative access and patient confidentiality.</p>
+              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                {t('admin', 'securityPoliciesTitle', 'Security, 2FA & Session Policies')}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">
+                {t('admin', 'securityPoliciesSubtitle', 'Protect administrative access and patient confidentiality.')}
+              </p>
             </div>
 
             <div className="space-y-4">
@@ -356,8 +390,12 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                   className="w-4 h-4 accent-[#1677E8] mt-0.5"
                 />
                 <div>
-                  <div className="font-bold text-[#08165B] dark:text-white">Two-Factor Authentication (2FA) for Admins</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-300">Requires authenticator app code on every admin login.</div>
+                  <div className="font-bold text-[#08165B] dark:text-white">
+                    {t('admin', 'twoFactorAuthLabel', 'Two-Factor Authentication (2FA) for Admins')}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-300">
+                    {t('admin', 'twoFactorAuthDesc', 'Requires authenticator app code on every admin login.')}
+                  </div>
                 </div>
               </label>
 
@@ -369,14 +407,20 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                   className="w-4 h-4 accent-[#1677E8] mt-0.5"
                 />
                 <div>
-                  <div className="font-bold text-[#08165B] dark:text-white">Enforce Complex Password Standard</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-300">Requires 12+ characters, symbols, numbers, and mixed case.</div>
+                  <div className="font-bold text-[#08165B] dark:text-white">
+                    {t('admin', 'enforcePasswordStandard', 'Enforce Complex Password Standard')}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-300">
+                    {t('admin', 'enforcePasswordDesc', 'Requires 12+ characters, symbols, numbers, and mixed case.')}
+                  </div>
                 </div>
               </label>
 
               <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0B132B] border border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">Session Idle Timeout (Minutes)</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
+                    {t('admin', 'sessionTimeoutLabel', 'Session Idle Timeout (Minutes)')}
+                  </label>
                   <input
                     type="number"
                     value={securityForm.sessionTimeoutMins}
@@ -385,7 +429,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">Password Expiration (Days)</label>
+                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-1.5">
+                    {t('admin', 'passwordExpLabel', 'Password Expiration (Days)')}
+                  </label>
                   <input
                     type="number"
                     value={securityForm.passwordExpirationDays}
@@ -401,7 +447,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                 type="submit"
                 className="px-6 py-2.5 rounded-xl bg-[#1677E8] text-white font-bold text-xs hover:bg-[#08165B] dark:hover:bg-blue-600 transition-colors shadow-sm shadow-blue-500/20"
               >
-                Save Security Policies
+                {t('admin', 'saveSecurityPoliciesBtn', 'Save Security Policies')}
               </button>
             </div>
           </form>
@@ -411,15 +457,23 @@ export default function SettingsScreen({ navigateTo, showToast }) {
         {activeTab === 'notifications' && (
           <form onSubmit={handleSaveNotifications} className="p-6 sm:p-8 space-y-6 text-xs sm:text-sm">
             <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">Alerts & System Notifications</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">Control notifications for vector indexing, error alerts, and signups.</p>
+              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                {t('admin', 'alertsTitle', 'Alerts & System Notifications')}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">
+                {t('admin', 'alertsSubtitle', 'Control notifications for vector indexing, error alerts, and signups.')}
+              </p>
             </div>
 
             <div className="space-y-3">
               <label className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-[#0B132B] hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <div>
-                  <div className="font-bold text-[#08165B] dark:text-white">Document Processing & Indexing Alerts</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-300">Notifies when document chunking and vector indexing complete.</div>
+                  <div className="font-bold text-[#08165B] dark:text-white">
+                    {t('admin', 'docProcessingAlerts', 'Document Processing & Indexing Alerts')}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-300">
+                    {t('admin', 'docProcessingAlertsDesc', 'Notifies when document chunking and vector indexing complete.')}
+                  </div>
                 </div>
                 <input
                   type="checkbox"
@@ -431,8 +485,12 @@ export default function SettingsScreen({ navigateTo, showToast }) {
 
               <label className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-[#0B132B] hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <div>
-                  <div className="font-bold text-[#08165B] dark:text-white">System Health & Latency Warnings</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-300">Alerts when LLM latency exceeds 500 ms or connection degrades.</div>
+                  <div className="font-bold text-[#08165B] dark:text-white">
+                    {t('admin', 'systemHealthAlerts', 'System Health & Latency Warnings')}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-300">
+                    {t('admin', 'systemHealthAlertsDesc', 'Alerts when LLM latency exceeds 500 ms or connection degrades.')}
+                  </div>
                 </div>
                 <input
                   type="checkbox"
@@ -444,8 +502,12 @@ export default function SettingsScreen({ navigateTo, showToast }) {
 
               <label className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-[#0B132B] hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <div>
-                  <div className="font-bold text-[#08165B] dark:text-white">User Registration Alerts</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-300">Notifies when new consumer or practitioner accounts register.</div>
+                  <div className="font-bold text-[#08165B] dark:text-white">
+                    {t('admin', 'userRegAlerts', 'User Registration Alerts')}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-300">
+                    {t('admin', 'userRegAlertsDesc', 'Notifies when new consumer or practitioner accounts register.')}
+                  </div>
                 </div>
                 <input
                   type="checkbox"
@@ -461,7 +523,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                 type="submit"
                 className="px-6 py-2.5 rounded-xl bg-[#1677E8] text-white font-bold text-xs hover:bg-[#08165B] dark:hover:bg-blue-600 transition-colors shadow-sm shadow-blue-500/20"
               >
-                Save Notifications
+                {t('admin', 'saveNotificationsBtn', 'Save Notifications')}
               </button>
             </div>
           </form>
@@ -471,13 +533,19 @@ export default function SettingsScreen({ navigateTo, showToast }) {
         {activeTab === 'system' && (
           <form onSubmit={handleSaveSystem} className="p-6 sm:p-8 space-y-6 text-xs sm:text-sm">
             <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">System Limits & Processing Preferences</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">Fine-tune chunk boundaries and upload file constraints.</p>
+              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                {t('admin', 'systemLimitsTitle', 'System Limits & Processing Preferences')}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">
+                {t('admin', 'systemLimitsSubtitle', 'Fine-tune chunk boundaries and upload file constraints.')}
+              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Max Document File Size (MB)</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'maxFileSizeLabel', 'Max Document File Size (MB)')}
+                </label>
                 <input
                   type="number"
                   value={systemForm.maxFileSizeMB}
@@ -487,7 +555,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Chunk Size (Tokens)</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'chunkSizeLabel', 'Chunk Size (Tokens)')}
+                </label>
                 <input
                   type="number"
                   value={systemForm.chunkSizeTokens}
@@ -497,7 +567,9 @@ export default function SettingsScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Chunk Overlap (Tokens)</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'chunkOverlapLabel', 'Chunk Overlap (Tokens)')}
+                </label>
                 <input
                   type="number"
                   value={systemForm.chunkOverlapTokens}
@@ -507,14 +579,20 @@ export default function SettingsScreen({ navigateTo, showToast }) {
               </div>
 
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">Maintenance Mode</label>
+                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  {t('admin', 'maintenanceModeLabel', 'Maintenance Mode')}
+                </label>
                 <select
                   value={systemForm.maintenanceMode ? 'true' : 'false'}
                   onChange={(e) => setSystemForm({ ...systemForm, maintenanceMode: e.target.value === 'true' })}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-800 dark:text-white outline-none"
                 >
-                  <option value="false" className="dark:bg-[#0B132B] dark:text-white">Disabled (Normal Operations)</option>
-                  <option value="true" className="dark:bg-[#0B132B] dark:text-white">Enabled (Read-Only Mode)</option>
+                  <option value="false" className="dark:bg-[#0B132B] dark:text-white">
+                    {t('admin', 'maintDisabled', 'Disabled (Normal Operations)')}
+                  </option>
+                  <option value="true" className="dark:bg-[#0B132B] dark:text-white">
+                    {t('admin', 'maintEnabled', 'Enabled (Read-Only Mode)')}
+                  </option>
                 </select>
               </div>
             </div>
@@ -524,7 +602,7 @@ export default function SettingsScreen({ navigateTo, showToast }) {
                 type="submit"
                 className="px-6 py-2.5 rounded-xl bg-[#1677E8] text-white font-bold text-xs hover:bg-[#08165B] dark:hover:bg-blue-600 transition-colors shadow-sm shadow-blue-500/20"
               >
-                Save System Limits
+                {t('admin', 'saveSystemLimitsBtn', 'Save System Limits')}
               </button>
             </div>
           </form>
