@@ -262,7 +262,28 @@ function MainRouter() {
 
       {/* Main Page Layout */}
       <main>
-        {/* 1. Hero: brand, heading, description and complete doctor banner */}
+        {/* 1. Multilingual Demo Videos (All 6 Languages: EN, HI, MR, GU, BN, AR) */}
+        <DemoVideoSection />
+
+        {/* 2. Explore by Category: 10 clinical pill buttons with inline chatboard */}
+        <ExploreCategories onSelectCategory={handleSelectCategory} />
+
+        {/* 3. How It Works */}
+        <HowItWorksSection onStartAssessment={() => navigate('/user/dashboard')} />
+
+        {/* 4. Doctor Profile */}
+        <DoctorProfileSection onStartAssessment={() => navigate('/user/dashboard')} />
+
+        {/* 5. Risk Levels: Red, Yellow & Green Clinical Triage */}
+        <RiskLevelsSection onStartAssessment={() => navigate('/user/dashboard')} />
+
+        {/* 6. Privacy / DPDP: Digital Personal Data Protection Act 2023 */}
+        <DPDPSection />
+
+        {/* 7. FAQ: Frequently Asked Questions */}
+        <FAQSection />
+
+        {/* 8. Hero: brand, heading, description and complete doctor banner (Moved right above Feedback) */}
         <Hero
           onStartAssessment={() => navigate('/user/dashboard')}
           onExploreCategories={() => {
@@ -272,28 +293,7 @@ function MainRouter() {
           onOpenDisclaimer={() => setShowDisclaimer(true)}
         />
 
-        {/* 2. Explore by Category: 10 clinical pill buttons with inline chatboard */}
-        <ExploreCategories onSelectCategory={handleSelectCategory} />
-
-        {/* 5. How It Works */}
-        <HowItWorksSection onStartAssessment={() => navigate('/user/dashboard')} />
-
-        {/* 7. Doctor Profile */}
-        <DoctorProfileSection onStartAssessment={() => navigate('/user/dashboard')} />
-
-        {/* 8. Multilingual Demo Videos (All 6 Languages: EN, HI, MR, GU, BN, AR) */}
-        <DemoVideoSection />
-
-        {/* 9. Risk Levels: Red, Yellow & Green Clinical Triage */}
-        <RiskLevelsSection onStartAssessment={() => navigate('/user/dashboard')} />
-
-        {/* 10. Privacy / DPDP: Digital Personal Data Protection Act 2023 */}
-        <DPDPSection />
-
-        {/* 11. FAQ: Frequently Asked Questions */}
-        <FAQSection />
-
-        {/* 12. Feedback and Footer */}
+        {/* 9. Feedback and Footer */}
         <div id="patient-feedback" className="py-12 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <FeedbackCard />
         </div>
