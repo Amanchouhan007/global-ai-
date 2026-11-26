@@ -44,6 +44,7 @@ export default function FloatingHealthChatbot({
   inline = false,
   compact = false,
   onClose = null,
+  onMessageSent = null,
   onStartAssessment,
   customQuickPrompts = null,
   externalPrompt = null
@@ -340,6 +341,9 @@ export default function FloatingHealthChatbot({
     setInputMessage('');
     setAttachedFile(null);
     setIsTyping(true);
+    if (onMessageSent) {
+      onMessageSent(messageText);
+    }
 
     // Simulate smart clinical evaluation response using verified knowledge base
     setTimeout(() => {

@@ -70,14 +70,14 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
   };
 
   return (
-    <div className={`h-screen w-full flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900 transition-colors duration-200 overflow-hidden ${
-      isDark ? 'bg-[#080D1A] text-slate-100' : 'bg-[#F2F7FF] text-[#08165B]'
+    <div className={`h-screen w-full flex flex-col font-sans selection:bg-emerald-100 selection:text-emerald-900 transition-colors duration-200 overflow-hidden ${
+      isDark ? 'bg-[#080D1A] text-slate-100' : 'bg-[#F8FAF9] text-slate-900'
     }`}>
       
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 bg-[#08165B] text-white px-5 py-3 rounded-2xl shadow-2xl border border-blue-400/30 text-xs sm:text-sm font-semibold animate-in fade-in slide-in-from-bottom-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 bg-[#0D5C3A] text-white px-5 py-3 rounded-2xl shadow-2xl border border-emerald-400/30 text-xs sm:text-sm font-semibold animate-in fade-in slide-in-from-bottom-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -88,14 +88,14 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
         {/* SIDEBAR (Desktop) - Fixed/Stuck, will never scroll with dashboard */}
         <aside
           className={`hidden md:flex flex-col border-r transition-all duration-300 z-30 shrink-0 h-full select-none ${
-            isDark ? 'bg-[#0B132B] border-slate-800' : 'bg-white border-[#D6E6FA]'
+            isDark ? 'bg-[#0B132B] border-slate-800' : 'bg-white border-emerald-200/80'
           } ${
             sidebarCollapsed ? 'w-[76px]' : 'w-[260px]'
           }`}
         >
           {/* Sidebar Header: Logo & Branding */}
           <div className={`h-[68px] px-4 border-b flex items-center justify-between ${
-            isDark ? 'border-slate-800' : 'border-[#D6E6FA]'
+            isDark ? 'border-slate-800' : 'border-emerald-200/80'
           }`}>
             <div
               onClick={() => handleNavClick('dashboard')}
@@ -120,7 +120,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
               className={`p-1 rounded-lg transition-colors ${
-                isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-400 hover:text-[#08165B] hover:bg-slate-100'
+                isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-400 hover:text-[#0D5C3A] hover:bg-emerald-50'
               }`}
               title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
@@ -146,10 +146,10 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                   title={sidebarCollapsed ? item.label : undefined}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-bold transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-[#1677E8] text-white shadow-md shadow-blue-500/20'
+                      ? 'bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] text-white shadow-md shadow-emerald-900/15'
                       : isDark
                         ? 'text-slate-300 hover:text-white hover:bg-slate-800/80'
-                        : 'text-slate-600 hover:text-[#08165B] hover:bg-blue-50/70'
+                        : 'text-slate-600 hover:text-[#0D5C3A] hover:bg-[#EBF5F0]/70'
                   }`}
                 >
                   <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : isDark ? 'text-slate-400' : 'text-slate-500'}`} />
@@ -166,7 +166,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
 
           {/* Sidebar Footer: Theme Toggle & Admin Profile Dropdown */}
           <div className={`p-3 border-t space-y-2 ${
-            isDark ? 'border-slate-800 bg-[#0B132B]' : 'border-[#D6E6FA] bg-slate-50/50'
+            isDark ? 'border-slate-800 bg-[#0B132B]' : 'border-emerald-200/80 bg-[#F8FAF9]'
           }`}>
             {/* Theme Toggle in Admin Sidebar */}
             <div className="pb-1">
@@ -176,7 +176,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
             {/* AI Status Badge */}
             {!sidebarCollapsed && (
               <div className={`px-3 py-2 rounded-xl flex items-center justify-between text-xs border ${
-                isDark ? 'bg-slate-800/60 border-slate-700/80' : 'bg-blue-50 border-blue-100'
+                isDark ? 'bg-slate-800/60 border-slate-700/80' : 'bg-[#EBF5F0] border-emerald-200/80'
               }`}>
                 <div className="flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
@@ -187,7 +187,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                     {t('admin', 'aiReadiness', 'AI Readiness')}
                   </span>
                 </div>
-                <span className="text-[11px] font-black text-[#1677E8]">{aiReadinessScore}%</span>
+                <span className="text-[11px] font-black text-[#0D5C3A] dark:text-emerald-400">{aiReadinessScore}%</span>
               </div>
             )}
 
@@ -198,17 +198,17 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                 className={`w-full flex items-center gap-2.5 p-2 rounded-xl border transition-all cursor-pointer text-left ${
                   isDark
                     ? 'hover:bg-slate-800 border-transparent hover:border-slate-700 text-slate-200'
-                    : 'hover:bg-white border-transparent hover:border-[#D6E6FA] text-slate-800'
+                    : 'hover:bg-white border-transparent hover:border-emerald-200 text-slate-800'
                 } ${
                   sidebarCollapsed ? 'justify-center' : ''
                 }`}
               >
-                <div className="w-8 h-8 rounded-full bg-[#08165B] border border-blue-400/30 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
+                <div className="w-8 h-8 rounded-full bg-[#0D5C3A] border border-emerald-400/30 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
                   {settings.profile.avatar}
                 </div>
                 {!sidebarCollapsed && (
                   <div className="flex-1 min-w-0">
-                    <div className={`text-xs font-black truncate ${isDark ? 'text-white' : 'text-[#08165B]'}`}>
+                    <div className={`text-xs font-black truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {settings.profile.name}
                     </div>
                     <div className="text-[10px] text-slate-400 font-medium truncate">
@@ -224,10 +224,10 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
               {/* Profile Dropdown */}
               {profileDropdownOpen && (
                 <div className={`absolute bottom-full left-0 mb-2 w-56 rounded-xl shadow-xl border p-1.5 z-50 text-xs ${
-                  isDark ? 'bg-[#0F1C36] border-slate-700 text-slate-100' : 'bg-white border-[#D6E6FA] text-slate-800'
+                  isDark ? 'bg-[#0F1C36] border-slate-700 text-slate-100' : 'bg-white border-emerald-200 text-slate-800'
                 }`}>
                   <div className={`px-3 py-2 border-b ${isDark ? 'border-slate-700/80' : 'border-slate-100'}`}>
-                    <div className={`font-bold ${isDark ? 'text-white' : 'text-[#08165B]'}`}>{settings.profile.name}</div>
+                    <div className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{settings.profile.name}</div>
                     <div className="text-[11px] text-slate-400 truncate">{settings.profile.email}</div>
                   </div>
                   <button
@@ -236,7 +236,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                       handleNavClick('settings');
                     }}
                     className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left ${
-                      isDark ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-700 hover:bg-blue-50'
+                      isDark ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-700 hover:bg-[#EBF5F0]'
                     }`}
                   >
                     <User className="w-3.5 h-3.5 text-slate-400" />
@@ -247,7 +247,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                       setProfileDropdownOpen(false);
                       onExitToLanding();
                     }}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-[#1677E8] hover:bg-blue-500/10 rounded-lg text-left font-bold"
+                    className="w-full flex items-center gap-2 px-3 py-2 text-[#0D5C3A] dark:text-emerald-400 hover:bg-emerald-500/10 rounded-lg text-left font-bold"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                     <span>{t('admin', 'backToWebsite', 'Back to Live Website')}</span>
@@ -282,13 +282,13 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
               isDark ? 'bg-[#0B132B] text-slate-100' : 'bg-white text-slate-800'
             }`}>
               <div className={`h-[64px] px-4 border-b flex items-center justify-between ${
-                isDark ? 'border-slate-800' : 'border-[#D6E6FA]'
+                isDark ? 'border-slate-800' : 'border-emerald-200/80'
               }`}>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#1677E8] text-white flex items-center justify-center font-bold">
+                  <div className="w-8 h-8 rounded-lg bg-[#0D5C3A] text-white flex items-center justify-center font-bold">
                     GH
                   </div>
-                  <span className={`font-black ${isDark ? 'text-white' : 'text-[#08165B]'}`}>GlobalHealthAI</span>
+                  <span className={`font-black ${isDark ? 'text-white' : 'text-[#0D5C3A]'}`}>GlobalHealthAI</span>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
@@ -308,10 +308,10 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                       onClick={() => handleNavClick(item.id)}
                       className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-bold transition-all ${
                         isActive
-                          ? 'bg-[#1677E8] text-white shadow-md'
+                          ? 'bg-[#0D5C3A] text-white shadow-md'
                           : isDark
                             ? 'text-slate-300 hover:bg-slate-800'
-                            : 'text-slate-700 hover:bg-blue-50'
+                            : 'text-slate-700 hover:bg-[#EBF5F0]'
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -322,7 +322,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
               </div>
 
               <div className={`p-4 border-t space-y-2.5 ${
-                isDark ? 'border-slate-800 bg-[#0B132B]' : 'border-[#D6E6FA] bg-slate-50'
+                isDark ? 'border-slate-800 bg-[#0B132B]' : 'border-emerald-200/80 bg-[#F8FAF9]'
               }`}>
                 <ThemeToggle variant="sidebar" />
                 <button
@@ -331,7 +331,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                     onExitToLanding();
                   }}
                   className={`w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl font-bold text-xs ${
-                    isDark ? 'bg-slate-800 text-blue-400' : 'bg-blue-50 text-[#1677E8]'
+                    isDark ? 'bg-slate-800 text-emerald-400' : 'bg-[#EBF5F0] text-[#0D5C3A]'
                   }`}
                 >
                   <ExternalLink className="w-4 h-4" />
@@ -358,14 +358,14 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
           
           {/* Top Admin Header Bar */}
           <header className={`h-[68px] border-b px-4 sm:px-6 lg:px-8 flex items-center justify-between shrink-0 z-20 shadow-2xs transition-colors duration-200 ${
-            isDark ? 'bg-[#0B132B] border-slate-800' : 'bg-white border-[#D6E6FA]'
+            isDark ? 'bg-[#0B132B] border-slate-800' : 'bg-white border-emerald-200/80'
           }`}>
             {/* Left: Mobile hamburger + Screen title */}
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 className={`md:hidden p-2 -ml-1 transition-colors ${
-                  isDark ? 'text-slate-300 hover:text-white' : 'text-slate-500 hover:text-[#08165B]'
+                  isDark ? 'text-slate-300 hover:text-white' : 'text-slate-500 hover:text-[#0D5C3A]'
                 }`}
               >
                 <Menu className="w-5 h-5" />
@@ -373,7 +373,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
 
               <div>
                 <h1 className={`text-base sm:text-lg font-black capitalize ${
-                  isDark ? 'text-white' : 'text-[#08165B]'
+                  isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   {navigationItems.find(i => i.id === activeScreen)?.label || t('admin', 'dashboard', 'Dashboard')}
                 </h1>
@@ -397,8 +397,8 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                 onClick={onExitToLanding}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition-colors cursor-pointer ${
                   isDark
-                    ? 'border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-blue-400'
-                    : 'border-blue-200 hover:border-blue-400 bg-blue-50/50 hover:bg-blue-100/60 text-[#1677E8]'
+                    ? 'border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-emerald-400'
+                    : 'border-emerald-200 hover:border-[#0D5C3A] bg-[#EBF5F0] hover:bg-emerald-100/80 text-[#0D5C3A]'
                 }`}
                 title="Return to public landing page"
               >
@@ -413,29 +413,29 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                   className={`p-2 rounded-full border transition-colors relative cursor-pointer ${
                     isDark
                       ? 'border-slate-700 hover:bg-slate-800 text-slate-300'
-                      : 'border-[#D6E6FA] hover:bg-blue-50 text-slate-600'
+                      : 'border-emerald-200 hover:bg-[#EBF5F0] text-slate-600'
                   }`}
                 >
                   <Bell className="w-4 h-4" />
-                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#F04B0A]"></span>
+                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#D81B60]"></span>
                 </button>
 
                 {notificationOpen && (
                   <div className={`absolute right-0 mt-2 w-80 rounded-2xl shadow-xl border p-3 z-50 text-xs ${
-                    isDark ? 'bg-[#0F1C36] border-slate-700 text-slate-100' : 'bg-white border-[#D6E6FA]'
+                    isDark ? 'bg-[#0F1C36] border-slate-700 text-slate-100' : 'bg-white border-emerald-200'
                   }`}>
                     <div className={`flex items-center justify-between pb-2 border-b ${
                       isDark ? 'border-slate-700' : 'border-slate-100'
                     }`}>
-                      <span className={`font-bold ${isDark ? 'text-white' : 'text-[#08165B]'}`}>{t('admin', 'sysNotifications', 'System Notifications')}</span>
+                      <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{t('admin', 'sysNotifications', 'System Notifications')}</span>
                       <span className="text-[10px] text-slate-400">{t('admin', 'liveStream', 'Live stream')}</span>
                     </div>
                     <div className="py-2 space-y-2 max-h-60 overflow-y-auto">
                       {activities.slice(0, 4).map((act) => (
                         <div key={act.id} className={`p-2 rounded-xl ${
-                          isDark ? 'bg-slate-800/70 text-slate-200' : 'bg-slate-50 text-slate-800'
+                          isDark ? 'bg-slate-800/70 text-slate-200' : 'bg-[#F8FAF9] text-slate-800'
                         }`}>
-                          <div className={`font-bold ${isDark ? 'text-blue-300' : 'text-[#08165B]'}`}>{act.action}</div>
+                          <div className={`font-bold ${isDark ? 'text-emerald-300' : 'text-[#0D5C3A]'}`}>{act.action}</div>
                           <div className={`text-[11px] truncate ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>{act.target}</div>
                           <div className="text-[9px] text-slate-400 mt-0.5">{act.timestamp}</div>
                         </div>
@@ -443,7 +443,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                     </div>
                     <button
                       onClick={() => setNotificationOpen(false)}
-                      className="w-full text-center py-1 text-[11px] font-bold text-[#1677E8] hover:underline"
+                      className="w-full text-center py-1 text-[11px] font-bold text-[#0D5C3A] dark:text-emerald-400 hover:underline"
                     >
                       {t('admin', 'closeNotifications', 'Close Notifications')}
                     </button>
@@ -455,12 +455,12 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
               <div className={`hidden lg:flex items-center gap-2 pl-2 border-l ${
                 isDark ? 'border-slate-700' : 'border-slate-200'
               }`}>
-                <div className="w-7 h-7 rounded-full bg-[#08165B] border border-blue-400/40 text-white font-bold text-[11px] flex items-center justify-center">
+                <div className="w-7 h-7 rounded-full bg-[#0D5C3A] border border-emerald-400/40 text-white font-bold text-[11px] flex items-center justify-center">
                   {settings.profile.avatar}
                 </div>
                 <div className="text-left text-xs leading-none">
-                  <div className={`font-bold ${isDark ? 'text-white' : 'text-[#08165B]'}`}>{settings.profile.name}</div>
-                  <div className="text-[10px] text-emerald-400 font-semibold mt-0.5">● {t('admin', 'adminRole', 'Admin')}</div>
+                  <div className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{settings.profile.name}</div>
+                  <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold mt-0.5">● {t('admin', 'adminRole', 'Admin')}</div>
                 </div>
               </div>
 

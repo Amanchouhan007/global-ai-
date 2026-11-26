@@ -110,9 +110,9 @@ export default function MinimalSidebar({
                 onNewChat();
                 if (mobileOpen) setMobileOpen(false);
               }}
-              className="w-full py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-[#08165B] to-[#122b7a] dark:from-[#1677E8] dark:to-[#08165B] hover:from-[#122b7a] hover:to-[#08165B] text-white text-xs font-semibold shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group border border-blue-900/30"
+              className="w-full py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] hover:from-[#0A4D30] hover:to-[#083F27] text-white text-xs font-semibold shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group border border-emerald-900/20"
             >
-              <Plus className="w-4 h-4 text-[#F04B0A] dark:text-white group-hover:rotate-90 transition-transform stroke-[2.5]" />
+              <Plus className="w-4 h-4 text-emerald-200 group-hover:rotate-90 transition-transform stroke-[2.5]" />
               <span>{t('dashboard', 'newChat', 'New Assessment Chat')}</span>
             </button>
           </div>
@@ -127,11 +127,11 @@ export default function MinimalSidebar({
               }}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
                 activeView === 'library'
-                  ? 'bg-blue-50 dark:bg-slate-800 text-[#08165B] dark:text-blue-300 font-bold border border-blue-200/80 dark:border-slate-700'
-                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-[#EBF5F0] dark:bg-slate-800 text-[#0D5C3A] dark:text-emerald-300 font-bold border border-emerald-200/80 dark:border-slate-700'
+                  : 'text-slate-600 dark:text-slate-300 hover:bg-emerald-50/60 dark:hover:bg-slate-800 hover:text-[#0D5C3A] dark:hover:text-white'
               }`}
             >
-              <BookMarked className="w-4 h-4 text-[#1677E8]" />
+              <BookMarked className="w-4 h-4 text-[#0D5C3A] dark:text-emerald-400" />
               <span>{t('dashboard', 'library', 'Library')}</span>
               <span className="ml-auto text-[10px] text-slate-400 dark:text-slate-500 font-medium">{t('dashboard', 'savedReports', 'Saved Reports')}</span>
             </button>
@@ -143,7 +143,7 @@ export default function MinimalSidebar({
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 {t('dashboard', 'healthFocus', 'Health Focus Categories')}
               </span>
-              <span className="text-[10px] font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-slate-800 px-1.5 py-0.5 rounded-full font-mono">
+              <span className="text-[10px] font-bold text-[#0D5C3A] dark:text-emerald-300 bg-[#EBF5F0] dark:bg-slate-800 border border-emerald-200/70 dark:border-slate-700 px-1.5 py-0.5 rounded-full font-mono">
                 12
               </span>
             </div>
@@ -156,15 +156,15 @@ export default function MinimalSidebar({
               aria-expanded={categoriesDropdownOpen}
               className={`w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-xl border transition-all cursor-pointer text-left ${
                 categoriesDropdownOpen
-                  ? 'bg-white dark:bg-slate-800 border-[#1677E8] shadow-xs ring-2 ring-blue-500/10'
-                  : 'bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-100/80 dark:hover:bg-slate-800 border-slate-200/90 dark:border-slate-700 text-slate-800 dark:text-slate-200'
+                  ? 'bg-white dark:bg-slate-800 border-[#0D5C3A] shadow-xs ring-2 ring-emerald-500/15'
+                  : 'bg-[#F4F9F6] dark:bg-slate-800/80 hover:bg-[#EBF5F0] dark:hover:bg-slate-800 border-emerald-200/80 dark:border-slate-700 text-slate-800 dark:text-slate-200'
               }`}
             >
               <div className="flex items-center gap-2.5 min-w-0">
                 {activeCategory ? (
                   <span className={`w-2.5 h-2.5 rounded-full ${activeCategory.dotColor} shrink-0`} />
                 ) : (
-                  <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#1677E8] to-[#F04B0A] shrink-0" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#0D5C3A] to-[#D81B60] shrink-0" />
                 )}
                 <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
                   {activeCategory ? getCategoryName(activeCategory) : t('dashboard', 'allCategories', 'All Health Categories')}
@@ -172,14 +172,14 @@ export default function MinimalSidebar({
               </div>
               <ChevronDown
                 className={`w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 transition-transform duration-200 ${
-                  categoriesDropdownOpen ? 'rotate-180 text-[#1677E8]' : ''
+                  categoriesDropdownOpen ? 'rotate-180 text-[#0D5C3A]' : ''
                 }`}
               />
             </button>
 
             {/* Dropdown Menu Overlay */}
             {categoriesDropdownOpen && (
-              <div className="absolute left-3.5 right-3.5 top-[calc(100%-2px)] z-50 bg-white dark:bg-[#0F1C36] border border-blue-200/80 dark:border-slate-700 rounded-xl shadow-xl p-1.5 max-h-72 overflow-y-auto space-y-0.5 animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute left-3.5 right-3.5 top-[calc(100%-2px)] z-50 bg-white dark:bg-[#0F1C36] border border-emerald-200/80 dark:border-slate-700 rounded-xl shadow-xl p-1.5 max-h-72 overflow-y-auto space-y-0.5 animate-in fade-in zoom-in-95 duration-150">
                 {/* Option 1: All Categories (General Triage Mode) */}
                 <button
                   type="button"
@@ -190,16 +190,16 @@ export default function MinimalSidebar({
                   }}
                   className={`w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
                     !activeCategory && activeView === 'workspace'
-                      ? 'bg-blue-50 dark:bg-blue-900/40 text-[#08165B] dark:text-blue-200 font-bold border border-blue-200/70 dark:border-blue-700/60'
-                      : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                      ? 'bg-[#EBF5F0] dark:bg-emerald-950/50 text-[#0D5C3A] dark:text-emerald-200 font-bold border border-emerald-200/70 dark:border-emerald-800/60'
+                      : 'text-slate-600 dark:text-slate-300 hover:bg-emerald-50/50 dark:hover:bg-slate-800 hover:text-[#0D5C3A] dark:hover:text-white'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#1677E8] to-[#F04B0A] shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#0D5C3A] to-[#D81B60] shrink-0" />
                     <span className="truncate font-semibold">{t('dashboard', 'allCategories', 'All Categories (General Triage)')}</span>
                   </div>
                   {!activeCategory && activeView === 'workspace' && (
-                    <Check className="w-3.5 h-3.5 text-[#1677E8] shrink-0 stroke-[2.5]" />
+                    <Check className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0 stroke-[2.5]" />
                   )}
                 </button>
 
@@ -220,8 +220,8 @@ export default function MinimalSidebar({
                       }}
                       className={`w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
                         isSelected
-                          ? 'bg-blue-50 dark:bg-blue-900/40 text-[#08165B] dark:text-blue-200 font-semibold border border-blue-200/70 dark:border-blue-700/60'
-                          : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                          ? 'bg-[#EBF5F0] dark:bg-emerald-950/50 text-[#0D5C3A] dark:text-emerald-200 font-semibold border border-emerald-200/70 dark:border-emerald-800/60'
+                          : 'text-slate-600 dark:text-slate-300 hover:bg-emerald-50/50 dark:hover:bg-slate-800 hover:text-[#0D5C3A] dark:hover:text-white'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
@@ -230,7 +230,7 @@ export default function MinimalSidebar({
                       </div>
 
                       {isSelected && (
-                        <Check className="w-3.5 h-3.5 text-[#1677E8] shrink-0 stroke-[2.5]" />
+                        <Check className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0 stroke-[2.5]" />
                       )}
                     </button>
                   );
