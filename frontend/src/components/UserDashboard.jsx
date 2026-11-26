@@ -312,43 +312,43 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
             <div className="max-w-4xl w-full mx-auto space-y-4 sm:space-y-6 py-1 xs:py-2 sm:py-4 overflow-hidden">
 
               {/* Landing Page Clinical Trust Ribbon */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 xs:gap-2.5 p-1.5 xs:p-2 rounded-2xl bg-white/70 dark:bg-[#0B132B]/80 backdrop-blur-xs border border-blue-100 dark:border-slate-800 shadow-2xs w-full max-w-full overflow-hidden">
-                <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-blue-50/60 dark:bg-slate-800/60 border border-blue-100/60 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
-                  <div className="w-6 h-6 rounded-lg bg-orange-100 dark:bg-orange-950/60 text-[#F04B0A] flex items-center justify-center shrink-0">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 xs:gap-2.5 p-1.5 xs:p-2 rounded-2xl bg-white/80 dark:bg-[#0B132B]/80 backdrop-blur-xs border border-emerald-200/80 dark:border-slate-800 shadow-2xs w-full max-w-full overflow-hidden">
+                <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-[#F4F9F6] dark:bg-slate-800/60 border border-emerald-200/70 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
+                  <div className="w-6 h-6 rounded-lg bg-[#FCE7F3] dark:bg-rose-950/60 text-[#D81B60] flex items-center justify-center shrink-0">
                     <Shield className="w-3.5 h-3.5" />
                   </div>
                   <div className="leading-tight min-w-0 flex-1 overflow-hidden">
-                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">{t('dashboard', 'ribbonSafety', 'Safety First')}</span>
+                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-slate-900 dark:text-white truncate">{t('dashboard', 'ribbonSafety', 'Safety First')}</span>
                     <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">{t('dashboard', 'ribbonSafetySub', 'Red-Flag Triage')}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-blue-50/60 dark:bg-slate-800/60 border border-blue-100/60 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
-                  <div className="w-6 h-6 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-[#1677E8] flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-[#F4F9F6] dark:bg-slate-800/60 border border-emerald-200/70 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
+                  <div className="w-6 h-6 rounded-lg bg-[#EBF5F0] dark:bg-emerald-950/60 text-[#0D5C3A] flex items-center justify-center shrink-0">
                     <BookOpen className="w-3.5 h-3.5" />
                   </div>
                   <div className="leading-tight min-w-0 flex-1 overflow-hidden">
-                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">{t('dashboard', 'ribbonCards', '1,000 Cards')}</span>
+                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-slate-900 dark:text-white truncate">{t('dashboard', 'ribbonCards', '1,000 Cards')}</span>
                     <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">{t('dashboard', 'ribbonCardsSub', 'Clinically Reviewed')}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-blue-50/60 dark:bg-slate-800/60 border border-blue-100/60 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
+                <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-[#F4F9F6] dark:bg-slate-800/60 border border-emerald-200/70 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
                   <div className="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
                     <Target className="w-3.5 h-3.5" />
                   </div>
                   <div className="leading-tight min-w-0 flex-1 overflow-hidden">
-                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">{t('dashboard', 'ribbonAnswers', 'Specific Answers')}</span>
+                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-slate-900 dark:text-white truncate">{t('dashboard', 'ribbonAnswers', 'Specific Answers')}</span>
                     <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">{t('dashboard', 'ribbonAnswersSub', '≈ 100 Words Guidance')}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-blue-50/60 dark:bg-slate-800/60 border border-blue-100/60 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
-                  <div className="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-1.5 xs:gap-2 px-2 xs:px-3 py-1.5 rounded-xl bg-[#F4F9F6] dark:bg-slate-800/60 border border-emerald-200/70 dark:border-slate-700/60 text-left min-w-0 overflow-hidden">
+                  <div className="w-6 h-6 rounded-lg bg-teal-100 dark:bg-teal-950/60 text-[#0F766E] dark:text-teal-400 flex items-center justify-center shrink-0">
                     <UserCheck className="w-3.5 h-3.5" />
                   </div>
                   <div className="leading-tight min-w-0 flex-1 overflow-hidden">
-                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-[#08165B] dark:text-white truncate">{t('dashboard', 'ribbonDoctor', 'Dr P. Madhukar')}</span>
+                    <span className="block text-[10.5px] xs:text-[11px] font-bold text-slate-900 dark:text-white truncate">{t('dashboard', 'ribbonDoctor', 'Dr P. Madhukar')}</span>
                     <span className="text-[9.5px] xs:text-[10px] text-slate-500 dark:text-slate-400 truncate block">{t('dashboard', 'ribbonDoctorSub', '38 Yrs Clinical Practice')}</span>
                   </div>
                 </div>
@@ -423,7 +423,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
               <div className="pt-1">
                 <div className="flex items-center justify-between px-1 mb-2.5">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[#08165B] dark:text-white uppercase tracking-wider">
+                    <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                       {t('dashboard', 'healthFocus', 'Explore by Health Focus')}
                     </span>
                     <span className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -434,7 +434,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                     <button
                       type="button"
                       onClick={() => setActiveCategory(null)}
-                      className="text-xs text-[#1677E8] dark:text-blue-400 hover:text-[#08165B] dark:hover:text-white font-bold transition-colors cursor-pointer hover:underline"
+                      className="text-xs text-[#0D5C3A] dark:text-emerald-400 hover:text-[#0A4D30] dark:hover:text-white font-bold transition-colors cursor-pointer hover:underline"
                     >
                       ✕ {t('dashboard', 'allCategories', 'Clear Focus (General)')}
                     </button>
@@ -450,15 +450,15 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                         type="button"
                         onClick={() => setActiveCategory(cat)}
                         className={`p-2.5 xs:p-3 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between min-w-0 overflow-hidden ${isCurrent
-                          ? 'bg-white dark:bg-[#0F1C36] border-[#1677E8] ring-2 ring-blue-500/20 shadow-sm'
-                          : 'bg-white dark:bg-[#0B132B]/80 hover:bg-blue-50/40 dark:hover:bg-[#0F1C36] border-blue-100 dark:border-slate-800 hover:border-blue-300 dark:hover:border-slate-700 shadow-2xs hover:shadow-xs'
+                          ? 'bg-white dark:bg-[#0F1C36] border-[#0D5C3A] ring-2 ring-emerald-500/20 shadow-sm'
+                          : 'bg-white dark:bg-[#0B132B]/80 hover:bg-[#EBF5F0]/60 dark:hover:bg-[#0F1C36] border-emerald-200/80 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-slate-700 shadow-2xs hover:shadow-xs'
                           }`}
                       >
                         <div className="flex items-center justify-between mb-1.5">
                           <span className={`w-2.5 h-2.5 rounded-full ${cat.dotColor} shrink-0`} />
-                          {isCurrent && <Check className="w-3.5 h-3.5 text-[#1677E8] stroke-[2.5]" />}
+                          {isCurrent && <Check className="w-3.5 h-3.5 text-[#0D5C3A] stroke-[2.5]" />}
                         </div>
-                        <span className="text-xs font-bold text-[#08165B] dark:text-white leading-tight group-hover:text-[#1677E8] dark:group-hover:text-blue-400 transition-colors truncate">
+                        <span className="text-xs font-bold text-slate-900 dark:text-white leading-tight group-hover:text-[#0D5C3A] dark:group-hover:text-emerald-400 transition-colors truncate">
                           {getCategoryName(cat)}
                         </span>
                         <span className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
@@ -473,7 +473,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
               {/* Clinically Reviewed Health Card Output (Dynamic 1,000+ Cards System matching Client Reference Image 2) */}
               <div className="pt-2 space-y-3">
                 <div className="flex items-center justify-between px-1">
-                  <span className="text-xs font-bold text-[#08165B] dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
                     <Stethoscope className="w-4 h-4 text-emerald-600" />
                     <span>{t('dashboard', 'cardEngineDetails', 'Clinical Guidance • Health Card Details (1,000+ Cards Engine)')}</span>
                   </span>

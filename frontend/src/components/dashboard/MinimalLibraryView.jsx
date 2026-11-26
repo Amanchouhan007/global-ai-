@@ -91,7 +91,7 @@ export default function MinimalLibraryView({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by topic, symptom, or summary..."
-          className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#0F1C36] border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#1677E8] shadow-2xs"
+          className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#0F1C36] border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#0D5C3A] shadow-2xs"
         />
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" />
       </div>
@@ -132,7 +132,7 @@ export default function MinimalLibraryView({
                       </span>
                     </div>
 
-                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#1677E8] transition-colors truncate">
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#0D5C3A] transition-colors truncate">
                       {rep.title}
                     </h4>
 
@@ -213,7 +213,7 @@ export default function MinimalLibraryView({
                     </span>
                   </div>
 
-                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#1677E8] transition-colors truncate">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#0D5C3A] transition-colors truncate">
                     {conv.title}
                   </h4>
 
@@ -222,7 +222,7 @@ export default function MinimalLibraryView({
                   </p>
                 </div>
 
-                <div className="flex items-center gap-1.5 shrink-0 text-xs font-semibold text-[#1677E8] group-hover:translate-x-1 transition-transform">
+                <div className="flex items-center gap-1.5 shrink-0 text-xs font-semibold text-[#0D5C3A] group-hover:translate-x-1 transition-transform">
                   <span>Open</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>

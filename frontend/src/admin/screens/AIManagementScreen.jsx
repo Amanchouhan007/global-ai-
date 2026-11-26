@@ -147,10 +147,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
     <div className="space-y-6 animate-in fade-in duration-300">
       
       {/* Header Banner */}
-      <div className="bg-white dark:bg-[#0F1C36] rounded-2xl p-6 border border-[#D6E6FA] dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#0F1C36] rounded-2xl p-6 border border-emerald-200/80 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-black text-[#08165B] dark:text-white flex items-center gap-2">
-            <Cpu className="w-6 h-6 text-[#1677E8] dark:text-blue-400" />
+          <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <Cpu className="w-6 h-6 text-[#0D5C3A] dark:text-emerald-400" />
             <span>{t('admin', 'aiTitle', 'AI Knowledge & Model Management')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 font-medium mt-1">
@@ -159,7 +159,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/50 text-[#1677E8] dark:text-blue-300 border border-blue-200 dark:border-blue-700/60 text-xs font-bold flex items-center gap-1.5">
+          <span className="px-3 py-1 rounded-full bg-[#EBF5F0] dark:bg-emerald-900/50 text-[#0D5C3A] dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700/60 text-xs font-bold flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             {aiConfig.model}
           </span>
@@ -167,16 +167,16 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
       </div>
 
       {/* INTERNAL TABS: EXACTLY 5 TABS */}
-      <div className="bg-white dark:bg-[#0F1C36] rounded-2xl border border-[#D6E6FA] dark:border-slate-800 shadow-xs overflow-hidden">
+      <div className="bg-white dark:bg-[#0F1C36] rounded-2xl border border-emerald-200/80 dark:border-slate-800 shadow-xs overflow-hidden">
         
         {/* Tab Buttons Bar */}
-        <div className="flex border-b border-[#D6E6FA] dark:border-slate-800 overflow-x-auto bg-[#F2F7FF]/50 dark:bg-[#080D1A] text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300">
+        <div className="flex border-b border-emerald-200/80 dark:border-slate-800 overflow-x-auto bg-[#F4F9F6]/60 dark:bg-[#080D1A] text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300">
           <button
             onClick={() => setActiveTab('model')}
             className={`py-3.5 px-4 sm:px-6 flex items-center gap-2 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
               activeTab === 'model'
-                ? 'border-[#1677E8] text-[#1677E8] dark:text-blue-400 bg-white dark:bg-[#0F1C36]'
-                : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#08165B] dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/40'
+                ? 'border-[#0D5C3A] text-[#0D5C3A] dark:text-emerald-400 bg-white dark:bg-[#0F1C36]'
+                : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#0A4D30] dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/40'
             }`}
           >
             <Cpu className="w-4 h-4" />
@@ -187,8 +187,8 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             onClick={() => setActiveTab('knowledge')}
             className={`py-3.5 px-4 sm:px-6 flex items-center gap-2 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
               activeTab === 'knowledge'
-                ? 'border-[#1677E8] text-[#1677E8] dark:text-blue-400 bg-white dark:bg-[#0F1C36]'
-                : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#08165B] dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/40'
+                ? 'border-[#0D5C3A] text-[#0D5C3A] dark:text-emerald-400 bg-white dark:bg-[#0F1C36]'
+                : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#0A4D30] dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/40'
             }`}
           >
             <Database className="w-4 h-4" />
@@ -199,8 +199,8 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             onClick={() => setActiveTab('retrieval')}
             className={`py-3.5 px-4 sm:px-6 flex items-center gap-2 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
               activeTab === 'retrieval'
-                ? 'border-[#1677E8] text-[#1677E8] dark:text-blue-400 bg-white dark:bg-[#0F1C36]'
-                : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#08165B] dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/40'
+                ? 'border-[#0D5C3A] text-[#0D5C3A] dark:text-emerald-400 bg-white dark:bg-[#0F1C36]'
+                : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#0A4D30] dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/40'
             }`}
           >
             <Sliders className="w-4 h-4" />
@@ -211,8 +211,8 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             onClick={() => setActiveTab('safety')}
             className={`py-3.5 px-4 sm:px-6 flex items-center gap-2 border-b-2 whitespace-nowrap transition-all cursor-pointer ${
               activeTab === 'safety'
-                ? 'border-[#1677E8] text-[#1677E8] dark:text-blue-400 bg-white dark:bg-[#0F1C36]'
-                : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#08165B] dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/40'
+                ? 'border-[#0D5C3A] text-[#0D5C3A] dark:text-emerald-400 bg-white dark:bg-[#0F1C36]'
+                : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#0A4D30] dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/40'
             }`}
           >
             <ShieldCheck className="w-4 h-4" />
@@ -236,7 +236,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         {activeTab === 'model' && (
           <div className="p-6 sm:p-8 space-y-6">
             <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
                 {t('admin', 'llmProviderTuningTitle', 'LLM Provider & Parameter Tuning')}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
@@ -249,13 +249,13 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 
                 {/* Provider */}
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  <label className="block font-bold text-slate-900 dark:text-slate-200 mb-2">
                     {t('admin', 'aiProviderLabel', 'AI Provider')}
                   </label>
                   <select
                     value={modelForm.provider}
                     onChange={(e) => setModelForm({ ...modelForm, provider: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-medium text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 font-medium text-slate-900 dark:text-white bg-white dark:bg-[#0B132B] outline-none"
                   >
                     <option value="Google Gemini">Google Gemini</option>
                     <option value="OpenAI">OpenAI GPT-4</option>
@@ -266,13 +266,13 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
 
                 {/* Model Selection */}
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  <label className="block font-bold text-slate-900 dark:text-slate-200 mb-2">
                     {t('admin', 'modelSelectionLabel', 'Model Selection')}
                   </label>
                   <select
                     value={modelForm.model}
                     onChange={(e) => setModelForm({ ...modelForm, model: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-medium text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 font-medium text-slate-900 dark:text-white bg-white dark:bg-[#0B132B] outline-none"
                   >
                     <option value="Gemini 1.5 Pro (Healthcare Tuned)">Gemini 1.5 Pro (Healthcare Tuned)</option>
                     <option value="Gemini 1.5 Flash (Ultra Fast)">Gemini 1.5 Flash (Ultra Fast)</option>
@@ -284,10 +284,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               </div>
 
               {/* API Security Notice */}
-              <div className="p-4 rounded-xl bg-blue-50/50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-800 flex items-start gap-3 text-xs text-slate-600 dark:text-slate-300">
-                <Lock className="w-4 h-4 text-[#1677E8] shrink-0 mt-0.5" />
+              <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-emerald-950/40 border border-emerald-200/70 dark:border-emerald-800 flex items-start gap-3 text-xs text-slate-600 dark:text-slate-300">
+                <Lock className="w-4 h-4 text-[#0D5C3A] shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-bold text-[#08165B] dark:text-white">
+                  <div className="font-bold text-slate-900 dark:text-white">
                     {t('admin', 'apiSecurityTitle', 'API Keys Securely Managed Server-Side')}
                   </div>
                   <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
@@ -302,10 +302,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 {/* Temperature */}
                 <div className="space-y-2">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#08165B] dark:text-slate-200">
+                    <span className="text-slate-900 dark:text-slate-200">
                       {t('admin', 'tempSliderLabel', 'Temperature (Creativity vs Determinism)')}
                     </span>
-                    <span className="text-[#1677E8] font-black">{modelForm.temperature}</span>
+                    <span className="text-[#0D5C3A] font-black">{modelForm.temperature}</span>
                   </div>
                   <input
                     type="range"
@@ -314,7 +314,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     step="0.05"
                     value={modelForm.temperature}
                     onChange={(e) => setModelForm({ ...modelForm, temperature: parseFloat(e.target.value) })}
-                    className="w-full accent-[#1677E8]"
+                    className="w-full accent-[#0D5C3A]"
                   />
                   <div className="flex justify-between text-[10px] text-slate-400 font-medium">
                     <span>{t('admin', 'tempDeterministic', '0.0 (Deterministic / Medical Guidance)')}</span>
@@ -325,10 +325,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 {/* Max Tokens */}
                 <div className="space-y-2">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#08165B] dark:text-slate-200">
+                    <span className="text-slate-900 dark:text-slate-200">
                       {t('admin', 'maxTokensLabel', 'Maximum Output Tokens')}
                     </span>
-                    <span className="text-[#1677E8] font-black">{modelForm.maxOutputTokens} {t('admin', 'tokensUnit', 'tokens')}</span>
+                    <span className="text-[#0D5C3A] font-black">{modelForm.maxOutputTokens} {t('admin', 'tokensUnit', 'tokens')}</span>
                   </div>
                   <input
                     type="range"
@@ -337,7 +337,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     step="256"
                     value={modelForm.maxOutputTokens}
                     onChange={(e) => setModelForm({ ...modelForm, maxOutputTokens: parseInt(e.target.value) })}
-                    className="w-full accent-[#1677E8]"
+                    className="w-full accent-[#0D5C3A]"
                   />
                   <div className="flex justify-between text-[10px] text-slate-400 font-medium">
                     <span>512 {t('admin', 'tokensUnit', 'tokens')}</span>
@@ -353,7 +353,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                   type="button"
                   onClick={handleTestConnection}
                   disabled={testingConnection}
-                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-blue-200 dark:border-slate-700 hover:bg-blue-50 dark:hover:bg-slate-800 text-[#1677E8] dark:text-blue-400 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-emerald-200 dark:border-slate-700 hover:bg-[#EBF5F0] dark:hover:bg-slate-800 text-[#0D5C3A] dark:text-emerald-400 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {testingConnection ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Server className="w-4 h-4" />}
                   <span>{t('admin', 'testConnectionBtn', 'Test Connection')}</span>
@@ -361,7 +361,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-bold text-xs transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-bold text-xs transition-colors cursor-pointer"
                 >
                   {t('admin', 'saveModelConfigBtn', 'Save Model Configuration')}
                 </button>
@@ -389,7 +389,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
           <div className="p-6 sm:p-8 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
               <div>
-                <h3 className="text-base font-black text-[#08165B] dark:text-white">
+                <h3 className="text-base font-black text-slate-900 dark:text-white">
                   {t('admin', 'kbVectorStoreTitle', 'Knowledge Base & Vector Store')}
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
@@ -400,7 +400,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               <button
                 onClick={handleReindexKnowledgeBase}
                 disabled={reindexing}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-bold text-xs transition-colors cursor-pointer self-start sm:self-auto"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-bold text-xs transition-colors cursor-pointer self-start sm:self-auto"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${reindexing ? 'animate-spin' : ''}`} />
                 <span>{reindexing ? t('admin', 'reindexingChunksBtn', 'Reindexing Chunks...') : t('admin', 'reindexEntireKbBtn', 'Reindex Entire Knowledge Base')}</span>
@@ -409,25 +409,25 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
 
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800">
+              <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/80 dark:border-slate-800">
                 <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
                   {t('admin', 'totalIndexedDocs', 'Total Indexed Documents')}
                 </div>
-                <div className="text-2xl font-black text-[#08165B] dark:text-white mt-1">{totalDocuments}</div>
+                <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">{totalDocuments}</div>
               </div>
-              <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800">
+              <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/80 dark:border-slate-800">
                 <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
                   {t('admin', 'vectorizedChunksCount', 'Vectorized Chunks')}
                 </div>
-                <div className="text-2xl font-black text-[#1677E8] dark:text-blue-400 mt-1">{totalChunks}</div>
+                <div className="text-2xl font-black text-[#0D5C3A] dark:text-emerald-400 mt-1">{totalChunks}</div>
               </div>
-              <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800">
+              <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/80 dark:border-slate-800">
                 <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
                   {t('admin', 'indexedClinicalTopics', 'Indexed Clinical Topics')}
                 </div>
                 <div className="text-2xl font-black text-[#F04B0A] mt-1">{knowledgeTopicsCount}</div>
               </div>
-              <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-[#0B132B] border border-[#D6E6FA] dark:border-slate-800">
+              <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-[#0B132B] border border-emerald-200/80 dark:border-slate-800">
                 <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
                   {t('admin', 'lastSynced', 'Last Synced')}
                 </div>
@@ -440,7 +440,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
             {/* Document Chunk Inspector */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-xs text-[#08165B] dark:text-white">
+                <span className="font-bold text-xs text-slate-900 dark:text-white">
                   {t('admin', 'activeKnowledgeChunks', 'Active Knowledge Chunks')}
                 </span>
                 <input
@@ -448,23 +448,23 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                   placeholder={t('admin', 'filterChunksPlaceholder', 'Filter chunks...')}
                   value={chunkSearch}
                   onChange={(e) => setChunkSearch(e.target.value)}
-                  className="px-3 py-1.5 rounded-lg border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] text-[#08165B] dark:text-white text-xs outline-none w-48"
+                  className="px-3 py-1.5 rounded-lg border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] text-slate-900 dark:text-white text-xs outline-none w-48"
                 />
               </div>
 
-              <div className="border border-[#D6E6FA] dark:border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+              <div className="border border-emerald-200/80 dark:border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 text-xs">
                 {documents
                   .filter(d => !chunkSearch || d.title.toLowerCase().includes(chunkSearch.toLowerCase()))
                   .map((doc) => (
                     <div key={doc.id} className="p-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors flex items-start justify-between gap-3">
                       <div>
-                        <div className="font-bold text-[#08165B] dark:text-white">{doc.title}</div>
+                        <div className="font-bold text-slate-900 dark:text-white">{doc.title}</div>
                         <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5 line-clamp-1">
                           {doc.extractedTextSample}
                         </div>
                       </div>
                       <div className="text-right shrink-0">
-                        <span className="px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-[#1677E8] dark:text-blue-300 font-bold text-[10px]">
+                        <span className="px-2 py-0.5 rounded-full bg-[#EBF5F0] dark:bg-emerald-950/60 text-[#0D5C3A] dark:text-emerald-300 font-bold text-[10px]">
                           {doc.chunksCount} {t('admin', 'chunksLabel', 'chunks')}
                         </span>
                       </div>
@@ -479,7 +479,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         {activeTab === 'retrieval' && (
           <div className="p-6 sm:p-8 space-y-6">
             <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
                 {t('admin', 'ragRetrievalTitle', 'RAG Retrieval & Semantic Similarity')}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
@@ -493,10 +493,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 {/* Top-K Chunks */}
                 <div className="space-y-2">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#08165B] dark:text-slate-200">
+                    <span className="text-slate-900 dark:text-slate-200">
                       {t('admin', 'topKRetrievedChunks', 'Top-K Retrieved Chunks')}
                     </span>
-                    <span className="text-[#1677E8] font-black">{retrievalForm.topKChunks} {t('admin', 'chunksLabel', 'chunks')}</span>
+                    <span className="text-[#0D5C3A] font-black">{retrievalForm.topKChunks} {t('admin', 'chunksLabel', 'chunks')}</span>
                   </div>
                   <input
                     type="range"
@@ -505,7 +505,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     step="1"
                     value={retrievalForm.topKChunks}
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, topKChunks: parseInt(e.target.value) })}
-                    className="w-full accent-[#1677E8]"
+                    className="w-full accent-[#0D5C3A]"
                   />
                   <div className="text-[11px] text-slate-500 dark:text-slate-400">
                     {t('admin', 'topKDesc', 'Determines how many relevant text passages are fed into the LLM context prompt.')}
@@ -515,10 +515,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 {/* Similarity Threshold */}
                 <div className="space-y-2">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#08165B] dark:text-slate-200">
+                    <span className="text-slate-900 dark:text-slate-200">
                       {t('admin', 'cosineSimilarityThreshold', 'Cosine Similarity Threshold')}
                     </span>
-                    <span className="text-[#1677E8] font-black">{retrievalForm.similarityThreshold}</span>
+                    <span className="text-[#0D5C3A] font-black">{retrievalForm.similarityThreshold}</span>
                   </div>
                   <input
                     type="range"
@@ -527,7 +527,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     step="0.02"
                     value={retrievalForm.similarityThreshold}
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, similarityThreshold: parseFloat(e.target.value) })}
-                    className="w-full accent-[#1677E8]"
+                    className="w-full accent-[#0D5C3A]"
                   />
                   <div className="text-[11px] text-slate-500 dark:text-slate-400">
                     {t('admin', 'cosineSimilarityDesc', 'Chunks with vector similarity below this threshold are omitted to prevent irrelevant answers.')}
@@ -539,13 +539,13 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               {/* Retrieval Strategy & Context Window */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  <label className="block font-bold text-slate-900 dark:text-slate-200 mb-2">
                     {t('admin', 'retrievalStrategyLabel', 'Retrieval Strategy')}
                   </label>
                   <select
                     value={retrievalForm.retrievalStrategy}
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, retrievalStrategy: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-medium text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 font-medium text-slate-900 dark:text-white bg-white dark:bg-[#0B132B] outline-none"
                   >
                     <option value="Hybrid (Dense Vector + BM25 Lexical)">Hybrid (Dense Vector + BM25 Lexical)</option>
                     <option value="Pure Dense Vector Search">Pure Dense Vector Search</option>
@@ -554,13 +554,13 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                  <label className="block font-bold text-slate-900 dark:text-slate-200 mb-2">
                     {t('admin', 'contextWindowBudget', 'Context Window Budget')}
                   </label>
                   <select
                     value={retrievalForm.contextWindowTokens}
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, contextWindowTokens: parseInt(e.target.value) })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D6E6FA] dark:border-slate-700 font-medium text-[#08165B] dark:text-white bg-white dark:bg-[#0B132B] outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-emerald-200/80 dark:border-slate-700 font-medium text-slate-900 dark:text-white bg-white dark:bg-[#0B132B] outline-none"
                   >
                     <option value={4096}>4,096 Tokens</option>
                     <option value={8192}>8,192 Tokens</option>
@@ -576,9 +576,9 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     type="checkbox"
                     checked={retrievalForm.enableSourceCitations}
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, enableSourceCitations: e.target.checked })}
-                    className="w-4 h-4 accent-[#1677E8]"
+                    className="w-4 h-4 accent-[#0D5C3A]"
                   />
-                  <span className="font-bold text-[#08165B] dark:text-slate-200">
+                  <span className="font-bold text-slate-900 dark:text-slate-200">
                     {t('admin', 'enforceSourceCitations', 'Enforce Source Citations [Source: Document Title] in generated outputs')}
                   </span>
                 </label>
@@ -588,9 +588,9 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     type="checkbox"
                     checked={retrievalForm.showConfidenceScores}
                     onChange={(e) => setRetrievalForm({ ...retrievalForm, showConfidenceScores: e.target.checked })}
-                    className="w-4 h-4 accent-[#1677E8]"
+                    className="w-4 h-4 accent-[#0D5C3A]"
                   />
-                  <span className="font-bold text-[#08165B] dark:text-slate-200">
+                  <span className="font-bold text-slate-900 dark:text-slate-200">
                     {t('admin', 'showConfidenceScores', 'Compute and display grounding confidence score on every query')}
                   </span>
                 </label>
@@ -599,7 +599,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-bold text-xs transition-colors cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-bold text-xs transition-colors cursor-pointer"
                 >
                   {t('admin', 'saveRetrievalSettingsBtn', 'Save Retrieval Settings')}
                 </button>
@@ -612,7 +612,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
         {activeTab === 'safety' && (
           <div className="p-6 sm:p-8 space-y-6">
             <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="text-base font-black text-[#08165B] dark:text-white">
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
                 {t('admin', 'clinicalSafetyRulesTitle', 'Clinical Safety Rules & Guardrails')}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
@@ -624,29 +624,29 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               
               {/* System Instructions Editor */}
               <div>
-                <label className="block font-bold text-[#08165B] dark:text-slate-200 mb-2">
+                <label className="block font-bold text-slate-900 dark:text-slate-200 mb-2">
                   {t('admin', 'systemInstructionsLabel', 'System Instructions (Master Clinical Prompt)')}
                 </label>
                 <textarea
                   rows={8}
                   value={safetyForm.systemPrompt}
                   onChange={(e) => setSafetyForm({ ...safetyForm, systemPrompt: e.target.value })}
-                  className="w-full p-4 rounded-xl border border-[#D6E6FA] dark:border-slate-700 bg-white dark:bg-[#0B132B] font-mono text-xs text-slate-800 dark:text-slate-200 leading-relaxed outline-none focus:border-[#1677E8]"
+                  className="w-full p-4 rounded-xl border border-emerald-200/80 dark:border-slate-700 bg-white dark:bg-[#0B132B] font-mono text-xs text-slate-800 dark:text-slate-200 leading-relaxed outline-none focus:border-[#0D5C3A]"
                 ></textarea>
               </div>
 
               {/* Guardrails Checkboxes */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-800">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-2xl bg-[#F4F9F6] dark:bg-emerald-950/40 border border-emerald-200/70 dark:border-emerald-800">
                 
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={safetyForm.noDiagnosisRule}
                     onChange={(e) => setSafetyForm({ ...safetyForm, noDiagnosisRule: e.target.checked })}
-                    className="w-4 h-4 accent-[#1677E8] mt-0.5"
+                    className="w-4 h-4 accent-[#0D5C3A] mt-0.5"
                   />
                   <div>
-                    <div className="font-black text-[#08165B] dark:text-white">
+                    <div className="font-black text-slate-900 dark:text-white">
                       {t('admin', 'noDiagnosisRuleTitle', 'No Confirmed Diagnosis Rule')}
                     </div>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -660,10 +660,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     type="checkbox"
                     checked={safetyForm.noPrescriptionRule}
                     onChange={(e) => setSafetyForm({ ...safetyForm, noPrescriptionRule: e.target.checked })}
-                    className="w-4 h-4 accent-[#1677E8] mt-0.5"
+                    className="w-4 h-4 accent-[#0D5C3A] mt-0.5"
                   />
                   <div>
-                    <div className="font-black text-[#08165B] dark:text-white">
+                    <div className="font-black text-slate-900 dark:text-white">
                       {t('admin', 'noPrescriptionRuleTitle', 'No Prescription Rule')}
                     </div>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -677,10 +677,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     type="checkbox"
                     checked={safetyForm.emergencyEscalationRule}
                     onChange={(e) => setSafetyForm({ ...safetyForm, emergencyEscalationRule: e.target.checked })}
-                    className="w-4 h-4 accent-[#1677E8] mt-0.5"
+                    className="w-4 h-4 accent-[#0D5C3A] mt-0.5"
                   />
                   <div>
-                    <div className="font-black text-[#08165B] dark:text-white">
+                    <div className="font-black text-slate-900 dark:text-white">
                       {t('admin', 'emergencyEscalationTitle', 'Emergency Red-Flag Escalation')}
                     </div>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -694,10 +694,10 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     type="checkbox"
                     checked={safetyForm.uncertaintyDisclosure}
                     onChange={(e) => setSafetyForm({ ...safetyForm, uncertaintyDisclosure: e.target.checked })}
-                    className="w-4 h-4 accent-[#1677E8] mt-0.5"
+                    className="w-4 h-4 accent-[#0D5C3A] mt-0.5"
                   />
                   <div>
-                    <div className="font-black text-[#08165B] dark:text-white">
+                    <div className="font-black text-slate-900 dark:text-white">
                       {t('admin', 'uncertaintyDisclosureTitle', 'Uncertainty & Limitation Transparency')}
                     </div>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -711,7 +711,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
               <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-bold text-xs transition-colors cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-bold text-xs transition-colors cursor-pointer"
                 >
                   {t('admin', 'saveSafetyInstructionsBtn', 'Save Safety Instructions')}
                 </button>
@@ -750,7 +750,7 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                   <button
                     key={i}
                     onClick={() => setPlaygroundQuery(q)}
-                    className="text-left px-3 py-1.5 rounded-lg border border-[#D6E6FA] dark:border-slate-700 bg-slate-50 dark:bg-[#0B132B] hover:bg-blue-50 dark:hover:bg-slate-800 text-[11px] text-slate-700 dark:text-slate-200 font-medium transition-colors cursor-pointer"
+                    className="text-left px-3 py-1.5 rounded-lg border border-emerald-200/80 dark:border-slate-700 bg-slate-50 dark:bg-[#0B132B] hover:bg-[#EBF5F0] dark:hover:bg-slate-800 text-[11px] text-slate-700 dark:text-slate-200 font-medium transition-colors cursor-pointer"
                   >
                     {q}
                   </button>
@@ -766,13 +766,13 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                   value={playgroundQuery}
                   onChange={(e) => setPlaygroundQuery(e.target.value)}
                   placeholder="Enter a health or medical query (e.g. 'What are safe next steps for high blood pressure?')..."
-                  className="flex-1 px-4 py-3 rounded-xl border border-[#D6E6FA] text-xs sm:text-sm font-medium outline-none focus:border-[#1677E8]"
+                  className="flex-1 px-4 py-3 rounded-xl border border-emerald-200/80 text-xs sm:text-sm font-medium outline-none focus:border-[#0D5C3A]"
                 />
 
                 <select
                   value={playgroundLang}
                   onChange={(e) => setPlaygroundLang(e.target.value)}
-                  className="px-3 py-2.5 rounded-xl border border-[#D6E6FA] text-xs font-bold text-[#08165B] bg-white outline-none"
+                  className="px-3 py-2.5 rounded-xl border border-emerald-200/80 text-xs font-bold text-slate-900 bg-white outline-none"
                 >
                   <option value="English">English</option>
                   <option value="Hindi">Hindi (हिंदी)</option>
@@ -801,13 +801,13 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                     <div className="text-[10px] font-bold text-slate-400">Grounding Score</div>
                     <div className="text-base font-black text-emerald-700 mt-0.5">{playgroundResult.metrics.groundingScore}</div>
                   </div>
-                  <div className="p-3 rounded-xl bg-blue-50 border border-blue-100">
+                  <div className="p-3 rounded-xl bg-[#EBF5F0] border border-emerald-200/70">
                     <div className="text-[10px] font-bold text-slate-400">Latency</div>
-                    <div className="text-base font-black text-[#1677E8] mt-0.5">{playgroundResult.metrics.latencyMs} ms</div>
+                    <div className="text-base font-black text-[#0D5C3A] mt-0.5">{playgroundResult.metrics.latencyMs} ms</div>
                   </div>
-                  <div className="p-3 rounded-xl bg-blue-50 border border-blue-100">
+                  <div className="p-3 rounded-xl bg-[#EBF5F0] border border-emerald-200/70">
                     <div className="text-[10px] font-bold text-slate-400">Tokens Consumed</div>
-                    <div className="text-base font-black text-[#08165B] mt-0.5">{playgroundResult.metrics.tokensUsed} tokens</div>
+                    <div className="text-base font-black text-slate-900 mt-0.5">{playgroundResult.metrics.tokensUsed} tokens</div>
                   </div>
                   <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-100">
                     <div className="text-[10px] font-bold text-slate-400">Clinical Safety</div>
@@ -816,32 +816,32 @@ export default function AIManagementScreen({ navigateTo, showToast }) {
                 </div>
 
                 {/* Generated Output */}
-                <div className="p-5 rounded-2xl bg-[#F2F7FF] border border-[#D6E6FA] space-y-3">
+                <div className="p-5 rounded-2xl bg-[#F4F9F6] border border-emerald-200/80 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-[#08165B] text-xs uppercase tracking-wider flex items-center gap-2">
+                    <span className="font-black text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-[#F04B0A]" />
                       <span>Evidence-Grounded Response</span>
                     </span>
                     <span className="text-[11px] font-bold text-slate-400">Model: {playgroundResult.metrics.modelUsed}</span>
                   </div>
 
-                  <div className="text-xs sm:text-sm text-slate-800 leading-relaxed whitespace-pre-line font-medium bg-white p-4 rounded-xl border border-blue-100">
+                  <div className="text-xs sm:text-sm text-slate-800 leading-relaxed whitespace-pre-line font-medium bg-white p-4 rounded-xl border border-emerald-200/70">
                     {playgroundResult.response}
                   </div>
                 </div>
 
                 {/* Retrieved Document Sources */}
                 <div className="space-y-2">
-                  <div className="text-xs font-bold text-[#08165B] uppercase tracking-wider">
+                  <div className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                     Retrieved Knowledge Sources ({playgroundResult.retrievedSources.length} Chunks Injected)
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     {playgroundResult.retrievedSources.map((source, idx) => (
-                      <div key={idx} className="p-3.5 rounded-xl bg-white border border-[#D6E6FA] space-y-1">
+                      <div key={idx} className="p-3.5 rounded-xl bg-white border border-emerald-200/80 space-y-1">
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-[#08165B] truncate">{source.doc.title}</span>
-                          <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#1677E8] font-bold text-[10px]">
+                          <span className="font-bold text-slate-900 truncate">{source.doc.title}</span>
+                          <span className="px-2 py-0.5 rounded-full bg-[#EBF5F0] text-[#0D5C3A] font-bold text-[10px]">
                             Score: {source.score}
                           </span>
                         </div>

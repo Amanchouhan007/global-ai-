@@ -153,10 +153,10 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
     <div className="space-y-6 animate-in fade-in duration-300">
       
       {/* Top Banner & Header */}
-      <div className="bg-white rounded-2xl p-6 border border-[#D6E6FA] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white rounded-2xl p-6 border border-emerald-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-black text-[#08165B] flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-[#1677E8]" />
+          <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-[#0D5C3A]" />
             <span>{t('admin', 'libraryTitle', 'Clinical Document Library')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
@@ -166,7 +166,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
 
         <button
           onClick={() => navigateTo('upload')}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1677E8] hover:bg-[#08165B] text-white font-black text-xs transition-colors self-start sm:self-auto shadow-xs cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-black text-xs transition-colors self-start sm:self-auto shadow-xs cursor-pointer"
         >
           <Upload className="w-4 h-4 stroke-[2.2]" />
           <span>{t('admin', 'upload', 'Upload New Document')}</span>
@@ -174,7 +174,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
       </div>
 
       {/* SEARCH & FILTERS BAR */}
-      <div className="bg-white rounded-2xl p-5 border border-[#D6E6FA] shadow-xs space-y-4">
+      <div className="bg-white rounded-2xl p-5 border border-emerald-200/80 shadow-xs space-y-4">
         
         {/* Search input + Sort */}
         <div className="flex flex-col md:flex-row items-center gap-3">
@@ -188,7 +188,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                 setCurrentPage(1);
               }}
               placeholder={t('admin', 'searchDocPlaceholder', 'Search documents by title, clinical tag, or keyword...')}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D6E6FA] focus:border-[#1677E8] outline-none text-xs sm:text-sm text-[#08165B] font-medium"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-emerald-200/80 focus:border-[#0D5C3A] outline-none text-xs sm:text-sm text-slate-900 font-medium"
             />
             {searchQuery && (
               <button
@@ -205,7 +205,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-3 py-2.5 rounded-xl border border-[#D6E6FA] text-xs font-bold text-[#08165B] bg-white outline-none w-full md:w-auto"
+              className="px-3 py-2.5 rounded-xl border border-emerald-200/80 text-xs font-bold text-slate-900 bg-white outline-none w-full md:w-auto"
             >
               <option value="newest">{t('admin', 'sortNewest', 'Newest Upload')}</option>
               <option value="oldest">{t('admin', 'sortOldest', 'Oldest Upload')}</option>
@@ -218,7 +218,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
         {/* Filter Pills / Dropdowns */}
         <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs">
           <div className="flex items-center gap-1.5 text-slate-400 font-bold mr-1">
-            <Filter className="w-3.5 h-3.5 text-[#1677E8]" />
+            <Filter className="w-3.5 h-3.5 text-[#0D5C3A]" />
             <span>{t('admin', 'filtersLabel', 'Filters:')}</span>
           </div>
 
@@ -226,7 +226,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
           <select
             value={selectedCategory}
             onChange={(e) => { setSelectedCategory(e.target.value); setCurrentPage(1); }}
-            className="px-2.5 py-1.5 rounded-lg border border-[#D6E6FA] font-medium text-slate-700 bg-slate-50 outline-none text-xs"
+            className="px-2.5 py-1.5 rounded-lg border border-emerald-200/80 font-medium text-slate-700 bg-slate-50 outline-none text-xs"
           >
             <option value="All">{t('admin', 'allCategories', 'All Categories')}</option>
             <option value="Health Guidelines">{t('admin', 'catHealthGuidelines', 'Health Guidelines')}</option>
@@ -240,7 +240,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
           <select
             value={selectedFileType}
             onChange={(e) => { setSelectedFileType(e.target.value); setCurrentPage(1); }}
-            className="px-2.5 py-1.5 rounded-lg border border-[#D6E6FA] font-medium text-slate-700 bg-slate-50 outline-none text-xs"
+            className="px-2.5 py-1.5 rounded-lg border border-emerald-200/80 font-medium text-slate-700 bg-slate-50 outline-none text-xs"
           >
             <option value="All">{t('admin', 'allTypes', 'All Types')}</option>
             <option value="PDF">PDF</option>
@@ -252,7 +252,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
           <select
             value={selectedLanguage}
             onChange={(e) => { setSelectedLanguage(e.target.value); setCurrentPage(1); }}
-            className="px-2.5 py-1.5 rounded-lg border border-[#D6E6FA] font-medium text-slate-700 bg-slate-50 outline-none text-xs"
+            className="px-2.5 py-1.5 rounded-lg border border-emerald-200/80 font-medium text-slate-700 bg-slate-50 outline-none text-xs"
           >
             <option value="All">{t('admin', 'allLanguages', 'All Languages')}</option>
             <option value="English">{t('admin', 'langEnglish', 'English')}</option>
@@ -265,7 +265,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
           <select
             value={selectedStatus}
             onChange={(e) => { setSelectedStatus(e.target.value); setCurrentPage(1); }}
-            className="px-2.5 py-1.5 rounded-lg border border-[#D6E6FA] font-medium text-slate-700 bg-slate-50 outline-none text-xs"
+            className="px-2.5 py-1.5 rounded-lg border border-emerald-200/80 font-medium text-slate-700 bg-slate-50 outline-none text-xs"
           >
             <option value="All">{t('admin', 'allStatuses', 'All Processing Statuses')}</option>
             <option value="Successfully Indexed">{t('admin', 'statusIndexed', 'Successfully Indexed')}</option>
@@ -294,11 +294,11 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
       </div>
 
       {/* DOCUMENT TABLE */}
-      <div className="bg-white rounded-2xl border border-[#D6E6FA] shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl border border-emerald-200/80 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#F2F7FF] border-b border-[#D6E6FA] text-[11px] font-black text-[#08165B] uppercase tracking-wider">
+              <tr className="bg-[#F4F9F6] border-b border-emerald-200/80 text-[11px] font-black text-slate-900 uppercase tracking-wider">
                 <th className="py-3.5 px-4 sm:px-6">{t('admin', 'colDocName', 'Document Name')}</th>
                 <th className="py-3.5 px-4">{t('admin', 'colCategory', 'Category')}</th>
                 <th className="py-3.5 px-3">{t('admin', 'colType', 'Type')}</th>
@@ -321,7 +321,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                 paginatedDocs.map((doc) => (
                   <tr
                     key={doc.id}
-                    className="hover:bg-blue-50/40 transition-colors group cursor-pointer"
+                    className="hover:bg-[#EBF5F0]/60 transition-colors group cursor-pointer"
                     onClick={() => {
                       setActiveDoc(doc);
                       setDrawerTab('original');
@@ -330,11 +330,11 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                     {/* Name & Size */}
                     <td className="py-3.5 px-4 sm:px-6 max-w-[280px]">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#1677E8] flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-[#EBF5F0] text-[#0D5C3A] flex items-center justify-center shrink-0">
                           <FileText className="w-4 h-4" />
                         </div>
                         <div className="truncate">
-                          <div className="font-bold text-[#08165B] truncate group-hover:text-[#1677E8]">
+                          <div className="font-bold text-slate-900 truncate group-hover:text-[#0D5C3A]">
                             {doc.title}
                           </div>
                           <div className="text-[10px] text-slate-400 flex items-center gap-1.5 mt-0.5">
@@ -348,7 +348,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
 
                     {/* Category */}
                     <td className="py-3.5 px-4 whitespace-nowrap">
-                      <span className="px-2.5 py-1 rounded-full bg-blue-50 text-[#08165B] font-bold text-[11px] border border-blue-100">
+                      <span className="px-2.5 py-1 rounded-full bg-[#EBF5F0] text-slate-900 font-bold text-[11px] border border-emerald-200/70">
                         {getCategoryName(doc.category)}
                       </span>
                     </td>
@@ -395,7 +395,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                             setDrawerTab('original');
                           }}
                           title="View Original Document"
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-[#1677E8] hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors"
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-[#0D5C3A] hover:bg-[#EBF5F0] dark:hover:bg-slate-800 transition-colors"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
@@ -403,7 +403,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                         <button
                           onClick={() => handleDownload(doc)}
                           title="Download Document"
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-[#08165B] hover:bg-slate-100 transition-colors"
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-[#0A4D30] hover:bg-slate-100 transition-colors"
                         >
                           <Download className="w-4 h-4" />
                         </button>
@@ -433,27 +433,27 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
         </div>
 
         {/* Pagination Bar */}
-        <div className="p-4 border-t border-[#D6E6FA] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        <div className="p-4 border-t border-emerald-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
           <div>
-            {t('admin', 'showingDocs', 'Showing')} <strong className="text-[#08165B]">{paginatedDocs.length}</strong> {t('admin', 'ofFilteredDocs', 'of')}{' '}
-            <strong className="text-[#08165B]">{filteredDocuments.length}</strong> {t('admin', 'filteredDocsSuffix', 'filtered documents')}
+            {t('admin', 'showingDocs', 'Showing')} <strong className="text-slate-900">{paginatedDocs.length}</strong> {t('admin', 'ofFilteredDocs', 'of')}{' '}
+            <strong className="text-slate-900">{filteredDocuments.length}</strong> {t('admin', 'filteredDocsSuffix', 'filtered documents')}
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="p-1.5 rounded-lg border border-[#D6E6FA] disabled:opacity-40 hover:bg-slate-50 cursor-pointer"
+              className="p-1.5 rounded-lg border border-emerald-200/80 disabled:opacity-40 hover:bg-slate-50 cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="font-bold text-[#08165B]">
+            <span className="font-bold text-slate-900">
               {t('admin', 'pageLabel', 'Page')} {currentPage} {t('admin', 'ofPageLabel', 'of')} {totalPages}
             </span>
             <button
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="p-1.5 rounded-lg border border-[#D6E6FA] disabled:opacity-40 hover:bg-slate-50 cursor-pointer"
+              className="p-1.5 rounded-lg border border-emerald-200/80 disabled:opacity-40 hover:bg-slate-50 cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -465,15 +465,15 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
       {/* DOCUMENT DETAILS MODAL / DRAWER */}
       {activeDoc && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className={`bg-white dark:bg-[#0F1C36] rounded-3xl w-full ${drawerTab === 'original' ? 'max-w-5xl' : 'max-w-2xl'} max-h-[92vh] flex flex-col shadow-2xl border border-[#D6E6FA] dark:border-slate-700 overflow-hidden transition-all duration-300`}>
+          <div className={`bg-white dark:bg-[#0F1C36] rounded-3xl w-full ${drawerTab === 'original' ? 'max-w-5xl' : 'max-w-2xl'} max-h-[92vh] flex flex-col shadow-2xl border border-emerald-200/80 dark:border-slate-700 overflow-hidden transition-all duration-300`}>
             
             {/* Modal Header */}
-            <div className="p-6 border-b border-[#D6E6FA] dark:border-slate-700 flex items-start justify-between bg-gradient-to-r from-blue-50/70 to-white dark:from-slate-800/80 dark:to-[#0F1C36]">
+            <div className="p-6 border-b border-emerald-200/80 dark:border-slate-700 flex items-start justify-between bg-gradient-to-r from-[#EBF5F0]/80 to-white dark:from-slate-800/80 dark:to-[#0F1C36]">
               <div className="pr-4">
-                <span className="px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-[#1677E8] dark:text-blue-300 border border-blue-200/50 dark:border-blue-700/50 font-black text-[10px] uppercase">
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-[#0D5C3A] dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-700/50 font-black text-[10px] uppercase">
                   {activeDoc.category}
                 </span>
-                <h3 className="text-lg font-black text-[#08165B] dark:text-white mt-1.5 leading-snug">
+                <h3 className="text-lg font-black text-slate-900 dark:text-white mt-1.5 leading-snug">
                   {activeDoc.title}
                 </h3>
                 <div className="text-xs text-slate-400 mt-1 flex items-center gap-2">
@@ -498,8 +498,8 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                 onClick={() => setDrawerTab('original')}
                 className={`py-3 px-3 border-b-2 transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                   drawerTab === 'original'
-                    ? 'border-[#1677E8] dark:border-blue-400 text-[#1677E8] dark:text-blue-400 font-black'
-                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#08165B] dark:hover:text-white'
+                    ? 'border-[#0D5C3A] dark:border-emerald-400 text-[#0D5C3A] dark:text-emerald-400 font-black'
+                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#0A4D30] dark:hover:text-white'
                 }`}
               >
                 <FileText className="w-3.5 h-3.5" />
@@ -512,8 +512,8 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                 onClick={() => setDrawerTab('overview')}
                 className={`py-3 px-3 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
                   drawerTab === 'overview'
-                    ? 'border-[#1677E8] dark:border-blue-400 text-[#1677E8] dark:text-blue-400 font-black'
-                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#08165B] dark:hover:text-white'
+                    ? 'border-[#0D5C3A] dark:border-emerald-400 text-[#0D5C3A] dark:text-emerald-400 font-black'
+                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#0A4D30] dark:hover:text-white'
                 }`}
               >
                 Overview & Summary
@@ -522,8 +522,8 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                 onClick={() => setDrawerTab('chunks')}
                 className={`py-3 px-3 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
                   drawerTab === 'chunks'
-                    ? 'border-[#1677E8] dark:border-blue-400 text-[#1677E8] dark:text-blue-400 font-black'
-                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#08165B] dark:hover:text-white'
+                    ? 'border-[#0D5C3A] dark:border-emerald-400 text-[#0D5C3A] dark:text-emerald-400 font-black'
+                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#0A4D30] dark:hover:text-white'
                 }`}
               >
                 Extracted Text & Chunks ({activeDoc.chunksCount})
@@ -532,8 +532,8 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                 onClick={() => setDrawerTab('metadata')}
                 className={`py-3 px-3 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
                   drawerTab === 'metadata'
-                    ? 'border-[#1677E8] dark:border-blue-400 text-[#1677E8] dark:text-blue-400 font-black'
-                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#08165B] dark:hover:text-white'
+                    ? 'border-[#0D5C3A] dark:border-emerald-400 text-[#0D5C3A] dark:text-emerald-400 font-black'
+                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-[#0A4D30] dark:hover:text-white'
                 }`}
               >
                 Metadata & Vectors
@@ -547,13 +547,13 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
               {drawerTab === 'original' && (
                 <div className="space-y-4">
                   {/* File Info & Action Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-blue-50/60 dark:bg-slate-900/90 border border-blue-100 dark:border-slate-800">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#F4F9F6] dark:bg-slate-900/90 border border-emerald-200/70 dark:border-slate-800">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#1677E8] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
+                      <div className="w-10 h-10 rounded-xl bg-[#0D5C3A] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
                         {activeDoc.fileType || 'PDF'}
                       </div>
                       <div>
-                        <div className="font-bold text-[#08165B] dark:text-white text-xs sm:text-sm truncate max-w-md">
+                        <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate max-w-md">
                           {activeDoc.originalFileName || `${activeDoc.title}.${(activeDoc.fileType || 'pdf').toLowerCase()}`}
                         </div>
                         <div className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-2 mt-0.5">
@@ -579,7 +579,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                         </button>
                       )}
 
-                      <label className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-[#1677E8] dark:text-blue-300 font-bold text-xs hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200/60 dark:border-blue-700/60 transition-colors cursor-pointer">
+                      <label className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#EBF5F0] dark:bg-emerald-900/40 text-[#0D5C3A] dark:text-emerald-300 font-bold text-xs hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200/60 dark:border-emerald-700/60 transition-colors cursor-pointer">
                         <Upload className="w-3.5 h-3.5" />
                         <span>{effectiveFileUrl ? 'Switch File' : 'Attach Local PDF'}</span>
                         <input
@@ -604,9 +604,9 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                   ) : (
                     /* Fallback Document Sheet / Manuscript Preview */
                     <div className="space-y-4">
-                      <div className="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-blue-900 dark:text-blue-200 text-xs flex items-center justify-between gap-3">
+                      <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-slate-900 dark:text-emerald-200 text-xs flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
-                          <Info className="w-4 h-4 shrink-0 text-[#1677E8] dark:text-blue-400" />
+                          <Info className="w-4 h-4 shrink-0 text-[#0D5C3A] dark:text-emerald-400" />
                           <span>
                             Complete verified clinical text & structure for this document is displayed below. You can also click <strong>"Attach Local PDF"</strong> above to embed the exact physical PDF file.
                           </span>
@@ -616,12 +616,12 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                       {/* Formatted Medical Manuscript Paper Sheet */}
                       <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6 text-slate-800 dark:text-slate-100 font-sans max-h-[500px] overflow-y-auto">
                         {/* Paper Header */}
-                        <div className="border-b-2 border-[#08165B] dark:border-blue-500 pb-4 flex items-start justify-between">
+                        <div className="border-b-2 border-[#0D5C3A] dark:border-emerald-500 pb-4 flex items-start justify-between">
                           <div>
-                            <div className="text-[10px] font-black uppercase tracking-widest text-[#1677E8] dark:text-blue-400">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-[#0D5C3A] dark:text-emerald-400">
                               GlobalHealthAI Clinical Knowledge Base • Verified Document
                             </div>
-                            <h2 className="text-base sm:text-lg font-black text-[#08165B] dark:text-white mt-1">
+                            <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1">
                               {activeDoc.title}
                             </h2>
                             <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -639,7 +639,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
 
                         {/* Section 1: Clinical Abstract */}
                         <div className="space-y-2">
-                          <div className="text-xs font-black uppercase tracking-wider text-[#08165B] dark:text-blue-400">
+                          <div className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-emerald-400">
                             1. Executive Abstract & Scope
                           </div>
                           <p className="text-xs leading-relaxed text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
@@ -649,7 +649,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
 
                         {/* Section 2: Primary Clinical Text */}
                         <div className="space-y-2">
-                          <div className="text-xs font-black uppercase tracking-wider text-[#08165B] dark:text-blue-400">
+                          <div className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-emerald-400">
                             2. Clinical Directives & Evidence Content
                           </div>
                           <div className="text-xs leading-relaxed text-slate-700 dark:text-slate-300 p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/60 font-mono text-[11px] whitespace-pre-wrap">
@@ -660,7 +660,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                         {/* Section 3: Indexing Verification Stamp */}
                         <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 gap-2">
                           <div>
-                            Reviewed by: <strong className="text-[#08165B] dark:text-white">Dr. Pratap Madhukar</strong> (Physician • Clinical Editor)
+                            Reviewed by: <strong className="text-slate-900 dark:text-white">Dr. Pratap Madhukar</strong> (Physician • Clinical Editor)
                           </div>
                           <div className="italic">
                             Indexed into {activeDoc.chunksCount} semantic vector chunks • 1536-dim Embedding Space
@@ -682,17 +682,17 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    <div className="p-3 rounded-xl bg-blue-50/50 dark:bg-slate-900/60 border border-blue-100 dark:border-slate-800">
+                    <div className="p-3 rounded-xl bg-[#F4F9F6] dark:bg-slate-900/60 border border-emerald-200/70 dark:border-slate-800">
                       <div className="text-[10px] font-bold text-slate-400">File Type & Size</div>
-                      <div className="font-black text-[#08165B] dark:text-white mt-0.5">{activeDoc.fileType} ({activeDoc.fileSize})</div>
+                      <div className="font-black text-slate-900 dark:text-white mt-0.5">{activeDoc.fileType} ({activeDoc.fileSize})</div>
                     </div>
-                    <div className="p-3 rounded-xl bg-blue-50/50 dark:bg-slate-900/60 border border-blue-100 dark:border-slate-800">
+                    <div className="p-3 rounded-xl bg-[#F4F9F6] dark:bg-slate-900/60 border border-emerald-200/70 dark:border-slate-800">
                       <div className="text-[10px] font-bold text-slate-400">Source Type</div>
-                      <div className="font-black text-[#08165B] dark:text-white mt-0.5">{activeDoc.sourceType}</div>
+                      <div className="font-black text-slate-900 dark:text-white mt-0.5">{activeDoc.sourceType}</div>
                     </div>
-                    <div className="p-3 rounded-xl bg-blue-50/50 dark:bg-slate-900/60 border border-blue-100 dark:border-slate-800">
+                    <div className="p-3 rounded-xl bg-[#F4F9F6] dark:bg-slate-900/60 border border-emerald-200/70 dark:border-slate-800">
                       <div className="text-[10px] font-bold text-slate-400">Language</div>
-                      <div className="font-black text-[#08165B] dark:text-white mt-0.5">{activeDoc.language}</div>
+                      <div className="font-black text-slate-900 dark:text-white mt-0.5">{activeDoc.language}</div>
                     </div>
                   </div>
 
@@ -716,10 +716,10 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                     <span className="font-bold text-emerald-500">Embedding Vector Status: 1536-dim Active</span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-[#F2F7FF] dark:bg-slate-900/90 border border-[#D6E6FA] dark:border-slate-700 space-y-2">
-                    <div className="flex items-center justify-between font-bold text-[11px] text-[#08165B] dark:text-white">
+                  <div className="p-4 rounded-xl bg-[#F4F9F6] dark:bg-slate-900/90 border border-emerald-200/80 dark:border-slate-700 space-y-2">
+                    <div className="flex items-center justify-between font-bold text-[11px] text-slate-900 dark:text-white">
                       <span>Chunk #1 [Characters 0-480]</span>
-                      <span className="text-[#1677E8] dark:text-blue-400 font-bold">Relevance Index: 0.94</span>
+                      <span className="text-[#0D5C3A] dark:text-emerald-400 font-bold">Relevance Index: 0.94</span>
                     </div>
                     <p className="text-slate-700 dark:text-slate-200 leading-relaxed font-mono text-[11px]">
                       {activeDoc.extractedTextSample}
@@ -738,15 +738,15 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                       <tr>
                         <td className="py-2 text-slate-400 font-bold w-1/3">Knowledge Authority</td>
-                        <td className="py-2 text-[#08165B] dark:text-white font-bold">{activeDoc.author || 'Admin Verified'}</td>
+                        <td className="py-2 text-slate-900 dark:text-white font-bold">{activeDoc.author || 'Admin Verified'}</td>
                       </tr>
                       <tr>
                         <td className="py-2 text-slate-400 font-bold">Vector Dimension</td>
-                        <td className="py-2 text-[#08165B] dark:text-white font-bold">1536 (OpenAI / Gemini Embeddings compatible)</td>
+                        <td className="py-2 text-slate-900 dark:text-white font-bold">1536 (OpenAI / Gemini Embeddings compatible)</td>
                       </tr>
                       <tr>
                         <td className="py-2 text-slate-400 font-bold">Document Version</td>
-                        <td className="py-2 text-[#08165B] dark:text-white font-bold">{activeDoc.version || '1.0'}</td>
+                        <td className="py-2 text-slate-900 dark:text-white font-bold">{activeDoc.version || '1.0'}</td>
                       </tr>
                       <tr>
                         <td className="py-2 text-slate-400 font-bold">Approval Status</td>
@@ -759,7 +759,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
             </div>
 
             {/* Modal Footer Actions (High Contrast in both Dark and Light Modes) */}
-            <div className="p-4 border-t border-[#D6E6FA] dark:border-slate-800 bg-slate-50 dark:bg-[#0B132B] flex items-center justify-between">
+            <div className="p-4 border-t border-emerald-200/80 dark:border-slate-800 bg-slate-50 dark:bg-[#0B132B] flex items-center justify-between">
               <button
                 onClick={() => handleDownload(activeDoc)}
                 className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold transition-colors cursor-pointer"
@@ -774,13 +774,13 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
                     handleReindex(activeDoc);
                     setActiveDoc(null);
                   }}
-                  className="px-3.5 py-2 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-[#1677E8] dark:text-blue-300 font-bold hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200/60 dark:border-blue-700/60 transition-colors cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-[#EBF5F0] dark:bg-emerald-900/40 text-[#0D5C3A] dark:text-emerald-300 font-bold hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200/60 dark:border-emerald-700/60 transition-colors cursor-pointer"
                 >
                   Reindex Document
                 </button>
                 <button
                   onClick={() => setActiveDoc(null)}
-                  className="px-4 py-2 rounded-xl bg-[#08165B] dark:bg-[#1677E8] text-white font-bold hover:bg-blue-900 dark:hover:bg-blue-600 transition-colors cursor-pointer shadow-xs"
+                  className="px-4 py-2 rounded-xl bg-[#0D5C3A] dark:bg-[#0D5C3A] text-white font-bold hover:bg-[#0A4D30] dark:hover:bg-emerald-700 transition-colors cursor-pointer shadow-xs"
                 >
                   Close
                 </button>
@@ -799,7 +799,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
               <Trash2 className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-base font-black text-[#08165B]">Delete Clinical Document?</h4>
+              <h4 className="text-base font-black text-slate-900">Delete Clinical Document?</h4>
               <p className="text-xs text-slate-500 font-medium mt-1 leading-relaxed">
                 Are you sure you want to delete <strong className="text-slate-800">"{docToDelete.title}"</strong>?
                 This will purge all {docToDelete.chunksCount} vectorized chunks from the active AI knowledge base.
