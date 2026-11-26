@@ -62,6 +62,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
   // View state: 'workspace' | 'library'
   const [activeView, setActiveView] = useState('workspace');
+  const [chatSessionId, setChatSessionId] = useState(1);
 
   // User input prompt state
   const [promptText, setPromptText] = useState(initialSymptom || '');
@@ -143,13 +144,20 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // "+ New Chat" CTA handler - resets category so it doesn't stay stuck on any single category
+  // "+ New Chat" CTA handler - resets category and starts a fresh new chat conversation
   const handleNewChat = () => {
     setActiveCategory(null);
     setActiveView('workspace');
     setPromptText('');
     setActiveSeverity('GREEN');
+    setChatSessionId((prev) => prev + 1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      const chatInput = document.querySelector('textarea, input[placeholder*="symptom"], input[type="text"]');
+      if (chatInput) {
+        chatInput.focus();
+      }
+    }, 150);
   };
 
   // Analyze Symptoms Submit
@@ -289,6 +297,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
         activeView={activeView}
         onOpenHelp={() => setHelpOpen(true)}
         onOpenProfile={() => setProfileOpen(true)}
+        onLogout={handleLogout}
         user={effectiveUser}
         mobileOpen={mobileSidebarOpen}
         setMobileOpen={setMobileSidebarOpen}
@@ -388,9 +397,9 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
               </div>
 
               {/* Hero-Themed Interactive Clinical Chatboard */}
-              <div className="w-full">
+              <div id="dashboard-clinical-chat" className="w-full">
                 <FloatingHealthChatbot
-                  key={`dashboard-chat-${activeCategory?.id || 'symptoms'}`}
+                  key={`dashboard-chat-${activeCategory?.id || 'symptoms'}-${chatSessionId}`}
                   inline={true}
                   compact={true}
                   user={effectiveUser}

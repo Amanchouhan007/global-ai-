@@ -26,6 +26,7 @@ export default function MinimalSidebar({
   activeView, // 'workspace' | 'library'
   onOpenHelp,
   onOpenProfile,
+  onLogout,
   user,
   mobileOpen,
   setMobileOpen,
@@ -81,11 +82,11 @@ export default function MinimalSidebar({
             : 'bg-white border-slate-200 text-slate-800'
         } ${mobileOpen ? 'translate-x-0 visible' : '-translate-x-full invisible lg:visible pointer-events-none lg:pointer-events-auto'} lg:translate-x-0`}
       >
-        {/* Top Header & Navigation */}
-        <div className="flex flex-col flex-1 min-h-0">
+        {/* Top Header & Pinned Controls (Always fixed at top, never scrolls away) */}
+        <div className="shrink-0 bg-white dark:bg-[#0B132B] z-10">
           
           {/* 1. Minimalist Brand Logo */}
-          <div className="h-16 flex items-center justify-between px-5 border-b border-slate-100 dark:border-slate-800 shrink-0">
+          <div className="h-16 flex items-center justify-between px-5 border-b border-slate-100 dark:border-slate-800">
             <div
               onClick={onNavigateHome}
               className="flex items-center gap-2.5 cursor-pointer group"
@@ -109,8 +110,8 @@ export default function MinimalSidebar({
             </button>
           </div>
 
-          {/* 2. Primary CTA: Sleek "+ New Assessment Chat" button */}
-          <div className="p-3.5 pb-2 shrink-0">
+          {/* 2. Primary CTA: Sleek "+ New Assessment Chat" button (Pinned at Top) */}
+          <div className="p-3.5 pb-2">
             <button
               type="button"
               onClick={() => {
@@ -125,7 +126,7 @@ export default function MinimalSidebar({
           </div>
 
           {/* 3. Main Menu: Library (Saved Reports & Past Chats) */}
-          <div className="px-3.5 py-1 shrink-0">
+          <div className="px-3.5 py-1">
             <button
               type="button"
               onClick={() => {
@@ -144,8 +145,8 @@ export default function MinimalSidebar({
             </button>
           </div>
 
-          {/* 4. Health Focus Categories (Compact Dropdown Selector) */}
-          <div ref={dropdownRef} className="px-3.5 py-3 relative">
+          {/* 4. Health Focus Categories Header & Trigger Button */}
+          <div ref={dropdownRef} className="px-3.5 pt-3 pb-1.5">
             <div className="flex items-center justify-between px-1 mb-2">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 {t('dashboard', 'healthFocus', 'Health Focus Categories')}
@@ -183,76 +184,76 @@ export default function MinimalSidebar({
                 }`}
               />
             </button>
-
-            {/* Dropdown Menu Overlay */}
-            {categoriesDropdownOpen && (
-              <div className="absolute left-3.5 right-3.5 top-[calc(100%-2px)] z-50 bg-white dark:bg-[#0F1C36] border border-emerald-200/80 dark:border-slate-700 rounded-xl shadow-xl p-1.5 max-h-[420px] overflow-y-auto space-y-0.5 animate-in fade-in zoom-in-95 duration-150">
-                {/* Option 1: All Categories (General Triage Mode) */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    onSelectCategory(null);
-                    setCategoriesDropdownOpen(false);
-                    if (mobileOpen) setMobileOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
-                    !activeCategory && activeView === 'workspace'
-                      ? 'bg-[#EBF5F0] dark:bg-emerald-950/50 text-[#0D5C3A] dark:text-emerald-200 font-bold border border-emerald-200/70 dark:border-emerald-800/60'
-                      : 'text-slate-600 dark:text-slate-300 hover:bg-emerald-50/50 dark:hover:bg-slate-800 hover:text-[#0D5C3A] dark:hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#0D5C3A] to-[#D81B60] shrink-0" />
-                    <span className="truncate font-semibold">{t('dashboard', 'allCategories', 'All Categories (General Triage)')}</span>
-                  </div>
-                  {!activeCategory && activeView === 'workspace' && (
-                    <Check className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0 stroke-[2.5]" />
-                  )}
-                </button>
-
-                <div className="h-px bg-slate-100 dark:bg-slate-800 my-1" />
-
-                {/* 10 Official Health Focus Categories */}
-                {dashboardCategories.map((cat) => {
-                  const isSelected = activeCategory?.id === cat.id && activeView === 'workspace';
-
-                  return (
-                    <button
-                      key={cat.id}
-                      type="button"
-                      onClick={() => {
-                        onSelectCategory(cat);
-                        setCategoriesDropdownOpen(false);
-                        if (mobileOpen) setMobileOpen(false);
-                      }}
-                      className={`w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
-                        isSelected
-                          ? 'bg-[#EBF5F0] dark:bg-emerald-950/50 text-[#0D5C3A] dark:text-emerald-200 font-semibold border border-emerald-200/70 dark:border-emerald-800/60'
-                          : 'text-slate-600 dark:text-slate-300 hover:bg-emerald-50/50 dark:hover:bg-slate-800 hover:text-[#0D5C3A] dark:hover:text-white'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5 min-w-0">
-                        <span className={`w-2 h-2 rounded-full ${cat.dotColor} shrink-0`} />
-                        <span className="truncate">{getCategoryName(cat)}</span>
-                      </div>
-
-                      {isSelected && (
-                        <Check className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0 stroke-[2.5]" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
           </div>
-
-          {/* Flexible Spacer */}
-          <div className="flex-1" />
-
         </div>
 
-        {/* 5. Bottom Footer: Help & Support and Profile Settings */}
-        <div className="p-3 border-t border-slate-100 dark:border-slate-800 shrink-0 space-y-1.5">
+        {/* Middle Scrollable Section: ONLY the categories list scrolls if open */}
+        {categoriesDropdownOpen ? (
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-3.5 py-1">
+            <div className="bg-white dark:bg-[#0F1C36] border border-emerald-200/80 dark:border-slate-700 rounded-xl shadow-xs p-1.5 space-y-0.5">
+              {/* Option 1: All Categories (General Triage Mode) */}
+              <button
+                type="button"
+                onClick={() => {
+                  onSelectCategory(null);
+                  setCategoriesDropdownOpen(false);
+                  if (mobileOpen) setMobileOpen(false);
+                }}
+                className={`w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
+                  !activeCategory && activeView === 'workspace'
+                    ? 'bg-[#EBF5F0] dark:bg-emerald-950/50 text-[#0D5C3A] dark:text-emerald-200 font-bold border border-emerald-200/70 dark:border-emerald-800/60'
+                    : 'text-slate-600 dark:text-slate-300 hover:bg-emerald-50/50 dark:hover:bg-slate-800 hover:text-[#0D5C3A] dark:hover:text-white'
+                }`}
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#0D5C3A] to-[#D81B60] shrink-0" />
+                  <span className="truncate font-semibold">{t('dashboard', 'allCategories', 'All Categories (General Triage)')}</span>
+                </div>
+                {!activeCategory && activeView === 'workspace' && (
+                  <Check className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0 stroke-[2.5]" />
+                )}
+              </button>
+
+              <div className="h-px bg-slate-100 dark:bg-slate-800 my-1" />
+
+              {/* 10 Official Health Focus Categories */}
+              {dashboardCategories.map((cat) => {
+                const isSelected = activeCategory?.id === cat.id && activeView === 'workspace';
+
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => {
+                      onSelectCategory(cat);
+                      setCategoriesDropdownOpen(false);
+                      if (mobileOpen) setMobileOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer text-left ${
+                      isSelected
+                        ? 'bg-[#EBF5F0] dark:bg-emerald-950/50 text-[#0D5C3A] dark:text-emerald-200 font-semibold border border-emerald-200/70 dark:border-emerald-800/60'
+                        : 'text-slate-600 dark:text-slate-300 hover:bg-emerald-50/50 dark:hover:bg-slate-800 hover:text-[#0D5C3A] dark:hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span className={`w-2 h-2 rounded-full ${cat.dotColor} shrink-0`} />
+                      <span className="truncate">{getCategoryName(cat)}</span>
+                    </div>
+
+                    {isSelected && (
+                      <Check className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0 stroke-[2.5]" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="flex-1 min-h-2" />
+        )}
+
+        {/* 5. Bottom Footer: Help & Support, Profile Settings and Direct Logout (Always pinned at bottom) */}
+        <div className="p-3 border-t border-slate-100 dark:border-slate-800 shrink-0 space-y-1.5 bg-white dark:bg-[#0B132B] z-20">
           {/* Help & Support */}
           <button
             type="button"
@@ -284,6 +285,22 @@ export default function MinimalSidebar({
             </div>
             
             <Settings className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 shrink-0" />
+          </button>
+
+          {/* Direct Sign Out / Logout CTA */}
+          <button
+            type="button"
+            onClick={() => {
+              if (onLogout) onLogout();
+              if (mobileOpen) setMobileOpen(false);
+            }}
+            className="w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-rose-200/60 dark:border-rose-900/40 transition-colors cursor-pointer group"
+          >
+            <div className="flex items-center gap-2.5">
+              <LogOut className="w-4 h-4 text-rose-500 group-hover:-translate-x-0.5 transition-transform" />
+              <span>{t('dashboard', 'signOut', 'Sign Out')}</span>
+            </div>
+            <span className="text-[10px] text-rose-400 font-bold group-hover:text-rose-600">Logout →</span>
           </button>
 
         </div>
