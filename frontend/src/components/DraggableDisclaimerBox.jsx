@@ -42,11 +42,29 @@ export default function DraggableDisclaimerBox({
   const dragStartRef = useRef({ mouseX: 0, mouseY: 0, posX: 0, posY: 0 });
   const didDragRef = useRef(false);
 
-  // Initialize position to bottom-left once mounted
+  // Initialize position to bottom-left once mounted & clamp on resize/orientation change
   useEffect(() => {
-    const initY = Math.max(80, window.innerHeight - (isExpanded ? 520 : 180));
-    const initX = window.innerWidth < 640 ? 12 : 24;
-    setPosition({ x: initX, y: initY });
+    const updateInitPosition = () => {
+      const initY = Math.max(72, window.innerHeight - (isExpanded ? 520 : 180));
+      const initX = window.innerWidth < 640 ? 12 : 24;
+      setPosition({ x: initX, y: initY });
+    };
+    updateInitPosition();
+
+    const handleResize = () => {
+      setPosition((prev) => {
+        const boxW = boxRef.current?.offsetWidth || (window.innerWidth < 640 ? window.innerWidth * 0.9 : 360);
+        const boxH = boxRef.current?.offsetHeight || 160;
+        const maxX = Math.max(10, window.innerWidth - boxW - 10);
+        const maxY = Math.max(70, window.innerHeight - boxH - 12);
+        return {
+          x: Math.max(10, Math.min(prev.x, maxX)),
+          y: Math.max(70, Math.min(prev.y, maxY))
+        };
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // When triggered from header disclaimer button, automatically un-dismiss and expand
@@ -184,7 +202,8 @@ export default function DraggableDisclaimerBox({
           setIsDismissed(false);
           setIsExpanded(true);
         }}
-        className="fixed bottom-4 left-4 z-40 flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white text-xs font-bold shadow-xl border border-emerald-400/30 transition-transform hover:scale-105 cursor-pointer select-none"
+        className="fixed left-3 sm:left-4 z-40 flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white text-xs font-bold shadow-xl border border-emerald-400/30 transition-transform hover:scale-105 cursor-pointer select-none max-w-[calc(100vw-1.5rem)]"
+        style={{ bottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         title="Open DPDP Disclaimer"
       >
         <ShieldCheck className="w-4 h-4 text-emerald-300" />

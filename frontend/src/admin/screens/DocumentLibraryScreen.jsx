@@ -733,7 +733,7 @@ export default function DocumentLibraryScreen({ navigateTo, showToast }) {
               )}
 
               {drawerTab === 'metadata' && (
-                <div className="space-y-3">
+                <div className="space-y-3 overflow-x-auto">
                   <table className="w-full text-left font-medium">
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                       <tr>

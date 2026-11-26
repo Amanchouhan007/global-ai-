@@ -307,7 +307,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
         />
 
         {/* Dynamic Main View */}
-        <main className="flex-1 w-full max-w-full p-2.5 xs:p-3 sm:p-6 lg:p-8 overflow-y-auto overflow-x-hidden">
+        <main className="flex-1 w-full max-w-full p-2.5 xs:p-3 sm:p-6 lg:p-8 pb-24 sm:pb-24 overflow-y-auto overflow-x-hidden">
 
           {activeView === 'library' ? (
             /* LIBRARY VIEW */
@@ -320,7 +320,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
             />
           ) : (
             /* MAIN CENTERED HEALTH WORKSPACE - GlobalHealthAI Theme */
-            <div className="max-w-4xl w-full mx-auto space-y-4 sm:space-y-6 py-1 xs:py-2 sm:py-4 overflow-hidden">
+            <div className="max-w-7xl w-full mx-auto space-y-4 sm:space-y-6 py-1 xs:py-2 sm:py-4 overflow-hidden">
 
               {/* Landing Page Clinical Trust Ribbon */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 xs:gap-2.5 p-1.5 xs:p-2 rounded-2xl bg-white/80 dark:bg-[#0B132B]/80 backdrop-blur-xs border border-emerald-200/70 dark:border-slate-800 shadow-2xs w-full max-w-full overflow-hidden">

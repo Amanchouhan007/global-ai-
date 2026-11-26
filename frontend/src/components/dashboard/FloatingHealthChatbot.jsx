@@ -905,10 +905,10 @@ export default function FloatingHealthChatbot({
   if (inline) {
     const chatCard = (
       <div
-        className={`w-full rounded-2xl overflow-hidden flex flex-col h-[380px] sm:h-[400px] ${
+        className={`w-full rounded-2xl overflow-hidden flex flex-col ${
           isDarkBoard
-            ? 'border border-emerald-200/90 shadow-[0_14px_40px_rgba(13,92,58,0.12)]'
-            : 'bg-white border border-emerald-950/15 shadow-lg'
+            ? 'h-[clamp(300px,74dvh,700px)] border border-emerald-200/90 shadow-[0_14px_40px_rgba(13,92,58,0.12)]'
+            : 'h-[clamp(320px,55dvh,400px)] bg-white border border-emerald-950/15 shadow-lg'
         }`}
         style={
           isDarkBoard
@@ -1036,11 +1036,14 @@ export default function FloatingHealthChatbot({
   return (
     <>
       {/* Floating Trigger Button */}
-      <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40">
+      <div
+        className="fixed right-3 sm:right-6 z-40 max-w-[calc(100vw-1.5rem)]"
+        style={{ bottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+      >
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="group relative flex items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-emerald-400/40"
+          className="group relative flex items-center gap-2 px-3.5 py-2.5 sm:px-5 sm:py-3.5 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-emerald-400/40"
           aria-label="Open Health AI Chatbot"
           title="Open Health Orbit Pro Assistant"
         >
@@ -1067,8 +1070,9 @@ export default function FloatingHealthChatbot({
       {/* Floating Modal Window */}
       {isOpen && (
         <div
-          className="fixed bottom-20 sm:bottom-24 right-3 sm:right-6 w-[360px] sm:w-[410px] max-w-[calc(100vw-1.5rem)] h-[540px] max-h-[82vh] rounded-3xl shadow-2xl border border-emerald-200/90 bg-white flex flex-col z-50 overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200"
+          className="fixed right-3 sm:right-6 w-[min(410px,calc(100vw-1.5rem))] h-[min(540px,calc(100dvh-5.5rem))] rounded-3xl shadow-2xl border border-emerald-200/90 bg-white flex flex-col z-50 overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200"
           style={{
+            bottom: 'max(4.5rem, calc(env(safe-area-inset-bottom) + 3.75rem))',
             boxShadow: '0 20px 50px -10px rgba(13, 92, 58, 0.28), 0 0 0 1px rgba(13, 92, 58, 0.15)'
           }}
         >
