@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import ChatAssistantSection from './components/ChatAssistantSection';
 import ExploreCategories from './components/ExploreCategories';
 import HowItWorksSection from './components/HowItWorksSection';
 import DoctorProfileSection from './components/DoctorProfileSection';
@@ -273,14 +272,8 @@ function MainRouter() {
           onOpenDisclaimer={() => setShowDisclaimer(true)}
         />
 
-        {/* 2. Explore by Category: 10 clinical cards with My Symptoms (1,000+ Health Cards) highlighted */}
+        {/* 2. Explore by Category: 10 clinical pill buttons with inline chatboard */}
         <ExploreCategories onSelectCategory={handleSelectCategory} />
-
-        {/* 4. Existing Chat Assistant: dedicated, spacious landing page section visible upon scrolling */}
-        <ChatAssistantSection
-          user={user}
-          onStartAssessment={(q) => handleSearch(q || '')}
-        />
 
         {/* 5. How It Works */}
         <HowItWorksSection onStartAssessment={() => navigate('/user/dashboard')} />
