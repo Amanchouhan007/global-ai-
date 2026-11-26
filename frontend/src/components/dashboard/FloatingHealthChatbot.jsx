@@ -34,12 +34,16 @@ import {
   detectEmergencyRedFlags,
   HEALTH_CATEGORIES
 } from '../../data/healthKnowledgeBase';
+import { getCategoryChatConfig } from '../../data/categoryChatConfigs';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function FloatingHealthChatbot({
   user,
   activeCategory,
   inline = false,
+  compact = false,
+  onClose = null,
+  onMessageSent = null,
   onStartAssessment,
   customQuickPrompts = null,
   externalPrompt = null
@@ -52,30 +56,41 @@ export default function FloatingHealthChatbot({
   const [isListening, setIsListening] = useState(false);
   const [showUploadMenu, setShowUploadMenu] = useState(false);
   const categoryTitle = activeCategory?.title || activeCategory?.name;
+  const categoryConfig = getCategoryChatConfig(activeCategory?.id);
+
+  const buildWelcomeText = () => {
+    const firstName = user?.name ? user.name.split(' ')[0] : 'there';
+    if (categoryConfig?.welcomePrefix) {
+      return `Hello ${firstName}! 👋 ${categoryConfig.welcomePrefix}`;
+    }
+    if (categoryTitle) {
+      return `Hello ${firstName}! 👋 Welcome to **${categoryTitle}**. ${activeCategory?.desc || activeCategory?.description || ''} Ask any question or tap a topic below for instant, clinically grounded guidance supervised by Dr. Pratap Madhukar.`;
+    }
+    return t('chat', 'welcome', `Hello ${firstName}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`);
+  };
+
   const [messages, setMessages] = useState(() => [
     {
       id: 'welcome',
       sender: 'ai',
       timestamp: 'Just now',
-      text: categoryTitle
-        ? `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 Welcome to **${categoryTitle}**. ${activeCategory?.desc || activeCategory?.description || ''} Ask any question or tap a topic below for instant, clinically grounded guidance supervised by Dr. Pratap Madhukar.`
-        : t('chat', 'welcome', `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`),
+      text: buildWelcomeText(),
       urgency: null
     }
   ]);
 
-  // Dynamically update welcome message when language changes
+  // Dynamically update welcome message when language changes (preserve category context if set)
   useEffect(() => {
     setMessages(prev => {
       if (prev.length === 1 && (prev[0].id === 'welcome' || prev[0].id === 'welcome-reset')) {
         return [{
           ...prev[0],
-          text: t('chat', 'welcome', `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your Health Orbit Pro Assistant, supervised by Dr. Pratap Madhukar. Describe any symptom or ask a health question, and I will give you instant, clinically grounded triage guidance, danger-sign checks, and safe next steps.`)
+          text: buildWelcomeText()
         }];
       }
       return prev;
     });
-  }, [currentLang]);
+  }, [currentLang, activeCategory?.id]);
 
   const chatContainerRef = useRef(null);
   const inputRef = useRef(null);
@@ -189,7 +204,7 @@ export default function FloatingHealthChatbot({
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
-        } catch {}
+        } catch { }
       }
     };
   }, []);
@@ -203,7 +218,7 @@ export default function FloatingHealthChatbot({
     if (isListening) {
       try {
         recognitionRef.current?.stop();
-      } catch {}
+      } catch { }
       setIsListening(false);
       return;
     }
@@ -280,10 +295,12 @@ export default function FloatingHealthChatbot({
     }
   }, [messages, isTyping]);
 
-  // Quick prompt suggestions dynamically translated
+  // Quick prompt suggestions dynamically translated or tailored to active button
   const quickPrompts = customQuickPrompts && customQuickPrompts.length > 0
     ? customQuickPrompts
-    : [
+    : categoryConfig?.quickPrompts && categoryConfig.quickPrompts.length > 0
+      ? categoryConfig.quickPrompts
+      : [
         t('chat', 'quickPrompt1', 'Severe right-side headache with sensitivity to bright lights'),
         t('chat', 'quickPrompt2', 'Chest tightness on exertion radiating to left shoulder'),
         t('chat', 'quickPrompt3', 'Mild dry cough and low-grade fever for 2 days'),
@@ -354,6 +371,9 @@ export default function FloatingHealthChatbot({
     setInputMessage('');
     setAttachedFile(null);
     setIsTyping(true);
+    if (onMessageSent) {
+      onMessageSent(messageText);
+    }
 
     if (currentAttachment) {
       setTimeout(() => {
@@ -429,11 +449,31 @@ export default function FloatingHealthChatbot({
     ]);
   };
 
+  const isDarkBoard = Boolean(compact);
+
+  // Safely render **bold** spans without raw markdown asterisks
+  const renderFormattedText = (text) => {
+    if (!text || typeof text !== 'string') return text;
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+        return (
+          <strong key={i} className="font-extrabold text-[#0B3B3A]">
+            {part.slice(2, -2)}
+          </strong>
+        );
+      }
+      return <React.Fragment key={i}>{part}</React.Fragment>;
+    });
+  };
+
   // Render message item (shared between inline and floating modes)
   const renderMessages = () => (
     <div
       ref={chatContainerRef}
-      className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm bg-slate-50/70"
+      className={`flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm ${
+        isDarkBoard ? 'bg-transparent' : 'bg-slate-50/70'
+      }`}
     >
       {messages.map((msg) => {
         const isAi = msg.sender === 'ai';
@@ -445,7 +485,7 @@ export default function FloatingHealthChatbot({
           >
             <div className={`flex items-start gap-2.5 max-w-[92%] sm:max-w-[85%] ${isAi ? 'flex-row' : 'flex-row-reverse'}`}>
               {/* Avatar Icon */}
-              <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs ${
+              <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-sm ${
                 isAi ? 'bg-[#D81B60] text-white' : 'bg-[#0D5C3A] text-white'
               }`}>
                 {isAi ? <Bot className="w-4 h-4 stroke-[2.3]" /> : <UserIcon className="w-4 h-4" />}
@@ -453,15 +493,18 @@ export default function FloatingHealthChatbot({
 
               {/* Message Bubble */}
               <div
-                className={`p-3.5 sm:p-4 rounded-2xl leading-relaxed whitespace-pre-wrap ${
-                  isAi
-                    ? 'bg-white text-slate-800 border border-emerald-950/10 shadow-xs rounded-tl-xs'
+                className={`p-3.5 sm:p-4 rounded-2xl leading-relaxed whitespace-pre-wrap ${isAi
+                    ? isDarkBoard
+                      ? 'bg-white/95 text-slate-800 border border-emerald-200/85 shadow-[0_4px_18px_rgba(13,92,58,0.08)] rounded-tl-xs backdrop-blur-sm'
+                      : 'bg-white text-slate-800 border border-emerald-950/10 shadow-xs rounded-tl-xs'
                     : 'bg-[#0D5C3A] text-white shadow-xs rounded-tr-xs'
-                }`}
+                  }`}
               >
                 {/* AI Header with Clinical Urgency Badge */}
                 {isAi && (
-                  <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2 mb-2 flex-wrap">
+                  <div className={`flex items-center justify-between gap-2 pb-2 mb-2 flex-wrap border-b ${
+                    isDarkBoard ? 'border-emerald-900/10' : 'border-slate-100'
+                  }`}>
                     <span className="text-[11px] font-black text-[#D81B60] uppercase tracking-wider">
                       Dr. Pratap Clinical AI
                     </span>
@@ -503,11 +546,13 @@ export default function FloatingHealthChatbot({
                   </div>
                 )}
 
-                <div className="text-xs sm:text-[13.5px] leading-relaxed">{msg.text}</div>
+                <div className="text-xs sm:text-[13.5px] leading-relaxed">{renderFormattedText(msg.text)}</div>
 
                 {/* Response Sources (only when explicitly returned) */}
                 {isAi && msg.sources && msg.sources.length > 0 && (
-                  <div className="mt-3 pt-2.5 border-t border-slate-100 text-[10px] text-slate-500 flex items-center gap-1.5 flex-wrap">
+                  <div className={`mt-3 pt-2.5 border-t text-[10px] flex items-center gap-1.5 flex-wrap ${
+                    isDarkBoard ? 'border-emerald-900/10 text-slate-500' : 'border-slate-100 text-slate-500'
+                  }`}>
                     <ShieldCheck className="w-3.5 h-3.5 text-[#0D5C3A] shrink-0" />
                     <span>{msg.sources.join(' • ')}</span>
                   </div>
@@ -515,7 +560,7 @@ export default function FloatingHealthChatbot({
               </div>
             </div>
 
-            <span className="text-[9.5px] text-slate-400 mt-1 px-10">
+            <span className="text-[9.5px] mt-1 px-10 text-slate-400">
               {msg.timestamp}
             </span>
           </div>
@@ -524,8 +569,10 @@ export default function FloatingHealthChatbot({
 
       {/* Typing Indicator */}
       {isTyping && (
-        <div className="flex items-center gap-2 p-3 rounded-2xl bg-white border border-emerald-950/10 shadow-xs max-w-[130px]">
-          <span className="text-xs font-bold text-slate-400">{t('chat', 'evaluating', 'Evaluating')}</span>
+        <div className={`flex items-center gap-2 p-3 rounded-2xl border shadow-xs max-w-[130px] ${
+          isDarkBoard ? 'bg-white/95 border-emerald-200/80' : 'bg-white border-emerald-950/10'
+        }`}>
+          <span className="text-xs font-bold text-slate-500">{t('chat', 'evaluating', 'Evaluating')}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#D81B60] animate-bounce"></span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#D81B60] animate-bounce [animation-delay:0.2s]"></span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#D81B60] animate-bounce [animation-delay:0.4s]"></span>
@@ -536,9 +583,13 @@ export default function FloatingHealthChatbot({
 
   // Render quick prompts chips (compact single-row horizontal scroll)
   const renderQuickPrompts = () => (
-    <div className="px-3 py-1.5 bg-white border-t border-slate-100 shrink-0">
+    <div className={`px-3 py-1.5 border-t shrink-0 ${
+      isDarkBoard ? 'bg-white/80 backdrop-blur-sm border-emerald-100' : 'bg-white border-slate-100'
+    }`}>
       <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 no-scrollbar whitespace-nowrap">
-        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
+        <span className={`text-[10px] font-bold uppercase tracking-wider shrink-0 flex items-center gap-1 ${
+          isDarkBoard ? 'text-[#0D5C3A]' : 'text-slate-400'
+        }`}>
           <Sparkles className="w-3 h-3 text-amber-500" />
           <span>{t('chat', 'tryLabel', 'Try:')}</span>
         </span>
@@ -547,7 +598,11 @@ export default function FloatingHealthChatbot({
             key={idx}
             type="button"
             onClick={() => handleSend(q)}
-            className="text-[10.5px] px-2.5 py-0.5 rounded-full bg-[#F2F8F5] hover:bg-[#EBF5F0] text-[#0D5C3A] hover:text-[#0A4D30] border border-emerald-200/80 transition-colors cursor-pointer font-medium shrink-0"
+            className={`text-[10.5px] px-2.5 py-0.5 rounded-full border transition-colors cursor-pointer font-medium shrink-0 ${
+              isDarkBoard
+                ? 'bg-[#F0FDF4] hover:bg-[#0D5C3A] text-[#0D5C3A] hover:text-white border-emerald-200'
+                : 'bg-[#F2F8F5] hover:bg-[#EBF5F0] text-[#0D5C3A] hover:text-[#0A4D30] border-emerald-200/80'
+            }`}
           >
             {q}
           </button>
@@ -558,7 +613,9 @@ export default function FloatingHealthChatbot({
 
   // Render chat input form
   const renderInputBar = () => (
-    <div className="p-2 sm:p-2.5 bg-white border-t border-slate-200 shrink-0">
+    <div className={`p-2 sm:p-2.5 border-t shrink-0 ${
+      isDarkBoard ? 'bg-white/90 backdrop-blur-md border-emerald-100' : 'bg-white border-slate-200'
+    }`}>
       {/* Hidden File Input for images and document files */}
       <input
         type="file"
@@ -592,18 +649,21 @@ export default function FloatingHealthChatbot({
           e.preventDefault();
           handleSend();
         }}
-        className="flex items-center gap-1.5 bg-slate-50 rounded-xl border border-slate-200/90 p-1 focus-within:border-[#0D5C3A] focus-within:ring-1 focus-within:ring-emerald-200 transition-all"
+        className={`flex items-center gap-1.5 rounded-xl border p-1 transition-all ${
+          isDarkBoard
+            ? 'bg-[#F8FAF9] border-emerald-200/90 focus-within:border-[#0D5C3A] focus-within:ring-2 focus-within:ring-emerald-100'
+            : 'bg-slate-50 border-slate-200/90 focus-within:border-[#0D5C3A] focus-within:ring-1 focus-within:ring-emerald-200'
+        }`}
       >
         {/* Upload Button with ChatGPT-style Options Popup */}
         <div className="relative" ref={uploadMenuRef}>
           <button
             type="button"
             onClick={() => setShowUploadMenu(prev => !prev)}
-            className={`p-1.5 rounded-lg transition-colors cursor-pointer shrink-0 ${
-              showUploadMenu
+            className={`p-1.5 rounded-lg transition-colors cursor-pointer shrink-0 ${showUploadMenu
                 ? 'bg-emerald-100 text-[#0D5C3A] ring-1 ring-[#0D5C3A]'
                 : 'text-slate-500 hover:text-[#0D5C3A] hover:bg-emerald-50'
-            }`}
+              }`}
             title="Upload medical report or image"
           >
             <Paperclip className="w-4 h-4" />
@@ -701,11 +761,10 @@ export default function FloatingHealthChatbot({
         <button
           type="button"
           onClick={handleVoiceInput}
-          className={`p-1.5 rounded-lg transition-colors cursor-pointer shrink-0 ${
-            isListening
+          className={`p-1.5 rounded-lg transition-colors cursor-pointer shrink-0 ${isListening
               ? 'text-rose-600 bg-rose-50 animate-pulse ring-1 ring-rose-400'
               : 'text-slate-500 hover:text-[#0D5C3A] hover:bg-emerald-50'
-          }`}
+            }`}
           title={isListening ? "Listening... Click to stop" : "Voice search / speak query"}
         >
           <Mic className={`w-4 h-4 ${isListening ? 'animate-bounce text-rose-600' : ''}`} />
@@ -736,7 +795,7 @@ export default function FloatingHealthChatbot({
         <button
           type="submit"
           disabled={(!inputMessage.trim() && !attachedFile) || isTyping}
-          className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#0D5C3A] hover:bg-[#0A4D30] disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1 transition-all cursor-pointer shrink-0"
+          className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#0D5C3A] hover:bg-[#0A4D30] disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1 transition-all cursor-pointer shrink-0 shadow-xs"
           title="Send message"
         >
           <span className="inline">{t('chat', 'sendBtn', 'Send')}</span>
@@ -744,12 +803,12 @@ export default function FloatingHealthChatbot({
         </button>
       </form>
 
-      <div className="flex items-center justify-between text-[9px] text-slate-400 mt-1 px-1">
+      <div className="flex items-center justify-between text-[9px] text-slate-500 mt-1 px-1">
         <span>{t('chat', 'supervisionBadge', 'Physician-supervised triage & evidence guidance')}</span>
         <button
           type="button"
           onClick={handleWhatsAppShare}
-          className="inline-flex items-center gap-1 text-emerald-700 hover:text-emerald-800 font-bold hover:underline cursor-pointer"
+          className="inline-flex items-center gap-1 text-[#0D5C3A] hover:text-[#0A4D30] font-bold hover:underline cursor-pointer"
         >
           <WhatsAppIcon className="w-3 h-3 text-[#25D366]" />
           <span>{t('chat', 'shareWhatsApp', 'Share on WhatsApp')}</span>
@@ -844,10 +903,108 @@ export default function FloatingHealthChatbot({
   // 1. INLINE MODE: COMPACT, ELEGANT LANDING PAGE SECTION
   // =========================================================================
   if (inline) {
+    const chatCard = (
+      <div
+        className={`w-full rounded-2xl overflow-hidden flex flex-col h-[380px] sm:h-[400px] ${
+          isDarkBoard
+            ? 'border border-emerald-200/90 shadow-[0_14px_40px_rgba(13,92,58,0.12)]'
+            : 'bg-white border border-emerald-950/15 shadow-lg'
+        }`}
+        style={
+          isDarkBoard
+            ? {
+                background:
+                  'radial-gradient(circle at 8% 15%, rgba(134, 239, 172, 0.35), transparent 46%), radial-gradient(circle at 90% 85%, rgba(167, 243, 208, 0.32), transparent 50%), radial-gradient(circle at 75% 15%, rgba(253, 224, 71, 0.14), transparent 36%), linear-gradient(155deg, #F0FDF4 0%, #FFFFFF 52%, #ECFDF5 100%)'
+              }
+            : undefined
+        }
+      >
+        {/* Top Bar */}
+        <div className={`${isDarkBoard ? 'bg-gradient-to-r from-[#0D5C3A] via-[#0B4F32] to-[#0D5C3A] border-b border-emerald-900/15' : 'bg-[#0E281F]'} text-white px-3.5 py-2.5 flex items-center justify-between shrink-0 shadow-xs`}>
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="relative w-7 h-7 rounded-lg bg-[#D81B60] flex items-center justify-center shrink-0 shadow-xs">
+              <Stethoscope className="w-3.5 h-3.5 text-white" />
+              <span className="absolute bottom-0 right-0 w-1.5 h-1.5 rounded-full bg-emerald-400 border border-[#0E281F]"></span>
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 leading-tight flex-wrap">
+                <h3 className="text-xs font-black tracking-tight truncate">
+                  {categoryTitle
+                    ? `${t('chat', 'botName', 'Dr. Pratap AI')} • ${categoryTitle}`
+                    : t('chat', 'botName', 'Dr. Pratap AI Clinical Assistant')}
+                </h3>
+                <span className="text-[8.5px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40">
+                  {t('chat', 'live', 'Live')}
+                </span>
+              </div>
+              <p className="text-[9.5px] text-emerald-200/80 font-medium truncate">
+                {categoryTitle
+                  ? (activeCategory?.desc || activeCategory?.description || t('chat', 'botStatus', 'Supervised by Dr. Pratap Madhukar • 38 Yrs Experience'))
+                  : t('chat', 'botStatus', 'Supervised by Dr. Pratap Madhukar • 38 Yrs Experience')}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              type="button"
+              onClick={handleWhatsAppShare}
+              className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#25D366]/20 hover:bg-[#25D366]/30 text-emerald-200 hover:text-white text-[10px] font-bold border border-[#25D366]/40 transition-colors cursor-pointer"
+              title="Share chat on WhatsApp"
+            >
+              <WhatsAppIcon className="w-3 h-3 text-[#25D366]" />
+              <span className="hidden xs:inline">WhatsApp</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleClearChat}
+              className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-emerald-200 text-[10px] font-semibold border border-white/10 transition-colors cursor-pointer"
+              title="Clear conversation"
+            >
+              <RotateCcw className="w-2.5 h-2.5" />
+              <span>{t('chat', 'clear', 'Clear')}</span>
+            </button>
+            {onClose ? (
+              <button
+                type="button"
+                aria-label="Close Chatboard"
+                onClick={onClose}
+                className="p-1 rounded-full bg-white/10 hover:bg-white/20 text-emerald-100 hover:text-white transition-colors cursor-pointer"
+                title="Close chatboard"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            ) : (
+              <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-white/10 text-emerald-200 text-[10px] font-semibold border border-white/10">
+                {t('chat', 'freeAccess', 'Free Access')}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Message Stream */}
+        {renderMessages()}
+
+        {/* Quick Prompts */}
+        {renderQuickPrompts()}
+
+        {/* Input Bar */}
+        {renderInputBar()}
+      </div>
+    );
+
+    if (compact) {
+      return (
+        <>
+          {chatCard}
+          {renderCameraModal()}
+        </>
+      );
+    }
+
     return (
       <section id="chat-assistant" className="py-6 sm:py-8 bg-gradient-to-b from-[#F8FAF9] via-white to-[#F2F8F5] border-y border-emerald-950/10 scroll-mt-20">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 space-y-3 sm:space-y-4">
-          
           {/* Section Header */}
           <div className="text-center space-y-1">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EBF5F0] border border-emerald-200 text-[10.5px] font-bold text-[#0D5C3A] shadow-2xs">
@@ -864,65 +1021,7 @@ export default function FloatingHealthChatbot({
             </p>
           </div>
 
-          {/* Compact Dedicated Chat Interface Container */}
-          <div className="w-full bg-white rounded-2xl border border-emerald-950/15 shadow-lg overflow-hidden flex flex-col h-[380px] sm:h-[400px]">
-            
-            {/* Top Bar */}
-            <div className="bg-[#0E281F] text-white px-3.5 py-2.5 flex items-center justify-between shrink-0 shadow-xs">
-              <div className="flex items-center gap-2">
-                <div className="relative w-7 h-7 rounded-lg bg-[#D81B60] flex items-center justify-center shrink-0">
-                  <Stethoscope className="w-3.5 h-3.5 text-white" />
-                  <span className="absolute bottom-0 right-0 w-1.5 h-1.5 rounded-full bg-emerald-400 border border-[#0E281F]"></span>
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5 leading-tight">
-                    <h3 className="text-xs font-black tracking-tight">
-                      {t('chat', 'botName', 'Dr. Pratap AI Clinical Assistant')}
-                    </h3>
-                    <span className="text-[8.5px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40">
-                      {t('chat', 'live', 'Live')}
-                    </span>
-                  </div>
-                  <p className="text-[9.5px] text-emerald-200/80 font-medium">
-                    {t('chat', 'botStatus', 'Supervised by Dr. Pratap Madhukar • 38 Yrs Experience')}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={handleWhatsAppShare}
-                  className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#25D366]/20 hover:bg-[#25D366]/30 text-emerald-200 hover:text-white text-[10px] font-bold border border-[#25D366]/40 transition-colors cursor-pointer"
-                  title="Share chat on WhatsApp"
-                >
-                  <WhatsAppIcon className="w-3 h-3 text-[#25D366]" />
-                  <span>WhatsApp</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={handleClearChat}
-                  className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-emerald-200 text-[10px] font-semibold border border-white/10 transition-colors cursor-pointer"
-                  title="Clear conversation"
-                >
-                  <RotateCcw className="w-2.5 h-2.5" />
-                  <span>{t('chat', 'clear', 'Clear')}</span>
-                </button>
-                <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-white/10 text-emerald-200 text-[10px] font-semibold border border-white/10">
-                  {t('chat', 'freeAccess', 'Free Access')}
-                </span>
-              </div>
-            </div>
-
-            {/* Message Stream */}
-            {renderMessages()}
-
-            {/* Quick Prompts */}
-            {renderQuickPrompts()}
-
-            {/* Input Bar */}
-            {renderInputBar()}
-          </div>
+          {chatCard}
         </div>
 
         {/* Live Camera Modal */}

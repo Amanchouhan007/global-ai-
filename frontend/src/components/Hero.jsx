@@ -18,7 +18,7 @@ import { useLanguage } from '../context/LanguageContext';
  * - Functional interactive DPDP Disclaimer action matching embedded button bounds
  * - Seamless breakpoint scaling for Mobile, Tablet, Desktop, 2K QHD, and 4K UHD
  */
-export default function Hero() {
+export default function Hero({ onOpenDisclaimer }) {
   const { t } = useLanguage();
 
   return (
@@ -40,7 +40,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 2. Responsive Hero Banner Container */}
+      {/* 2. Responsive Hero Banner Container with Functional Interactive Overlays */}
       <div className="relative w-full max-w-[3840px] mx-auto aspect-[1024/341]">
         <img
           src="/assets/hero_banner_clean_2x.webp"
@@ -58,6 +58,25 @@ export default function Hero() {
           loading="eager"
           fetchPriority="high"
           decoding="async"
+        />
+
+        {/* 3. Interactive DPDP Disclaimer Action - Mapped directly onto the embedded banner pill button */}
+        <button
+          type="button"
+          onClick={() => {
+            if (typeof onOpenDisclaimer === 'function') {
+              onOpenDisclaimer();
+            }
+          }}
+          aria-label="Open Indian DPDP Act 2023 Clinical Governance Disclaimer"
+          title="Click to view DPDP Act 2023 Privacy & Clinical Governance details"
+          className="absolute z-10 rounded-full transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 hover:bg-emerald-500/10 active:scale-95"
+          style={{
+            left: '1.25%',
+            top: '86.8%',
+            width: '13.5%',
+            height: '8.5%'
+          }}
         />
       </div>
     </section>
