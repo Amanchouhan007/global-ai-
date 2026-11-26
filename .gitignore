@@ -32,3 +32,6 @@ frontend/audit_results.json
 verify_*.js
 audit_*.js
 
+
+# Local Netlify folder
+.netlify

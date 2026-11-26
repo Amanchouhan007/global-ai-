@@ -152,3 +152,6 @@ verify_*.js
 audit_*.js
 *.zip
 
+
+# Local Netlify folder
+.netlify
