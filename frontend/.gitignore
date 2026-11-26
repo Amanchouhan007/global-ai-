@@ -146,6 +146,7 @@ raw_assets/
 backup_thumbnails/
 audit_results.json
 *.mjs
+!netlify/functions/*.mjs
 *.cjs
 verify_*.js
 audit_*.js
