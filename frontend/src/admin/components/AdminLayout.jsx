@@ -21,8 +21,10 @@ import {
 } from 'lucide-react';
 import { useAdminStore } from '../store/adminStore';
 import ThemeToggle from '../../components/common/ThemeToggle';
+import LanguageSelector from '../../components/common/LanguageSelector';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 import HealthOrbitLogo from '../../components/common/HealthOrbitLogo';
 import { BRAND } from '../../config/brand';
 
@@ -44,15 +46,16 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
   const { isDark } = useTheme();
   const { user, logout } = useAuth();
   const { settings, aiReadinessScore, activities } = useAdminStore();
+  const { t, currentLang } = useLanguage();
 
   // Exactly 6 menus as strictly required
   const navigationItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'upload', label: 'Upload Document', icon: UploadCloud },
-    { id: 'library', label: 'Document Library', icon: BookOpen },
-    { id: 'ai', label: 'AI Management', icon: Cpu },
-    { id: 'users', label: 'User Management', icon: Users },
-    { id: 'settings', label: 'Settings', icon: Settings }
+    { id: 'dashboard', label: t('admin', 'dashboard', 'Dashboard'), icon: LayoutDashboard },
+    { id: 'upload', label: t('admin', 'upload', 'Upload Document'), icon: UploadCloud },
+    { id: 'library', label: t('admin', 'library', 'Document Library'), icon: BookOpen },
+    { id: 'ai', label: t('admin', 'ai', 'AI Management'), icon: Cpu },
+    { id: 'users', label: t('admin', 'users', 'User Management'), icon: Users },
+    { id: 'settings', label: t('admin', 'settings', 'Settings'), icon: Settings }
   ];
 
   const handleNavClick = (id) => {
@@ -108,7 +111,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                     <span className="text-[10px] font-black text-white bg-[#D81B60] px-1.5 py-0.5 rounded-full ml-1">{BRAND.suffix}™</span>
                   </div>
                   <span className="text-[9px] font-bold text-[#0D5C3A] tracking-wider uppercase mt-1">
-                    ADMIN CONSOLE
+                    {t('admin', 'adminConsole', 'ADMIN CONSOLE')}
                   </span>
                 </div>
               )}
@@ -129,7 +132,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
           <div className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto">
             {!sidebarCollapsed && (
               <div className="px-3 pb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                Core Navigation
+                {t('admin', 'coreNav', 'Core Navigation')}
               </div>
             )}
 
@@ -180,7 +183,9 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
-                  <span className={`text-[11px] font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>AI Readiness</span>
+                  <span className={`text-[11px] font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    {t('admin', 'aiReadiness', 'AI Readiness')}
+                  </span>
                 </div>
                 <span className="text-[11px] font-black text-[#1677E8]">{aiReadinessScore}%</span>
               </div>
@@ -207,7 +212,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                       {settings.profile.name}
                     </div>
                     <div className="text-[10px] text-slate-400 font-medium truncate">
-                      Administrator
+                      {t('admin', 'adminRole', 'Administrator')}
                     </div>
                   </div>
                 )}
@@ -235,7 +240,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                     }`}
                   >
                     <User className="w-3.5 h-3.5 text-slate-400" />
-                    <span>Admin Profile & Settings</span>
+                    <span>{t('admin', 'adminProfileSettings', 'Admin Profile & Settings')}</span>
                   </button>
                   <button
                     onClick={() => {
@@ -245,20 +250,20 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                     className="w-full flex items-center gap-2 px-3 py-2 text-[#1677E8] hover:bg-blue-500/10 rounded-lg text-left font-bold"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
-                    <span>Back to Live Website</span>
+                    <span>{t('admin', 'backToWebsite', 'Back to Live Website')}</span>
                   </button>
                   <div className={`my-1 border-t ${isDark ? 'border-slate-700/80' : 'border-slate-100'}`}></div>
                   <button
                     onClick={() => {
                       setProfileDropdownOpen(false);
                       if (logout) logout();
-                      showToast('Admin session signed out.');
+                      showToast(t('admin', 'adminSessionSignedOut', 'Admin session signed out.'));
                       onExitToLanding();
                     }}
                     className="w-full flex items-center gap-2 px-3 py-2 text-rose-500 hover:bg-rose-500/10 rounded-lg text-left font-semibold cursor-pointer"
                   >
                     <LogOut className="w-3.5 h-3.5" />
-                    <span>Sign Out</span>
+                    <span>{t('admin', 'signOut', 'Sign Out')}</span>
                   </button>
                 </div>
               )}
@@ -370,10 +375,10 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                 <h1 className={`text-base sm:text-lg font-black capitalize ${
                   isDark ? 'text-white' : 'text-[#08165B]'
                 }`}>
-                  {navigationItems.find(i => i.id === activeScreen)?.label || 'Dashboard'}
+                  {navigationItems.find(i => i.id === activeScreen)?.label || t('admin', 'dashboard', 'Dashboard')}
                 </h1>
                 <div className="text-[11px] font-medium text-slate-400 hidden sm:block">
-                  GlobalHealthAI Healthcare SaaS • Knowledge Engineering
+                  {t('admin', 'subBanner', 'GlobalHealthAI Healthcare SaaS • Knowledge Engineering')}
                 </div>
               </div>
             </div>
@@ -381,6 +386,9 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
             {/* Right: Quick actions, ThemeToggle, notifications, live site button */}
             <div className="flex items-center gap-2 sm:gap-3">
               
+              {/* Language Selector in Header */}
+              <LanguageSelector />
+
               {/* Theme Toggle in Header */}
               <ThemeToggle variant="topbar" />
 
@@ -395,7 +403,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                 title="Return to public landing page"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">View Website</span>
+                <span className="hidden sm:inline">{t('admin', 'viewWebsite', 'View Website')}</span>
               </button>
 
               {/* Notification Bell */}
@@ -419,8 +427,8 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                     <div className={`flex items-center justify-between pb-2 border-b ${
                       isDark ? 'border-slate-700' : 'border-slate-100'
                     }`}>
-                      <span className={`font-bold ${isDark ? 'text-white' : 'text-[#08165B]'}`}>System Notifications</span>
-                      <span className="text-[10px] text-slate-400">Live stream</span>
+                      <span className={`font-bold ${isDark ? 'text-white' : 'text-[#08165B]'}`}>{t('admin', 'sysNotifications', 'System Notifications')}</span>
+                      <span className="text-[10px] text-slate-400">{t('admin', 'liveStream', 'Live stream')}</span>
                     </div>
                     <div className="py-2 space-y-2 max-h-60 overflow-y-auto">
                       {activities.slice(0, 4).map((act) => (
@@ -437,7 +445,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                       onClick={() => setNotificationOpen(false)}
                       className="w-full text-center py-1 text-[11px] font-bold text-[#1677E8] hover:underline"
                     >
-                      Close Notifications
+                      {t('admin', 'closeNotifications', 'Close Notifications')}
                     </button>
                   </div>
                 )}
@@ -452,7 +460,7 @@ export default function AdminLayout({ activeScreen, setActiveScreen, onExitToLan
                 </div>
                 <div className="text-left text-xs leading-none">
                   <div className={`font-bold ${isDark ? 'text-white' : 'text-[#08165B]'}`}>{settings.profile.name}</div>
-                  <div className="text-[10px] text-emerald-400 font-semibold mt-0.5">● Admin</div>
+                  <div className="text-[10px] text-emerald-400 font-semibold mt-0.5">● {t('admin', 'adminRole', 'Admin')}</div>
                 </div>
               </div>
 

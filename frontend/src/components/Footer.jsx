@@ -32,7 +32,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
             </div>
             <div>
               <span className="font-bold text-white uppercase tracking-wider block sm:inline mr-2">
-                Clinical Safety Notice:
+                {t('footer', 'safetyNotice', 'Clinical Safety Notice:')}
               </span>
               {t('footer', 'disclaimerNotice', `${BRAND.name}™ provides educational triage based on ${FOUNDER_INFO.experience} of physician experience. It does not provide definitive medical diagnoses or replace an emergency room.`)}
             </div>
@@ -69,7 +69,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
             <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 space-y-1">
               <div className="flex items-center gap-2 text-xs font-bold text-white">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>Clinical Editor: {FOUNDER_INFO.name}</span>
+                <span>{t('footer', 'clinicalEditor', 'Clinical Editor:')} {FOUNDER_INFO.name}</span>
               </div>
               <p className="text-[11px] text-slate-400">
                 {FOUNDER_INFO.credentials} • {FOUNDER_INFO.experience}
@@ -79,7 +79,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
             {/* 5-Language Switcher Pills */}
             <div className="pt-1">
               <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5 flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-slate-400" /> Multi-Language Edition
+                <Globe className="w-3.5 h-3.5 text-slate-400" /> {t('footer', 'multiLangEdition', 'Multi-Language Edition')}
               </span>
               <div className="flex flex-wrap items-center gap-1.5">
                 {supportedLanguages.map((l) => (
@@ -151,7 +151,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
                   onClick={() => onNavigate ? onNavigate('/user/dashboard') : (window.location.pathname = '/user/dashboard')}
                   className="hover:text-white transition-colors text-left flex items-center gap-1 text-emerald-400 font-semibold py-0.5 block cursor-pointer"
                 >
-                  Patient Dashboard <ExternalLink className="w-3 h-3" />
+                  {t('footer', 'patientDashboard', 'Patient Dashboard')} <ExternalLink className="w-3 h-3" />
                 </button>
               </li>
               <li>
@@ -160,7 +160,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
                   onClick={() => onNavigate ? onNavigate('/admin/dashboard') : (window.location.pathname = '/admin/dashboard')}
                   className="hover:text-white transition-colors text-left flex items-center gap-1 py-0.5 block cursor-pointer"
                 >
-                  Clinical Admin Portal <ExternalLink className="w-3 h-3" />
+                  {t('footer', 'adminPortal', 'Clinical Admin Portal')} <ExternalLink className="w-3 h-3" />
                 </button>
               </li>
               <li>
@@ -173,7 +173,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
                 </button>
               </li>
               <li className="pt-2 text-rose-400 font-bold">
-                <span className="block text-[11px] text-slate-400 font-normal">Emergency Ambulatory:</span>
+                <span className="block text-[11px] text-slate-400 font-normal">{t('footer', 'emergencyAmbulatory', 'Emergency Ambulatory:')}</span>
                 India: 108 / 112 • US: 911
               </li>
             </ul>
@@ -187,7 +187,7 @@ export default function Footer({ onOpenDisclaimer, onOpenAgeGate, onNavigate }) 
           </div>
           <div className="flex items-center gap-6">
             <span>{COMPANY_INFO.compliance}</span>
-            <span>Made with <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500" /> for India & the World</span>
+            <span>{t('footer', 'madeWith', 'Made with')} <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500" /> {t('footer', 'forIndia', 'for India & the World')}</span>
           </div>
         </div>
 

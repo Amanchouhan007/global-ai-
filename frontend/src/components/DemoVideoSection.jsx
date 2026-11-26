@@ -137,7 +137,7 @@ export default function DemoVideoSection() {
             <div className="p-6 sm:p-7 rounded-3xl bg-[#F8FAF9] border border-emerald-100 space-y-4 shadow-xs">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-[#0D5C3A] uppercase tracking-wider block">
-                  Interactive Chapters ({videoData.nativeName})
+                  {t('videos', 'interactiveChapters', 'Interactive Chapters')} ({videoData.nativeName})
                 </span>
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-100 text-[#0D5C3A]">
                   {videoData.duration}
@@ -156,7 +156,9 @@ export default function DemoVideoSection() {
                 <div className="p-2 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-emerald-100 text-[#0D5C3A] text-[10px] font-black flex items-center justify-center">1</span>
-                    <span className="font-bold text-slate-900">Entering Symptoms</span>
+                    <span className="font-bold text-slate-900">
+                      {currentLang === 'HI' ? 'लक्षण दर्ज करना' : currentLang === 'MR' ? 'लक्षणे नोंदवणे' : currentLang === 'GU' ? 'લક્ષણો દાખલ કરવા' : currentLang === 'BN' ? 'উপসর্গ লিপিবদ্ধ করা' : currentLang === 'AR' ? 'إدخال الأعراض' : 'Entering Symptoms'}
+                    </span>
                   </div>
                   <span className="text-[11px] font-mono text-slate-500">00:00 – 00:45</span>
                 </div>
@@ -164,7 +166,9 @@ export default function DemoVideoSection() {
                 <div className="p-2 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-teal-100 text-[#0F766E] text-[10px] font-black flex items-center justify-center">2</span>
-                    <span className="font-bold text-slate-900">Red-Yellow-Green Triage</span>
+                    <span className="font-bold text-slate-900">
+                      {currentLang === 'HI' ? 'रेड-येलो-ग्रीन ट्राइएज' : currentLang === 'MR' ? 'लाल-पिवळा-हिरवा ट्रायज' : currentLang === 'GU' ? 'રેડ-યલો-ગ્રીન ટ્રાયેજ' : currentLang === 'BN' ? 'লাল-হলুদ-সবুজ ট্রায়াজ' : currentLang === 'AR' ? 'فرز أحمر-أصفر-أخضر' : 'Red-Yellow-Green Triage'}
+                    </span>
                   </div>
                   <span className="text-[11px] font-mono text-slate-500">00:45 – 01:30</span>
                 </div>
@@ -172,7 +176,9 @@ export default function DemoVideoSection() {
                 <div className="p-2 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-pink-100 text-[#D81B60] text-[10px] font-black flex items-center justify-center">3</span>
-                    <span className="font-bold text-slate-900">Doctor Preparation Checklist</span>
+                    <span className="font-bold text-slate-900">
+                      {currentLang === 'HI' ? 'डॉक्टर परामर्श चेकलिस्ट' : currentLang === 'MR' ? 'डॉक्टर भेट चेकलिस्ट' : currentLang === 'GU' ? 'ડૉક્ટર મુલાકાત ચેકલિસ્ટ' : currentLang === 'BN' ? 'ডাক্তার পরিদর্শনের চেকলিস্ট' : currentLang === 'AR' ? 'قائمة الاستعداد للطبيب' : 'Doctor Preparation Checklist'}
+                    </span>
                   </div>
                   <span className="text-[11px] font-mono text-slate-500">01:30 – 02:15</span>
                 </div>
@@ -180,7 +186,9 @@ export default function DemoVideoSection() {
                 <div className="p-2 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black flex items-center justify-center">4</span>
-                    <span className="font-bold text-slate-900">100% Private Guest Mode</span>
+                    <span className="font-bold text-slate-900">
+                      {currentLang === 'HI' ? '100% निजी गेस्ट मोड' : currentLang === 'MR' ? '१००% खाजगी गेस्ट मोड' : currentLang === 'GU' ? '100% ખાનગી ગેસ્ટ મોડ' : currentLang === 'BN' ? '১০০% ব্যক্তিগত গেস্ট মোড' : currentLang === 'AR' ? 'وضع ضيف خاص 100%' : '100% Private Guest Mode'}
+                    </span>
                   </div>
                   <span className="text-[11px] font-mono text-slate-500">02:15 – 02:45</span>
                 </div>
@@ -194,7 +202,7 @@ export default function DemoVideoSection() {
                   className="w-full py-3 px-4 rounded-xl bg-[#0D5C3A] hover:bg-[#0A4D30] text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-xs"
                 >
                   <Play className="w-4 h-4 fill-current" />
-                  <span>{isPlaying ? 'Pause Demo Walkthrough' : `Watch in ${videoData.nativeName}`}</span>
+                  <span>{isPlaying ? (currentLang === 'HI' ? 'डेमो रोकें' : 'Pause Demo Walkthrough') : `${t('videos', 'watchBtn', 'Watch in')} ${videoData.nativeName}`}</span>
                 </button>
               </div>
             </div>

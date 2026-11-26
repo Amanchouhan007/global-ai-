@@ -38,12 +38,12 @@ export default function Header({ onNavigate, onOpenDisclaimer }) {
   // Dropdown menu options for interactive header links
   const dropdownMenus = {
     categories: [
-      { label: 'My Symptoms (Acute Emergency Triage)', targetId: 'categories' },
-      { label: 'My Personal Health (Vitals, BP & Sugar)', targetId: 'categories' },
-      { label: 'My Family (Multigenerational Care)', targetId: 'categories' },
-      { label: 'My Parenting (Pediatric Care)', targetId: 'categories' },
-      { label: 'My Mind (Mental Health & Coping)', targetId: 'categories' },
-      { label: 'Explore All 10 Categories →', targetId: 'categories', isCta: true }
+      { label: `${t('categories', 'symptomsTitle', 'My Symptoms')} (${t('categories', 'symptomsBadge', '1,000+ Health Cards')})`, targetId: 'categories' },
+      { label: `${t('categories', 'personalHealthTitle', 'My Personal Health')}`, targetId: 'categories' },
+      { label: `${t('categories', 'familyTitle', 'My Family')}`, targetId: 'categories' },
+      { label: `${t('categories', 'parentingTitle', 'My Parenting')}`, targetId: 'categories' },
+      { label: `${t('categories', 'mindTitle', 'My Mind')}`, targetId: 'categories' },
+      { label: `${t('categories', 'viewAll', 'Explore All 10 Categories')} →`, targetId: 'categories', isCta: true }
     ]
   };
 

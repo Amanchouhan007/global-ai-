@@ -13,6 +13,7 @@ import {
   Stethoscope
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import LanguageSelector from './common/LanguageSelector';
 
 export default function AdminDashboard({ onNavigate }) {
   const { user, logout } = useAuth();
@@ -78,6 +79,7 @@ export default function AdminDashboard({ onNavigate }) {
 
           {/* Right Controls */}
           <div className="flex items-center gap-3">
+            <LanguageSelector />
             <button
               type="button"
               onClick={() => onNavigate ? onNavigate('/') : (window.location.pathname = '/')}

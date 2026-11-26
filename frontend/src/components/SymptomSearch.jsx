@@ -18,7 +18,7 @@ import { BRAND } from '../config/brand';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function SymptomSearch({ onSearch }) {
-  const { t } = useLanguage();
+  const { t, currentLang } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [voiceStatus, setVoiceStatus] = useState(null);
@@ -292,13 +292,43 @@ export default function SymptomSearch({ onSearch }) {
             <span>{t('insights', 'frequentTitle', 'Frequent Clinical Inquiries (Click to Evaluate):')}</span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {[
+            {((currentLang === 'HI' ? [
+              { query: 'गर्दन में अकड़न के साथ गंभीर सिरदर्द', urgency: 'आपातकालीन ट्राइएज', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'खांसी के साथ 3 दिनों से अधिक लगातार तेज बुखार', urgency: '24–48 घंटे में डॉक्टर', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'सांस फूलने के साथ सीने में अचानक जकड़न', urgency: 'कार्डियक ट्राइएज', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'रात में बच्चे को घरघराहट और खांसी होना', urgency: 'बाल रोग परामर्श', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'भोजन के बाद एसिडिटी और पेट में जलन', urgency: 'घरेलू देखभाल प्रोटोकॉल', tagColor: 'bg-emerald-100 text-[#0D5C3A] border-emerald-200' }
+            ] : currentLang === 'MR' ? [
+              { query: 'मानेत ताठरपणासह तीव्र डोकेदुखी', urgency: 'तातडीचा ट्राइएज', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'खोbaselineसह ३ दिवसांहून अधिक ताप', urgency: '२४–४८ तासांत डॉक्टर', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'श्वास लागणे व छातीत अचानक जडपणा', urgency: 'हृदयरोग ट्राइएज', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'रात्री मुलास श्वास घेताना घरघर व खोकला', urgency: 'बालरोग तपासणी', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'जेवणानंतर पोटात जळजळ व ॲसिडिटी', urgency: 'घरगुती काळजी प्रोटोकॉल', tagColor: 'bg-emerald-100 text-[#0D5C3A] border-emerald-200' }
+            ] : currentLang === 'GU' ? [
+              { query: 'ગરદનમાં જકડન સાથે તીવ્ર માથાનો દુખાવો', urgency: 'ઇમરજન્સી ટ્રાયેજ', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'ખાંસી સાથે ૩ દિવસથી વધુ સતત તાવ', urgency: '૨૪-૪૮ કલાકમાં ડૉક્ટર', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'શ્વાસ લેવામાં તકલીફ સાથે છાતીમાં ભીંચાણ', urgency: 'કાર્ડિયાક ટ્રાયેજ', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'રાત્રે બાળકને ખાંસી અને શ્વાસમાં ઘરઘરાટી', urgency: 'બાળરોગ સંભાળ', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'જમ્યા પછી એસિડિટી અને પેટમાં બળતરા', urgency: 'ઘરેલું સંભાળ પ્રોટોકોલ', tagColor: 'bg-emerald-100 text-[#0D5C3A] border-emerald-200' }
+            ] : currentLang === 'BN' ? [
+              { query: 'ঘাড়ে শক্তভাব সহ তীব্র মাথাব্যথা', urgency: 'জরুরি ট্রায়াজ', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'কাশির সাথে ৩ দিনের বেশি জ্বর', urgency: '২৪–৪৮ ঘণ্টায় ডাক্তার', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'শ্বাসকষ্ট সহ হঠাৎ বুকে চাপ অনুভূত হওয়া', urgency: 'কার্ডিয়াক ট্রায়াজ', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'রাতে শিশুর শ্বাসকষ্ট ও কাশি', urgency: 'শিশু স্বাস্থ্য সেবা', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'খাওয়ার পর বুক ও পেট জ্বালাপোড়া (অ্যাসিডিটি)', urgency: 'ঘরোয়া সেবা প্রোটোকল', tagColor: 'bg-emerald-100 text-[#0D5C3A] border-emerald-200' }
+            ] : currentLang === 'AR' ? [
+              { query: 'صداع حاد مع تيبس في الرقبة', urgency: 'فرز طارئ', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'حمى مستمرة لأكثر من 3 أيام مع سعال', urgency: 'استشارة طبيب خلال 24-48 ساعة', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'ضيق مفاجئ في الصدر مع صعوبة التنفس', urgency: 'فرز قلبي طارئ', tagColor: 'bg-red-100 text-red-800 border-red-200' },
+              { query: 'سعال وصعوبة تنفس لدى الطفل ليلاً', urgency: 'رعاية أطفال', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
+              { query: 'حموضة وحرقة في المعدة بعد تناول الطعام', urgency: 'رعاية منزلية آمنة', tagColor: 'bg-emerald-100 text-[#0D5C3A] border-emerald-200' }
+            ] : [
               { query: 'Severe headache with stiff neck', urgency: 'Emergency Triage', tagColor: 'bg-red-100 text-red-800 border-red-200' },
               { query: 'Persistent high fever > 3 days with cough', urgency: 'Doctor in 24–48h', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
               { query: 'Sudden chest tightness with breathlessness', urgency: 'Cardiac Triage', tagColor: 'bg-red-100 text-red-800 border-red-200' },
               { query: 'Child wheezing and coughing at night', urgency: 'Pediatric Care', tagColor: 'bg-amber-100 text-amber-900 border-amber-200' },
               { query: 'Acid reflux and stomach burning after food', urgency: 'Self-Care Protocol', tagColor: 'bg-emerald-100 text-[#0D5C3A] border-emerald-200' }
-            ].map((item, idx) => (
+            ])).map((item, idx) => (
               <button
                 key={idx}
                 type="button"

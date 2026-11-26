@@ -1,7 +1,9 @@
 import React from 'react';
 import { Menu, PhoneCall, Sparkles, X } from 'lucide-react';
 import ThemeToggle from '../common/ThemeToggle';
+import LanguageSelector from '../common/LanguageSelector';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function WorkspaceTopBar({
   activeCategory,
@@ -10,6 +12,12 @@ export default function WorkspaceTopBar({
   activeView
 }) {
   const { isDark } = useTheme();
+  const { t } = useLanguage();
+
+  const getCategoryName = (cat) => {
+    if (!cat) return '';
+    return t('categoryNames', cat.id, cat.name);
+  };
 
   return (
     <header
@@ -35,13 +43,13 @@ export default function WorkspaceTopBar({
         <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden">
           {activeView === 'library' ? (
             <span className="inline-flex items-center gap-1.5 px-2.5 xs:px-3 py-1 rounded-full bg-blue-50 dark:bg-slate-800 text-[#08165B] dark:text-blue-300 border border-blue-200 dark:border-slate-700 text-xs font-semibold truncate max-w-full">
-              <span>Personal Health Library</span>
+              <span>{t('dashboard', 'personalHealthLibrary', 'Personal Health Library')}</span>
             </span>
           ) : activeCategory ? (
             <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 rounded-full bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 border border-blue-200/90 dark:border-slate-700 text-xs font-medium shadow-2xs min-w-0 max-w-full">
               <span className={`w-2 h-2 rounded-full ${activeCategory.dotColor} shrink-0`} />
-              <span className="text-slate-500 dark:text-slate-400 text-[10.5px] xs:text-[11px] font-normal shrink-0 hidden xs:inline">Focused:</span>
-              <span className="font-bold text-[#08165B] dark:text-white truncate">{activeCategory.name}</span>
+              <span className="text-slate-500 dark:text-slate-400 text-[10.5px] xs:text-[11px] font-normal shrink-0 hidden xs:inline">{t('dashboard', 'focused', 'Focused:')}</span>
+              <span className="font-bold text-[#08165B] dark:text-white truncate">{getCategoryName(activeCategory)}</span>
               <button
                 type="button"
                 onClick={() => onSelectCategory && onSelectCategory(null)}
@@ -54,15 +62,21 @@ export default function WorkspaceTopBar({
           ) : (
             <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 rounded-full bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 border border-blue-200/80 dark:border-slate-700 text-xs font-medium shadow-2xs min-w-0 max-w-full">
               <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#1677E8] to-[#F04B0A] shrink-0" />
-              <span className="text-slate-500 dark:text-slate-400 text-[10.5px] xs:text-[11px] font-normal shrink-0 hidden xs:inline">Triage Mode:</span>
-              <span className="font-bold text-[#08165B] dark:text-white truncate text-xs">All Categories<span className="hidden sm:inline"> / General</span></span>
+              <span className="text-slate-500 dark:text-slate-400 text-[10.5px] xs:text-[11px] font-normal shrink-0 hidden xs:inline">{t('dashboard', 'triageMode', 'Triage Mode:')}</span>
+              <span className="font-bold text-[#08165B] dark:text-white truncate text-xs">{t('dashboard', 'allCategories', 'All Categories / General')}</span>
             </div>
           )}
         </div>
       </div>
 
-      {/* Right: Emergency Pill Badge */}
+      {/* Right: Language Selector, Theme Toggle & Emergency Helpline Pill */}
       <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        {/* Dynamic 6-Language Selector */}
+        <LanguageSelector align="right" />
+
+        {/* Theme Toggle */}
+        <ThemeToggle />
+
         {/* Emergency Helpline Pill */}
         <a
           href="tel:112"
@@ -70,7 +84,7 @@ export default function WorkspaceTopBar({
           title="Emergency Helplines: 102 (Ambulance), 112 (National Emergency)"
         >
           <PhoneCall className="w-3.5 h-3.5 text-red-500 dark:text-red-400 shrink-0" />
-          <span className="hidden sm:inline">Emergency: 102 / 112</span>
+          <span className="hidden sm:inline">{t('dashboard', 'emergencyHelpline', 'Emergency: 102 / 112')}</span>
           <span className="sm:hidden font-bold">112</span>
         </a>
       </div>
