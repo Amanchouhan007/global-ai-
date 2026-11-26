@@ -100,7 +100,7 @@ export default function CategoryChatPage({
   };
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-[#F8FAF9] text-slate-900 font-sans flex flex-col">
+    <div className="min-h-screen w-full overflow-x-clip bg-[#F8FAF9] text-slate-900 font-sans flex flex-col">
       <Header onNavigate={onNavigate} />
 
       <main className="flex-1">

@@ -256,7 +256,7 @@ function MainRouter() {
 
   // Default Route: Health Orbit Pro™ Redesigned Landing Page
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-[#F8FAF9] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 transition-colors duration-200">
+    <div className="min-h-screen w-full overflow-x-clip bg-[#F8FAF9] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 transition-colors duration-200">
       {/* 1. Header / Navigation Bar matching reference Image 1 */}
       <Header onNavigate={navigate} />
 
