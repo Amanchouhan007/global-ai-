@@ -16,12 +16,12 @@ export default function WorkspaceTopBar({
 
   const getCategoryName = (cat) => {
     if (!cat) return '';
-    return t('categoryNames', cat.id, cat.name);
+    return cat.title || t('categoryNames', cat.id, cat.name);
   };
 
   return (
     <header
-      className={`sticky top-0 z-30 h-14 backdrop-blur-md border-b px-2.5 sm:px-6 lg:px-8 flex items-center justify-between transition-colors duration-200 w-full max-w-full overflow-hidden ${
+      className={`sticky top-0 z-30 h-14 backdrop-blur-md border-b px-2.5 sm:px-6 lg:px-8 flex items-center justify-between transition-colors duration-200 w-full max-w-full ${
         isDark
           ? 'bg-[#080D1A]/95 border-slate-800 text-slate-100'
           : 'bg-white/80 border-blue-100/80 text-slate-800'

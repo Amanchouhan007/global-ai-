@@ -10,7 +10,8 @@ import MinimalLibraryView from './dashboard/MinimalLibraryView';
 import HelpModal from './dashboard/HelpModal';
 import ProfileSettingsModal from './dashboard/ProfileSettingsModal';
 import FloatingHealthChatbot from './dashboard/FloatingHealthChatbot';
-import { PORTAL_CATEGORIES } from '../data/portalCategories';
+import CategoryMicroApp from './microapps/CategoryMicroApp';
+import { getClientCategories } from './ExploreCategories';
 import { userPortalStorage } from '../services/userPortalStorage';
 import {
   Mic,
@@ -32,9 +33,16 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
   const { isDark } = useTheme();
   const { t } = useLanguage();
 
+  const dashboardCategories = getClientCategories(t).map((cat) => ({
+    ...cat,
+    name: cat.title,
+    description: cat.desc,
+    dotColor: cat.isMain ? 'bg-[#D81B60]' : 'bg-[#0D5C3A]'
+  }));
+
   const getCategoryName = (cat) => {
     if (!cat) return '';
-    return t('categoryNames', cat.id, cat.name);
+    return cat.title || t('categoryNames', cat.id, cat.name);
   };
 
   // Active user: use authenticated user, or guest session for direct clinical triage
@@ -57,6 +65,9 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
 
   // User input prompt state
   const [promptText, setPromptText] = useState(initialSymptom || '');
+  const [externalPrompt, setExternalPrompt] = useState(
+    initialSymptom ? { text: initialSymptom, nonce: 'init' } : null
+  );
   const [isListening, setIsListening] = useState(false);
 
   // Active severity toggle for AI triage demo: 'GREEN' | 'YELLOW' | 'RED'
@@ -392,7 +403,7 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                       isMain: true
                     }
                   }
-                  externalPrompt={initialSymptom ? { text: initialSymptom, nonce: 'init' } : null}
+                  externalPrompt={externalPrompt}
                   onMessageSent={(msgText) => {
                     setPromptText(msgText);
                     const lower = msgText.toLowerCase();
@@ -441,8 +452,8 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                   )}
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-                  {PORTAL_CATEGORIES.slice(0, 6).map((cat) => {
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+                  {dashboardCategories.map((cat) => {
                     const isCurrent = activeCategory?.id === cat.id;
                     return (
                       <button
@@ -470,42 +481,17 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
                 </div>
               </div>
 
-              {/* Clinically Reviewed Health Card Output (Dynamic 1,000+ Cards System matching Client Reference Image 2) */}
-              <div className="pt-2 space-y-3">
-                <div className="flex items-center justify-between px-1">
-                  <span className="text-xs font-bold text-[#08165B] dark:text-white uppercase tracking-wider flex items-center gap-2">
-                    <Stethoscope className="w-4 h-4 text-emerald-600" />
-                    <span>{t('dashboard', 'cardEngineDetails', 'Clinical Guidance • Health Card Details (1,000+ Cards Engine)')}</span>
-                  </span>
-                  <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
-                    {t('dashboard', 'activeClinicalCard', 'Active Clinical Card')}
-                  </span>
-                </div>
-
-                {/* Final Dynamic Health Card matching Image 2 */}
-                <HealthCardShowcase
-                  query={promptText}
-                  onPrepareVisit={(summary) => {
-                    handleSaveReport({
-                      title: summary,
-                      date: new Date().toISOString(),
-                      severity: activeSeverity
-                    });
-                    alert(`Doctor Visit Checklist Saved to Your Library:\n${summary}`);
-                  }}
-                  showCardSelector={true}
-                />
-
-                {/* Compact Severity Assessment Summary */}
-                <div className="pt-3">
-                  <MinimalAIAssessmentCard
-                    activeSeverity={activeSeverity}
-                    onSelectSeverity={(sev) => setActiveSeverity(sev)}
-                    customQuery={promptText}
-                    onSaveReport={handleSaveReport}
+              {/* Interactive Category Micro-App matching the selected category */}
+              {activeCategory && (
+                <div className="pt-1">
+                  <CategoryMicroApp
+                    key={`microapp-${activeCategory.id}`}
+                    categoryId={activeCategory.id}
+                    category={activeCategory}
+                    onAskAI={(q) => setExternalPrompt({ text: q, nonce: Date.now() })}
                   />
                 </div>
-              </div>
+              )}
 
             </div>
           )}

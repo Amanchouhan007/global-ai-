@@ -11,7 +11,7 @@ import {
   LogOut,
   X
 } from 'lucide-react';
-import { PORTAL_CATEGORIES } from '../../data/portalCategories';
+import { getClientCategories } from '../ExploreCategories';
 import ThemeToggle from '../common/ThemeToggle';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
@@ -36,9 +36,16 @@ export default function MinimalSidebar({
   const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  const dashboardCategories = getClientCategories(t).map((cat) => ({
+    ...cat,
+    name: cat.title,
+    description: cat.desc,
+    dotColor: cat.isMain ? 'bg-[#D81B60]' : 'bg-[#0D5C3A]'
+  }));
+
   const getCategoryName = (cat) => {
     if (!cat) return '';
-    return t('categoryNames', cat.id, cat.name);
+    return cat.title || t('categoryNames', cat.id, cat.name);
   };
 
   // Close dropdown when clicking outside
@@ -144,7 +151,7 @@ export default function MinimalSidebar({
                 {t('dashboard', 'healthFocus', 'Health Focus Categories')}
               </span>
               <span className="text-[10px] font-bold text-[#0D5C3A] dark:text-emerald-300 bg-[#EBF5F0] dark:bg-slate-800 border border-emerald-200/70 dark:border-slate-700 px-1.5 py-0.5 rounded-full font-mono">
-                12
+                {dashboardCategories.length}
               </span>
             </div>
 
@@ -179,7 +186,7 @@ export default function MinimalSidebar({
 
             {/* Dropdown Menu Overlay */}
             {categoriesDropdownOpen && (
-              <div className="absolute left-3.5 right-3.5 top-[calc(100%-2px)] z-50 bg-white dark:bg-[#0F1C36] border border-emerald-200/80 dark:border-slate-700 rounded-xl shadow-xl p-1.5 max-h-72 overflow-y-auto space-y-0.5 animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute left-3.5 right-3.5 top-[calc(100%-2px)] z-50 bg-white dark:bg-[#0F1C36] border border-emerald-200/80 dark:border-slate-700 rounded-xl shadow-xl p-1.5 max-h-[420px] overflow-y-auto space-y-0.5 animate-in fade-in zoom-in-95 duration-150">
                 {/* Option 1: All Categories (General Triage Mode) */}
                 <button
                   type="button"
@@ -205,8 +212,8 @@ export default function MinimalSidebar({
 
                 <div className="h-px bg-slate-100 dark:bg-slate-800 my-1" />
 
-                {/* 12 Individual Categories */}
-                {PORTAL_CATEGORIES.map((cat) => {
+                {/* 10 Official Health Focus Categories */}
+                {dashboardCategories.map((cat) => {
                   const isSelected = activeCategory?.id === cat.id && activeView === 'workspace';
 
                   return (
