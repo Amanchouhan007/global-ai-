@@ -417,58 +417,54 @@ export default function DemoVideoSection() {
               )}
 
               {/* Discreet AI-Generated Avatar Disclosure Badge (Top-Left) */}
-              <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 z-20 flex items-center gap-2">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-xs font-bold shadow-lg">
-                  <Bot className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="absolute top-2.5 left-2.5 sm:top-5 sm:left-5 z-20 flex items-center gap-2 pointer-events-none">
+                <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-emerald-300 border border-emerald-500/30 text-[9px] sm:text-xs font-bold shadow-md">
+                  <Bot className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400" />
                   <span className="hidden sm:inline">AI-Generated Clinical Avatar • </span>
-                  <span>Supervised by {FOUNDER_INFO.name}</span>
+                  <span>Supervised by Dr. Pratap</span>
                 </div>
-                <div className="px-2 py-0.5 rounded bg-black/60 text-amber-400 text-[10px] font-black border border-amber-400/30">
+                <div className="hidden sm:block px-2 py-0.5 rounded bg-black/60 text-amber-400 text-[10px] font-black border border-amber-400/30">
                   16:9 FHD
                 </div>
               </div>
 
-              {/* Active Scene Indicator (Top-Center) */}
-              <div className="absolute top-4 sm:top-5 z-20 hidden md:block">
+              {/* Active Scene Indicator (Top-Center - Desktop/Tablet Only) */}
+              <div className="absolute top-4 sm:top-5 z-20 hidden md:block pointer-events-none">
                 <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-white/90 text-xs font-black tracking-wide border border-white/10 shadow-sm">
                   Scene {activeScene.id}/7: {activeScene.badge}
                 </span>
               </div>
 
-              {/* Big Center Play Button (When Paused) */}
+              {/* Dedicated Center Play/Pause Layer: Exact 50%/50% translation */}
               {!isPlaying && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-30 bg-black/40 backdrop-blur-[2px]">
+                <div
+                  onClick={togglePlay}
+                  className="absolute inset-0 z-30 flex items-center justify-center bg-black/35 backdrop-blur-[1px] cursor-pointer"
+                >
                   <button
                     type="button"
-                    onClick={togglePlay}
-                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white flex items-center justify-center shadow-2xl transition-transform hover:scale-110 active:scale-95 cursor-pointer border-4 border-white/80"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      togglePlay();
+                    }}
+                    className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#0D5C3A] hover:bg-[#0A4D30] text-white flex items-center justify-center shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer border-2 sm:border-4 border-white/90"
                     aria-label="Play AI Welcome & Onboarding Video"
                   >
-                    <Play className="w-10 h-10 fill-current ml-1.5" />
+                    <Play className="w-5 h-5 sm:w-7 sm:h-7 md:w-9 md:h-9 fill-current ml-0.5 sm:ml-1" />
                   </button>
-
-                  <div className="mt-5 text-white space-y-1.5 max-w-lg">
-                    <div className="flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-emerald-300">
-                      <Clock className="w-4 h-4" />
-                      <span>Duration: {videoData.duration} • 16:9 Widescreen</span>
-                    </div>
-                    <h3 className="text-base sm:text-lg lg:text-xl font-black drop-shadow-md">
-                      {videoData.title}
-                    </h3>
-                  </div>
                 </div>
               )}
 
-              {/* Synchronized Real-Time Subtitles (Bottom Display) with Arabic RTL Support */}
+              {/* Synchronized Real-Time Subtitles (Compact Inside Frame for Desktop, Minimal on Mobile) */}
               {showSubtitles && currentSubtitle && isPlaying && (
-                <div className="absolute bottom-16 sm:bottom-20 left-4 right-4 z-20 flex justify-center pointer-events-none">
+                <div className="absolute bottom-12 sm:bottom-16 left-2 right-2 sm:left-4 sm:right-4 z-20 flex justify-center pointer-events-none">
                   <div
                     dir={videoData.dir || 'ltr'}
-                    className={`px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-black/85 backdrop-blur-md text-white text-xs sm:text-sm md:text-base font-bold text-center max-w-2xl border border-white/15 shadow-2xl animate-fade-in leading-relaxed ${
+                    className={`px-2.5 py-1 sm:px-5 sm:py-2 rounded-lg sm:rounded-xl bg-black/85 backdrop-blur-sm text-white text-[11px] sm:text-xs md:text-sm font-semibold max-w-[92%] sm:max-w-xl border border-white/15 shadow-lg leading-snug line-clamp-2 ${
                       videoData.dir === 'rtl' ? 'text-right' : 'text-center'
                     }`}
                   >
-                    <span className="text-emerald-300 font-semibold">Dr. Pratap: </span>
+                    <span className="text-emerald-300 font-bold">Dr. Pratap: </span>
                     <span>"{currentSubtitle}"</span>
                   </div>
                 </div>
@@ -490,61 +486,63 @@ export default function DemoVideoSection() {
                 </div>
 
                 {/* Controls Row */}
-                <div className="flex items-center justify-between text-xs sm:text-sm">
-                  <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 text-[11px] sm:text-xs md:text-sm">
+                  {/* Left: Play, Replay, Mute & Time */}
+                  <div className="flex items-center gap-1.5 sm:gap-2.5">
                     <button
                       type="button"
                       onClick={togglePlay}
-                      className="p-1.5 hover:bg-white/20 rounded-lg transition-colors cursor-pointer"
+                      className="p-1 sm:p-1.5 hover:bg-white/20 rounded-lg transition-colors cursor-pointer"
                       title={isPlaying ? 'Pause' : 'Play'}
                     >
-                      {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-current" />}
+                      {isPlaying ? <Pause className="w-4 h-4 sm:w-5 sm:h-5" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />}
                     </button>
 
                     <button
                       type="button"
                       onClick={handleReplay}
-                      className="p-1.5 hover:bg-white/20 rounded-lg transition-colors cursor-pointer text-slate-300 hover:text-white"
+                      className="p-1 sm:p-1.5 hover:bg-white/20 rounded-lg transition-colors cursor-pointer text-slate-300 hover:text-white"
                       title="Replay from start"
                     >
-                      <RotateCcw className="w-4 h-4" />
+                      <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </button>
 
                     <button
                       type="button"
                       onClick={toggleMute}
-                      className="p-1.5 hover:bg-white/20 rounded-lg transition-colors cursor-pointer text-slate-300 hover:text-white"
+                      className="p-1 sm:p-1.5 hover:bg-white/20 rounded-lg transition-colors cursor-pointer text-slate-300 hover:text-white"
                       title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
                     >
-                      {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4" />}
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                     </button>
 
-                    <span className="font-mono text-xs text-slate-300">
+                    <span className="font-mono text-[10px] sm:text-xs text-slate-300 whitespace-nowrap">
                       {formatTime(currentTime)} / {formatTime(activeDuration)}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2 sm:gap-3">
+                  {/* Right: Subtitles, Speed & Fullscreen */}
+                  <div className="flex items-center gap-1 sm:gap-2 ml-auto">
                     {/* Subtitles Toggle */}
                     <button
                       type="button"
                       onClick={() => setShowSubtitles(!showSubtitles)}
-                      className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+                      className={`p-1 sm:p-1.5 rounded-lg transition-colors cursor-pointer ${
                         showSubtitles ? 'text-emerald-400 bg-white/10' : 'text-slate-400 hover:text-white'
                       }`}
                       title={showSubtitles ? 'Hide Subtitles' : 'Show Subtitles'}
                     >
-                      <Subtitles className="w-4 h-4" />
+                      <Subtitles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </button>
 
                     {/* Speed Selector */}
-                    <div className="flex items-center gap-1 bg-white/10 rounded-lg px-2 py-0.5">
+                    <div className="flex items-center bg-white/10 rounded-md sm:rounded-lg px-1 sm:px-1.5 py-0.5">
                       {[0.75, 1, 1.25].map(spd => (
                         <button
                           key={spd}
                           type="button"
                           onClick={() => handleSpeedChange(spd)}
-                          className={`text-[11px] font-bold px-1.5 py-0.5 rounded cursor-pointer ${
+                          className={`text-[9.5px] sm:text-[11px] font-bold px-1 py-0.5 rounded cursor-pointer ${
                             playbackSpeed === spd ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:text-white'
                           }`}
                         >
@@ -557,16 +555,24 @@ export default function DemoVideoSection() {
                     <button
                       type="button"
                       onClick={toggleFullscreen}
-                      className="p-1.5 hover:bg-white/20 rounded-lg transition-colors cursor-pointer text-slate-300 hover:text-white"
+                      className="p-1 sm:p-1.5 hover:bg-white/20 rounded-lg transition-colors cursor-pointer text-slate-300 hover:text-white"
                       title="Toggle Fullscreen"
                     >
-                      {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                      {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                     </button>
                   </div>
                 </div>
 
               </div>
             </div>
+
+            {/* Dedicated Mobile Caption Area Below Video Frame (Only on mobile when subtitles are enabled and active) */}
+            {showSubtitles && currentSubtitle && isPlaying && (
+              <div className="block sm:hidden mt-2 p-2 rounded-xl bg-slate-900 text-white text-[11px] leading-relaxed border border-slate-800 shadow-xs text-left" dir={videoData.dir || 'ltr'}>
+                <span className="text-emerald-400 font-bold">Narration: </span>
+                <span className="text-slate-200">"{currentSubtitle}"</span>
+              </div>
+            )}
           </div>
 
           {/* ================= RIGHT COLUMN: INTERACTIVE SCENE CHAPTERS & SCRIPT SYNOPSIS ================= */}

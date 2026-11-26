@@ -45,21 +45,26 @@ export default function DraggableDisclaimerBox({
   // Initialize position to bottom-left once mounted & clamp on resize/orientation change
   useEffect(() => {
     const updateInitPosition = () => {
-      const initY = Math.max(72, window.innerHeight - (isExpanded ? 520 : 180));
-      const initX = window.innerWidth < 640 ? 12 : 24;
+      const isMobile = window.innerWidth < 640;
+      // On mobile screens, default to bottom-right compact button or bottom dock
+      const initY = isMobile
+        ? Math.max(60, window.innerHeight - (isExpanded ? 460 : 70))
+        : Math.max(72, window.innerHeight - (isExpanded ? 520 : 180));
+      const initX = isMobile ? Math.max(8, (window.innerWidth - Math.min(window.innerWidth - 16, 360)) / 2) : 24;
       setPosition({ x: initX, y: initY });
     };
     updateInitPosition();
 
     const handleResize = () => {
       setPosition((prev) => {
-        const boxW = boxRef.current?.offsetWidth || (window.innerWidth < 640 ? window.innerWidth * 0.9 : 360);
+        const isMobile = window.innerWidth < 640;
+        const boxW = boxRef.current?.offsetWidth || (isMobile ? window.innerWidth - 16 : 360);
         const boxH = boxRef.current?.offsetHeight || 160;
-        const maxX = Math.max(10, window.innerWidth - boxW - 10);
-        const maxY = Math.max(70, window.innerHeight - boxH - 12);
+        const maxX = Math.max(8, window.innerWidth - boxW - 8);
+        const maxY = Math.max(60, window.innerHeight - boxH - 12);
         return {
-          x: Math.max(10, Math.min(prev.x, maxX)),
-          y: Math.max(70, Math.min(prev.y, maxY))
+          x: Math.max(8, Math.min(prev.x, maxX)),
+          y: Math.max(60, Math.min(prev.y, maxY))
         };
       });
     };
@@ -220,8 +225,8 @@ export default function DraggableDisclaimerBox({
         top: `${position.y}px`,
         touchAction: 'none'
       }}
-      className={`fixed z-40 transition-shadow select-none ${
-        isExpanded ? 'w-[92vw] sm:w-[420px] max-w-[440px]' : 'w-[90vw] sm:w-[360px]'
+      className={`fixed z-40 transition-shadow select-none max-w-[calc(100vw-16px)] ${
+        isExpanded ? 'w-[calc(100vw-20px)] sm:w-[420px] max-w-[440px]' : 'w-[calc(100vw-24px)] sm:w-[360px]'
       }`}
     >
       <div
@@ -240,14 +245,14 @@ export default function DraggableDisclaimerBox({
               setIsExpanded(true);
             }
           }}
-          className={`flex items-center justify-between px-3.5 py-2.5 bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] text-white ${!isExpanded ? 'cursor-pointer' : 'cursor-grab'} active:cursor-grabbing border-b border-emerald-800`}
+          className={`flex items-center justify-between px-3 sm:px-3.5 py-1.5 sm:py-2.5 bg-gradient-to-r from-[#0D5C3A] to-[#0A4D30] text-white ${!isExpanded ? 'cursor-pointer' : 'cursor-grab'} active:cursor-grabbing border-b border-emerald-800`}
           title={!isExpanded ? 'Click to open DPDP terms or drag anywhere' : 'Drag this box anywhere on your screen'}
         >
-          <div className="flex items-center gap-2">
-            <GripVertical className="w-4 h-4 text-emerald-300 shrink-0 opacity-80" />
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-300 shrink-0" />
-              <span className="text-xs font-black tracking-tight">{t('draggableDisclaimer', 'gripTitle', 'DPDP & Clinical Safety')}</span>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <GripVertical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 shrink-0 opacity-80" />
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 shrink-0" />
+              <span className="text-[11px] sm:text-xs font-black tracking-tight">{t('draggableDisclaimer', 'gripTitle', 'DPDP & Clinical Safety')}</span>
             </div>
           </div>
 
@@ -296,7 +301,7 @@ export default function DraggableDisclaimerBox({
                 setIsExpanded(true);
               }
             }}
-            className="p-3 text-xs space-y-2 bg-gradient-to-b from-[#F4F9F6] to-white cursor-pointer hover:from-[#EBF5F0] transition-colors"
+            className="p-2 sm:p-3 text-[11px] sm:text-xs space-y-1.5 sm:space-y-2 bg-gradient-to-b from-[#F4F9F6] to-white cursor-pointer hover:from-[#EBF5F0] transition-colors"
             title="Click to read full DPDP & Clinical Safety terms"
           >
             <div className="flex items-start gap-2 text-slate-700">

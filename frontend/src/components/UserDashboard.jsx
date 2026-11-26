@@ -511,9 +511,6 @@ export default function UserDashboard({ onNavigate, initialSymptom = '', initial
         />
       )}
 
-      {/* Floating Interactive Health AI Chatbot */}
-      <FloatingHealthChatbot user={effectiveUser} activeCategory={activeCategory} />
-
     </div>
   );
 }
