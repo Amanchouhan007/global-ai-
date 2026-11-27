@@ -10,8 +10,16 @@ import {
 import { BRAND } from '../config/brand';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function HowItWorksSection({ onStartAssessment }) {
+export default function HowItWorksSection({ onStartAssessment, onSelectStep }) {
   const { currentLang, t } = useLanguage();
+
+  const handleStepOpen = (stepPath) => {
+    if (onSelectStep) {
+      onSelectStep(stepPath);
+    } else if (onStartAssessment) {
+      onStartAssessment();
+    }
+  };
 
   return (
     <section id="how-it-works" className="py-16 sm:py-20 lg:py-24 bg-[#F4F9F6] border-y border-emerald-950/10 scroll-mt-20">
@@ -35,7 +43,10 @@ export default function HowItWorksSection({ onStartAssessment }) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 relative">
           
           {/* Step 1 */}
-          <div className="relative bg-white rounded-3xl p-7 sm:p-9 border border-emerald-950/10 shadow-xs hover:shadow-xl transition-all duration-200 flex flex-col justify-between space-y-6 text-left">
+          <div
+            onClick={() => handleStepOpen('/workflow/describe-symptoms')}
+            className="relative bg-white rounded-3xl p-7 sm:p-9 border border-emerald-950/10 shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all duration-200 flex flex-col justify-between space-y-6 text-left cursor-pointer"
+          >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-black text-emerald-300 tracking-tight font-mono">01</span>
@@ -79,14 +90,24 @@ export default function HowItWorksSection({ onStartAssessment }) {
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-bold text-emerald-800">
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> {t('howItWorks', 'previewSafetyValidated', 'Clinical safety validated')}</span>
-              <button type="button" onClick={onStartAssessment} className="text-xs font-black text-[#0D5C3A] hover:underline flex items-center gap-1">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleStepOpen('/workflow/describe-symptoms');
+                }}
+                className="text-xs font-black text-[#0D5C3A] hover:underline flex items-center gap-1 cursor-pointer"
+              >
                 {t('howItWorks', 'previewTryInput', 'Try Input')} <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
           {/* Step 2 */}
-          <div className="relative bg-white rounded-3xl p-7 sm:p-9 border border-emerald-950/10 shadow-xs hover:shadow-xl transition-all duration-200 flex flex-col justify-between space-y-6 text-left">
+          <div
+            onClick={() => handleStepOpen('/workflow/clinical-triaging')}
+            className="relative bg-white rounded-3xl p-7 sm:p-9 border border-emerald-950/10 shadow-xs hover:shadow-xl hover:border-teal-300 transition-all duration-200 flex flex-col justify-between space-y-6 text-left cursor-pointer"
+          >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-black text-teal-300 tracking-tight font-mono">02</span>
@@ -145,14 +166,24 @@ export default function HowItWorksSection({ onStartAssessment }) {
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-bold text-teal-800">
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-teal-600" /> {t('howItWorks', 'previewEvidenceProtocol', 'Evidence-based protocol')}</span>
-              <button type="button" onClick={onStartAssessment} className="text-xs font-black text-[#0F766E] hover:underline flex items-center gap-1">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleStepOpen('/workflow/clinical-triaging');
+                }}
+                className="text-xs font-black text-[#0F766E] hover:underline flex items-center gap-1 cursor-pointer"
+              >
                 {t('howItWorks', 'previewSeeTriage', 'See Triage')} <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
           {/* Step 3 */}
-          <div className="relative bg-white rounded-3xl p-7 sm:p-9 border border-emerald-950/10 shadow-xs hover:shadow-xl transition-all duration-200 flex flex-col justify-between space-y-6 text-left">
+          <div
+            onClick={() => handleStepOpen('/workflow/actionable-guidance')}
+            className="relative bg-white rounded-3xl p-7 sm:p-9 border border-emerald-950/10 shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all duration-200 flex flex-col justify-between space-y-6 text-left cursor-pointer"
+          >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-black text-emerald-300 tracking-tight font-mono">03</span>
@@ -208,7 +239,14 @@ export default function HowItWorksSection({ onStartAssessment }) {
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-bold text-emerald-800">
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> {t('howItWorks', 'previewActionable', 'Actionable guidance')}</span>
-              <button type="button" onClick={onStartAssessment} className="text-xs font-black text-[#0D5C3A] hover:underline flex items-center gap-1">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleStepOpen('/workflow/actionable-guidance');
+                }}
+                className="text-xs font-black text-[#0D5C3A] hover:underline flex items-center gap-1 cursor-pointer"
+              >
                 {t('howItWorks', 'previewStartNow', 'Start Now')} <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>

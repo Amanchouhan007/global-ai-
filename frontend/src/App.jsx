@@ -15,6 +15,7 @@ import AgeVerificationModal from './components/AgeVerificationModal';
 import LoginPage from './components/LoginPage';
 import UserDashboard from './components/UserDashboard';
 import CategoryChatPage from './components/CategoryChatPage';
+import WorkflowStepPage from './components/WorkflowStepPage';
 import AdminLayout from './admin/components/AdminLayout';
 import Footer from './components/Footer';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -243,6 +244,36 @@ function MainRouter() {
     );
   }
 
+  // Route: Individual Workflow Step Feature Pages (/workflow/:stepId)
+  if (currentPath.startsWith('/workflow/')) {
+    const stepId = currentPath.replace(/^\/workflow\//, '').split('/')[0];
+    return (
+      <>
+        <WorkflowStepPage
+          stepId={stepId}
+          onNavigate={navigate}
+          onOpenDisclaimer={() => setShowDisclaimer(true)}
+          onOpenAgeGate={() => setShowAgeGate(true)}
+        />
+        <DisclaimerModal
+          isOpen={showDisclaimer}
+          onClose={() => {
+            try {
+              sessionStorage.setItem('healthorbit_disclaimer_ack', 'true');
+            } catch {
+              // ignore
+            }
+            setShowDisclaimer(false);
+          }}
+        />
+        <AgeVerificationModal
+          isOpenManual={showAgeGate}
+          onCloseManual={() => setShowAgeGate(false)}
+        />
+      </>
+    );
+  }
+
   // Route: User Dashboard
   if (currentPath === '/user/dashboard' || window.location.hash.startsWith('#user')) {
     return (
@@ -269,7 +300,10 @@ function MainRouter() {
         <ExploreCategories onSelectCategory={handleSelectCategory} />
 
         {/* 3. How It Works */}
-        <HowItWorksSection onStartAssessment={() => navigate('/user/dashboard')} />
+        <HowItWorksSection
+          onStartAssessment={() => navigate('/user/dashboard')}
+          onSelectStep={(stepPath) => navigate(stepPath)}
+        />
 
         {/* 4. Doctor Profile */}
         <DoctorProfileSection onStartAssessment={() => navigate('/user/dashboard')} />
